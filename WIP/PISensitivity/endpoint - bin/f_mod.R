@@ -1,0 +1,31 @@
+{text <- "model{
+            
+            ## model                                                            
+            
+            for(i in 1:N){
+            
+              ## binary model for S(1) (trt disc due to AE on trt)
+                  logit(p[i])       = inprod(alpha[], X_s[i,] )                 
+                  S1[i]             ~ dbern(p[i])
+                  
+              ## Bianry model for Y(0)
+                   logit(p0[i]) = inprod(beta[], X_y[i,]) + gamma_in*S1[i]
+                   Y0[i]        ~ dbern(p0[i])
+                   
+              ## Bianry model for Y(1)
+                   logit(p1[i]) = inprod(beta[], X_y[i,]) + delta + eta*S1[i]
+                   Y1[i]        ~ dbern(p1[i])
+    
+            }
+            
+            ## priors                                                           
+            
+            for(b in 1:3){  alpha[b]  ~ dnorm(alpha_pm[b], 0.001)
+                             beta[b]  ~ dnorm(beta_pm[b], 0.001) }
+            eta    ~ dnorm(eta_pm,1)    
+            delta  ~ dnorm(delta_pm,1) 
+
+}
+"
+cat(text, file="mod.txt")
+}

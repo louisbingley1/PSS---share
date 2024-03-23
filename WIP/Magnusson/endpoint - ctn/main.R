@@ -1,0 +1,122 @@
+rm(list=ls())
+library(R2jags)  ;
+library(dplyr)
+setwd("C:/Users/liubing8/OneDrive - Merck Sharp & Dohme LLC/Documents/Github Ripos/PSS - share/WIP/magnusson/endpoint - ctn")
+
+#------------------#
+# Functions
+#------------------#
+{
+source('f_sim.r')                             # Function to simulate data using adace simulator
+source('f_mod.r')                             # Function to define model and write to file
+source('f_I.r')                               # Function to create matrix I
+source('f_datjags.r')                         # Function to define dat.jags 
+source('f_inits.r')                           # Function to define all initial values  - starting values for MCMC
+source('f_postparam_jags.r')                  # Function to compute postparam
+#source('f_postparam_jagsmodel.r')            # Function to compute postparam (NOT USED)
+source('f_ace_1sim.r')                        # Function to compute ACE within 1 dataset
+}
+
+#------------------#
+# set parameters
+#------------------#
+{
+seed           = 2020                               # argument of f_sim: set seed
+n              = 300                                # argument of f_sim: sample size in each 1 simulated trial
+alpha1         = c(1.3, 0.3, -0.3)                  # argument of f_sim: coefficient of lm(Z_1 ~ X_1 X_2) at time 1, Z_1 is set to be the BASELINE variable
+alpha2         = c(  0,   0,    0)                  # argument of f_sim: coefficient of lm(Z_2 ~ X_1 X_2) at time 2, set to 0 s.t. there's no other covariates besides X & BASE
+alpha3         = c(  0,   0,    0)                  # argument of f_sim: coefficient of lm(Z_3 ~ X_1 X_2) at time 3, set to 0 s.t. there's no other covariates besides X & BASE
+beta           = c(0.3, 0.1, -0.3,  0.2,0,0 )       # argument of f_sim: coefficient of Y ~ X_1 X_2 Z_1 Z_2 Z_3 at time 3, beta[5,6] set to 0  s.t. Y is determined only by X & BASE
+gamma1         = c(2.5,-0.1, -0.2, -0.3)            # argument of f_sim: coefficient of lm(A ~ X_1 X_2 Z_1) at time 1
+gamma2         = c(2.4,-0.1, -0.2, -0.5)            # argument of f_sim: coefficient of lm(A ~ X_1 X_2 Z_2) at time 2    
+gamma3         = c(2.3,-0.1, -0.2, -0.5)            # argument of f_sim: coefficient of lm(A ~ X_1 X_2 Z_1) at time 3, note that Z_3 has been replaced with Z_1, s.t. A is determined only by X & BASE
+TrtEff_adhpbo  = 0.5                                # argument of f_sim: true treatment/causal effect in stratum [H][1]
+TrtEff_adhnei  = 0                                  # argument of f_sim: true treatment/causal effect in stratum [D][2]
+TrtEff_adhboth = 2                                  # argument of f_sim: true treatment/causal effect in stratum [I][3]
+TrtEff_adhact  = 1.5                                # argument of f_sim: true treatment/causal effect in stratum [B][4]
+nSim           = 3                                  # number of simulated trials
+parSave        = c("delta","S0","S1","Y0","Y1")     # argument of jags() 
+n.chains       = 2                                  # argument of jags()
+n.burnin       = 10                                 # argument of jags()
+n.iter         = 50                                 # argument of jags()
+thin           = 2                                  # argument of jags()
+file           = "mod.txt"                          # argument of jags()
+#n.adapt        = 1000                              # argument of jags.model()
+}
+
+#------------------#
+# ACE 
+#------------------#
+
+result_df  =  NULL
+
+for (i in 1:nSim) {  
+  
+  sim           = f_sim(seed,n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_adhnei,TrtEff_adhboth,TrtEff_adhact,TrtEff_adhpbo)
+  dat_          = sim$obs_long %>% filter(AVISITN==3) 
+  dat_in        = dat_ %>%  mutate(Y0                = ifelse(TRT==0, Y, NA),
+                                   Y1                = ifelse(TRT==1, Y, NA),
+                                   Z                 = TRT,
+                                   S                 = ICE,
+                                   S0                = ifelse(TRT==0, S, NA),
+                                   S1                = ifelse(TRT==1, S, NA),
+                                   X_1_standardized  = X_1-mean(X_1),
+                                   X_2_standardized  = X_2-mean(X_2),
+                                   base_standardized = BASE-mean(BASE)  
+                                   )
+  
+  # true causal effect
+  
+  trued_D       = sim$true_d_T3$true_d_T3_adhnei
+  trued_I       = sim$true_d_T3$true_d_T3_adhboth
+  trued_H       = sim$true_d_T3$true_d_T3_adhpbo
+  trued_B       = sim$true_d_T3$true_d_T3_adhact 
+  
+  # ace calculation using Magnusson's paper's method
+  
+  I             = f_I(dat=dat_in)
+  dat.jags      = f_datjags(dat = dat_in, I=I) 
+  inits         = f_inits(dat=dat_in) 
+  postparam     = f_postparam_jags(dat.jags,inits,parSave,text,n.chains,n.iter,n.burnin,thin)       #`PS_post` must be size 20 or 1, not 15.
+# postparam     = f_postparam_jags.model(file,dat.jags,inits,n.chains,n.adapt,parSave,n.iter,thin) #`PS_post` must be size 20 or 1, not 45.
+  ace           =  f_ace_1sim(postparam = postparam,dat=dat_in,I=I)   
+  
+  # deliver results
+  
+  result_df     =  rbind.data.frame(result_df, 
+                                    data.frame(Sim = i,
+                                               ace,
+                                               trued_D = trued_D,
+                                               trued_I = trued_I,
+                                               trued_H = trued_H,
+                                               trued_B = trued_B) 
+                                    )
+  
+}
+result_df 
+  
+
+# ACE (delta version & ITT version)
+mean(result_df$delta_H); mean(result_df$ITT_H)
+mean(result_df$delta_D); mean(result_df$ITT_D)
+mean(result_df$delta_I); mean(result_df$ITT_I)
+mean(result_df$delta_B); mean(result_df$ITT_B)
+
+
+# causal/trt effect in simulated data  (true_d_T3_adhpbo)
+mean(result_df$trued_H)
+mean(result_df$trued_D)
+mean(result_df$trued_I)
+mean(result_df$trued_B)
+
+# true/theoretical value of causal/trt effect (defined in f_setting)
+# TrtEff_adhpbo  = 0.5                             # true treatment/causal effect in stratum [H][1]
+# TrtEff_adhnei  = 0                               # true treatment/causal effect in stratum [D][2]
+# TrtEff_adhboth = 2                               # true treatment/causal effect in stratum [I][3]
+# TrtEff_adhact  = 1.5                             # true treatment/causal effect in stratum [B][4]
+
+  
+
+
+
+    
