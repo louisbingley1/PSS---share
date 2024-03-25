@@ -1,4 +1,9 @@
-# Function to simulate data using adace simulator
+# f_sim:  Function to simulate a longitudinal data (similar to the AdACE-simulator code)  
+# Outcome Y0,Y1 are only available at VISIT 3, simulated using parameter TrtEff_XXX as the true causal effect of each stratum.
+# TrtEff_adhnei   :=  E(Y1 - Y0 | A0==0 & A1==0)
+# TrtEff_adhboth  :=  E(Y1 - Y1 | A0==1 & A1==1)
+# TrtEff_adhact   :=  E(Y1 - Y0 | A0==0 & A1==1)
+# TrtEff_adhpbo   :=  E(Y1 - Y0 | A0==1 & A1==0)
 
 library(dplyr)
 
@@ -24,6 +29,7 @@ f_sim = function(seed,n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_ad
     USUBJID   = seq(1,n,1)
     
     # Z ~ X  [through alpha]
+    # Note:  Z_1 later will be defined as 'BASE'.
     
     Z0_1    = alpha1[1] +  X_1 *alpha1[2] +  X_2 *alpha1[3]  + rnorm(n)
     Z0_2    = alpha2[1] +  X_1 *alpha2[2] +  X_2 *alpha2[3]  + rnorm(n)
@@ -37,8 +43,11 @@ f_sim = function(seed,n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_ad
     Z       = list(Z_1 , Z_2 , Z_3 )
     
     
-    # A ~ X, Z [through gamma] [Note: for p_A0_3, Z0_3 is replaced with Z0_1,
-    #                                 for p_A1_3, Z1_3 is replaced with Z1_1]
+    # A ~ X, Z [through gamma]
+    # Note: only the 3rd visit's adhererance will be used -- so only p_XX_3 matters.
+    #       for p_A0_3, Z0_3 is replaced with Z0_1;
+    #       for p_A1_3, Z1_3 is replaced with Z1_1.
+    #       This way, the Adherance(or ICE) at visit 3 are only determined by X_1, X_2, BASE (Z_1), which matches JAGS modeling.
     
     p_A0_1  = 1 / ( 1 + exp(-(gamma1[1] + (  X_1 *gamma1[2] +  X_2 *gamma1[3]  ) +  Z0_1  * gamma1[1])) ) 
     p_A0_2  = 1 / ( 1 + exp(-(gamma2[1] + (  X_1 *gamma2[2] +  X_2 *gamma2[3]  ) +  Z0_2  * gamma2[1])) )
@@ -62,10 +71,10 @@ f_sim = function(seed,n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_ad
     U_1 = rep(NA,n) ; 
     U_2 = rep(NA,n) ;
     U_3 = rep(NA,n) ;
-    Y0  = rep(NA,n) ;
-    Y1  = rep(NA,n) ;
-    Y   = rep(NA,n) ;
-    d   = rep(NA,n) ;
+    Y0  = rep(NA,n) ;  # only calculated for visit 3, based on U_3
+    Y1  = rep(NA,n) ;  # only calculated for visit 3, based on U_3
+    Y   = rep(NA,n) ;  # only calculated for visit 3, based on U_3
+    d   = rep(NA,n) ;  # only calculated for visit 3
     
     for(i in 1:n){
       
@@ -126,7 +135,7 @@ f_sim = function(seed,n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_ad
   # full_long
   #---------------
   {
-  X_cov           = full_wide %>% select(USUBJID,X_1,X_2,TRT,Z_1) %>% rename(BASE=Z_1)
+  X_cov           = full_wide %>% select(USUBJID,X_1,X_2,TRT,Z_1) %>% rename(BASE = Z_1)
   full_long       = cbind.data.frame( USUBJID  = rep(1:n, 3), 
                                       AVISITN  = rep(1:3, each=n), 
                                       Y0       =   c( rep(NA,2*nrow(full_wide)), full_wide %>% pull(Y0)), 

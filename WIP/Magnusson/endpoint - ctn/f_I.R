@@ -6,10 +6,10 @@
 #---------------------------------------------------------------------------
 # stratum  S(0) S(1)       stratum                                      
 #---------------------------------------------------------------------------
-#   1       0    1        Harmed(01)     /Control only compliers         
-#   2       1    1        Doomed(11)     /Never-compliers                 
-#   3       0    0        Immune(00)     /Always compliers                
-#   4       1    0        Benefitters(10 /Experimental-only-compliers     
+#   1       0    1        Harmed(01)        
+#   2       1    1        Doomed(11)                   
+#   3       0    0        Immune(00)               
+#   4       1    0        Benefitters(10)
 #---------------------------------------------------------------------------
 
 f_I = function(dat){
