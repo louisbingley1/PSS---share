@@ -3,17 +3,11 @@
 ###          Type of Endpoint: Binary
 ################################################################################################
 rm(list=ls())
-setwd("~/Github Ripos/PSS/WIP/PIsensitivity/endpoint - bin")
-library(data.table)
-library(ggplot2)
+setwd("C:/Users/liubing8/OneDrive - Merck Sharp & Dohme LLC/Documents/Github Ripos/PSS---share/WIP/PISensitivity/endpoint - bin")
 library(survival)
-library(survminer)
 library(mvtnorm)
-library(knitr)
 library(rjags)
-library(coda)
 library(dplyr)
-library(ggmcmc)
 library(R2jags)
 
 ################################## 
@@ -21,13 +15,13 @@ library(R2jags)
 ##################################
 {
 source('f_sim.r')                    # Function to simulate data
-source('f_OR_XXX.r')                 # Function to calculate the true causal effect (OR) |S1=1 for each simulated dataset
+source('f_OR_XXX.r')                 # Function to calculate the sample causal effect from simulated data
 source('f_mod.r')                    # Function to define model and write to file
 source('f_datjags.r')                # Function to define dat.jags
 source('f_pm.r')                     # Function to define prior means
 source('f_inits.r')                  # Function to define all initial values
 source('f_postparam_jags.r')         # Function to compute postparam
-source('f_postparam_jagsmodel.r')    # Function to compute postparam
+source('f_postparam_jagsmodel.r')    # Function to compute postparam (not used)
 source('f_ace_1sim.r')               # Function to compute ACE -> Odds Ratio within each Stratum of Interest
 
 }
@@ -48,15 +42,14 @@ sd                      = 1
 alpha0                  = -1.78
 alpha1                  = 2
 alpha2                  = 0 
-beta0                   = 0           # survival: beta0 = -5 
+beta0                   = 0            
 beta1                   = 0.5  
 beta2                   = -0.5 
-nSim                    = 50          # number of simulated trials
-seed                    = 2020
+nSim                    = 30          
 n.chains                = 3           
 n.adapt                 = 1000
-n.burnin                = 20
-n.iter                  = 30
+n.burnin                = 50
+n.iter                  = 200
   thin                  = 2
 parSave                 = c("Y0","Y1","S1", "beta", "alpha")
 file                    = "mod.txt"
@@ -75,15 +68,15 @@ for (i in 1:nSim) {
   OR_S1eq0                  = f_OR_S1eq0(data = dat_in)
   pm_result                 = f_pm(dat = dat_in)
   dat.jags                  = f_datjags(dat = dat_in,gamma_in,pm_result)
-  inits                     = f_inits(dat=dat_in,seed=seed) 
+  inits                     = f_inits(dat=dat_in) 
   postparam                 = f_postparam_jags(dat.jags,inits,parSave,text,n.chains,n.iter,n.burnin,thin)
 # postparam                 = f_postparam_jags.model(file,dat.jags,inits,n.chains,n.adapt,parSave,n.iter,thin)
   ace                       = f_ace_1sim( postparam=postparam,dat=dat_in)     
   result_df                 =  rbind.data.frame(result_df, data.frame(Sim        = i,
                                                                       Gamma_true = gamma, 
                                                                       Gamma_in   = gamma_in, 
-                                                                      OR_S1eq1, 
-                                                                      OR_S1eq0,
+                                                                      OR_S1eq1   = as.numeric(OR_S1eq1), 
+                                                                      OR_S1eq0   = as.numeric(OR_S1eq0),
                                                                       ace))      
 
 }

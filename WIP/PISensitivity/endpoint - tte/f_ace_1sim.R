@@ -1,6 +1,6 @@
 # Function to compute ACE -> Hazard Ratio for each Stratum of Interest
 f_ace_1sim    =  function(postparam,dat, cutoff) {  # dat = dat_in
-  #dim(postparam)
+   
   niter             = nrow(postparam)
   
   # "S1"
@@ -85,6 +85,5 @@ f_ace_1sim    =  function(postparam,dat, cutoff) {  # dat = dat_in
                     hr_S1eq0_mst.l = out$hr_S1eq0_mst_mean - 1.96*sqrt(out$hr_S1eq0_mst_vars)
   )
   
-  #return(list(out = out, est = est   ))  # S1 = sims[, S1_ind]
   return(est)
 }

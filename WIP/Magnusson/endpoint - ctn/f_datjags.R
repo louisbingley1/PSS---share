@@ -1,4 +1,4 @@
-f_datjags = function(dat,I){
+f_datjags = function(dat,I,pm_results){
   X   = model.matrix(lm(Z ~ X_1_standardized + X_2_standardized + base_standardized, data = dat))
   dat.jags=list(  N                           = nrow(dat),         
                   k                           = 4,                
@@ -9,10 +9,10 @@ f_datjags = function(dat,I){
                   S1                          = dat$S1,
                   X                           = X,                
                   I                           = I,              
-                  prior_delta1_mean           = 0.5,   # H
-                  prior_delta2_mean           = 0,     # D
-                  prior_delta3_mean           = 2,     # I
-                  prior_delta4_mean           = 1.5,   # B
+                  prior_delta1_mean           = pm_results$prior_delta1_mean,     # H: true TrtEff=0.5 
+                  prior_delta2_mean           = pm_results$prior_delta2_mean,     # D: true TrtEff=0
+                  prior_delta3_mean           = pm_results$prior_delta3_mean,     # I: true TrtEff=2
+                  prior_delta4_mean           = pm_results$prior_delta4_mean,     # B: true TrtEff=1.5
                   prior_beta_mean             = 0,
                   prior_eta0_H_mean           = 0,   
                   prior_eta123_H_mean         = 0,

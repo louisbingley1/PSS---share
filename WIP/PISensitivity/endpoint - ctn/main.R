@@ -1,26 +1,13 @@
 
-# bug: prior means calculated using true unobs value(Y0_)
-
-
 ################################################################################################
 ###    Simulate data from Sensitivity Analysis Paper 
 ###          Type of Endpoint: Continuous
 ################################################################################################
-
-setwd("C:/Users/liubing8/OneDrive - Merck Sharp & Dohme LLC/Share within Merck/Bing & Dominique/WIP")
-library(data.table)
-library(ggplot2)
-library(survival)
-library(survminer)
-library(mvtnorm)
-library(knitr)
-library(rjags)
-library(coda)
-library(dplyr)
-library(ggmcmc)
-library(R2jags)
 rm(list=ls())
-setwd("~/Github Ripos/PSS/WIP/PIsensitivity/endpoint - ctn")
+setwd("C:/Users/liubing8/OneDrive - Merck Sharp & Dohme LLC/Documents/Github Ripos/PSS---share/WIP/PISensitivity/endpoint - ctn")
+library(rjags)
+library(dplyr)
+library(R2jags)
 
 ################################## 
 # Functions
@@ -47,26 +34,23 @@ setwd("~/Github Ripos/PSS/WIP/PIsensitivity/endpoint - ctn")
   gamma_in                = gamma
   delta                   = d0                                ;delta
   eta                     = d1 + gamma - delta                ;eta 
-  n                       = 200         # 200
+  n                       = 200         
   mean                    = 0 
   sd                      = 1
   alpha0                  = -1.78
   alpha1                  = 2
   alpha2                  = 0 
-  beta0                   = 0           # survival: beta0 = -5 
+  beta0                   = 0           
   beta1                   = 0.5  
   beta2                   = -0.5 
-  nSim                    = 30          #50 #number of simulated trials
-  seed                    = 202
+  nSim                    = 10           
   n.chains                = 3            
   n.adapt                 = 1000
-  n.burnin                = 20
-  n.iter                  = 30
+  n.burnin                = 30
+  n.iter                  = 100
   thin                    = 2
   parSave                 = c("S1", "Y1","Y0" ,"beta", "alpha")
   file                    = "mod.txt"
-  nsim_pm                 = 20
-  
 
 }
 
@@ -83,16 +67,16 @@ for (i in 1:nSim) {
   trued_S1eq1               = f_delta_S1eq1(data=dat_in)
   pm_result                 = f_pm(dat=dat_in)
   dat.jags                  = f_datjags(dat=dat_in,gamma_in,pm_result)
-  inits                     = f_inits(dat=dat_in,seed,gamma_in) 
-  postparam                 = f_postparam_jags(dat.jags,inits,parSave,text,n.chains,n.iter,n.burnin,thin)       #`PS_post` must be size 20 or 1, not 15.
-# postparam                 = f_postparam_jags.model(file,dat.jags,inits,n.chains,n.adapt,parSave,n.iter,thin)  #`PS_post` must be size 20 or 1, not 45.
-  ace                       = f_ace_1sim(postparam = postparam,dat=dat_in)   # use sims or postparam to compute ACE 
-  result_df                 = rbind.data.frame(result_df, data.frame( Sim        = i, 
-                                                                      gamma_true = gamma,
-                                                                      gamma_in   = gamma_in,
-                                                                      trued_S1eq0,
-                                                                      trued_S1eq1,
-                                                                      ace))      # Append the gamma and estimate to the result data frame.
+  inits                     = f_inits(dat=dat_in,gamma_in) 
+  postparam                 = f_postparam_jags(dat.jags,inits,parSave,text,n.chains,n.iter,n.burnin,thin)       
+# postparam                 = f_postparam_jags.model(file,dat.jags,inits,n.chains,n.adapt,parSave,n.iter,thin)  
+  ace                       = f_ace_1sim(postparam = postparam,dat=dat_in)   
+  result_df                 = rbind.data.frame(result_df, data.frame( Sim         = i, 
+                                                                      gamma_true  = gamma,
+                                                                      gamma_in    = gamma_in,
+                                                                      trued_S1eq0 = as.numeric(trued_S1eq0),
+                                                                      trued_S1eq1 = as.numeric(trued_S1eq1),
+                                                                      ace))     
 }
 result_df 
 
@@ -101,7 +85,7 @@ result_df
 mean(result_df$ITT_S1eq0)
 mean(result_df$ITT_S1eq1)
 
-# true d in simulated data  (true_d_T3_adhpbo)
+# true d in simulated data   
 mean(result_df$trued_S1eq0)
 mean(result_df$trued_S1eq1)
 

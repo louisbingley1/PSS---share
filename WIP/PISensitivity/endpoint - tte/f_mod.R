@@ -26,10 +26,10 @@
             
               for(b in 1:3){      alpha[b] ~ dnorm(alpha_pm[b],1) }   # true alpha = -1.78,2,0
               
-              beta0  ~ dnorm(beta0_pm,1)                             # true beta0 = -3
-              for(b in 1:2){      beta[b]  ~ dnorm(beta_pm[b], 1) }  # true beta1=0.5, beta2=-0.5
-              eta    ~ dnorm(eta_pm,1)                               # true eta = 0.47
-              delta  ~ dnorm(delta_pm,1)                             # true delta = -0.69
+              beta0  ~ dnorm(beta0_pm,1)                              # true beta0 = -3
+              for(b in 1:2){      beta[b]  ~ dnorm(beta_pm[b], 1) }   # true beta1=0.5, beta2=-0.5
+              eta    ~ dnorm(eta_pm,1)                                # true eta = 0.47
+              delta  ~ dnorm(delta_pm,1)                              # true delta = -0.69
              
               # beta0  ~ dnorm(-3,1)                                   # true beta0 = -3
               # for(b in 1:2){      beta[b]  ~ dnorm(0, 1)          }  # true beta1=0.5 , beta2=-0.5

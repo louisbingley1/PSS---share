@@ -1,6 +1,6 @@
 # Function to compute ACE -> Odds Ratio within each Stratum of Interest
 f_ace_1sim      =  function(postparam,dat) {  
-  #dim(postparam)
+ 
   niter             = nrow(postparam)
   
   # "S1"
