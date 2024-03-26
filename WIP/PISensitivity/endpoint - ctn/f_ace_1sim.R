@@ -1,6 +1,6 @@
 # Function to compute ACE by strata -> Y1-Y0 or the 'delta‘ | S1 == 1 or 0
 f_ace_1sim      =  function(postparam,dat) {   
-  #dim(postparam)
+ 
   niter             = nrow(postparam)
   
   # "S1"
