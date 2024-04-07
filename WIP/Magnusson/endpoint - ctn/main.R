@@ -70,10 +70,9 @@ for (i in 1:nSim) {
                                    )
   
   # true causal effect (the true 'd' of stratum D/I/H/B)
-  
+  trued_H       = sim$true_d_T3$true_d_T3_adhpbo
   trued_D       = sim$true_d_T3$true_d_T3_adhnei
   trued_I       = sim$true_d_T3$true_d_T3_adhboth
-  trued_H       = sim$true_d_T3$true_d_T3_adhpbo
   trued_B       = sim$true_d_T3$true_d_T3_adhact 
   
   # ace calculation for 1 simulated dataset
@@ -89,12 +88,12 @@ for (i in 1:nSim) {
   # stack results of all simulations
   
   result_df     =  rbind.data.frame(result_df, 
-                                    data.frame(Sim = i,
-                                               ace,
-                                               trued_D = trued_D,
-                                               trued_I = trued_I,
+                                    data.frame(Sim = i, 
                                                trued_H = trued_H,
-                                               trued_B = trued_B) 
+                                               trued_D = trued_D,
+                                               trued_I = trued_I, 
+                                               trued_B = trued_B,
+                                               ace) 
                                     )
   
 }

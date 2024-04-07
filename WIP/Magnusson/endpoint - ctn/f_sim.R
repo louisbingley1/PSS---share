@@ -8,10 +8,10 @@
 library(dplyr)
 
 f_U = function(A0,A1){
-  if(A0==0 & A1==0){U='NeverAdhere/11/A'}else
-    if(A0==1 & A1==1){U='AlwaysAdhere/00/N'}else
-      if(A0==0 & A1==1){U='AdhereToACT/10/D'}else
-        if(A0==1 & A1==0){U='AdhereToPBO/01/C'}
+  if(A0==0 & A1==0){U='NeverAdhere/11/D'}else
+    if(A0==1 & A1==1){U='AlwaysAdhere/00/C'}else
+      if(A0==0 & A1==1){U='AdhereToACT/10/A'}else
+        if(A0==1 & A1==0){U='AdhereToPBO/01/N'}
   return(U)
 }
 
@@ -65,7 +65,7 @@ f_sim = function(seed,n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_ad
     A_2     =  A1_2  *  TRT  +  A0_2  * (1 -  TRT )
     A_3     =  A1_3  *  TRT  +  A0_3  * (1 -  TRT )
     
-
+    
     # Y   ~ X, Z  [through beta]
     
     U_1 = rep(NA,n) ; 
@@ -82,28 +82,28 @@ f_sim = function(seed,n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_ad
       U_2[i] = f_U( A0_2[i] , A1_2[i] )
       U_3[i] = f_U( A0_3[i] , A1_3[i] )
       
-      if( U_3[i] == 'NeverAdhere/11/A'){   
+      if( U_3[i] == 'NeverAdhere/11/D'){   
         
         Y0[i]  = beta[1] + (  X_1[i] *beta[2] +   X_2[i] *beta[3] ) +  Z0_1[i]  * beta[4] +   Z0_2[i]  * beta[5] +  Z0_3[i] * beta[6]  +  rnorm(1, mean = 0, sd = 0.3)
         Y1[i]  = beta[1] + (  X_1[i] *beta[2] +   X_2[i] *beta[3] ) +  Z1_1[i]  * beta[4] +   Z1_2[i]  * beta[5] +  Z1_3[i] * beta[6]  +  rnorm(1, mean = 0, sd = 0.3)  + TrtEff_adhnei                                         
         Y[i]   =  Y1[i] *  TRT[i] +  Y0[i] * (1 -  TRT[i])
         d[i]   =  Y1[i] -  Y0[i]
         
-      }else if( U_3[i] == 'AlwaysAdhere/00/N'){
+      }else if( U_3[i] == 'AlwaysAdhere/00/C'){
         
         Y0[i]  = beta[1] + (   X_1[i] *beta[2] +   X_2[i] *beta[3] ) +  Z0_1[i]  * beta[4] +   Z0_2[i]  * beta[5] +  Z0_3[i]  * beta[6]  +  rnorm(1, mean = 0, sd = 0.3)
         Y1[i]  = beta[1] + (   X_1[i] *beta[2] +   X_2[i] *beta[3] ) +  Z1_1[i]  * beta[4] +   Z1_2[i]  * beta[5] +  Z1_3[i]  * beta[6]  +  rnorm(1, mean = 0, sd = 0.3)  + TrtEff_adhboth                                         
         Y[i]   =  Y1[i] *  TRT[i] +  Y0[i] * (1 -  TRT[i])
         d[i]   =  Y1[i] -  Y0[i]
         
-      }else if ( U_3[i] == 'AdhereToACT/10/D'){
+      }else if ( U_3[i] == 'AdhereToACT/10/A'){
         
         Y0[i]  = beta[1] + (   X_1[i] *beta[2] +   X_2[i] *beta[3] ) +  Z0_1[i]  * beta[4] +  Z0_2[i]  * beta[5] +  Z0_3[i]  * beta[6]  +  rnorm(1, mean = 0, sd = 0.3)
         Y1[i]  = beta[1] + (   X_1[i] *beta[2] +   X_2[i] *beta[3] ) +  Z1_1[i]  * beta[4] +  Z1_2[i]  * beta[5] +  Z1_3[i]  * beta[6]  +  rnorm(1, mean = 0, sd = 0.3)  + TrtEff_adhact                                          
         Y[i]   =  Y1[i] *  TRT[i] +  Y0[i] * (1 -  TRT[i])
         d[i]   =  Y1[i] -  Y0[i]
         
-      }else if( U_3[i] == 'AdhereToPBO/01/C' ){
+      }else if( U_3[i] == 'AdhereToPBO/01/N' ){
         
         Y0[i]  = beta[1] + (   X_1[i] *beta[2] +   X_2[i] *beta[3] ) +  Z0_1[i]  * beta[4] +  Z0_2[i]  * beta[5] +  Z0_3[i]  * beta[6]  +  rnorm(1, mean = 0, sd = 0.3)
         Y1[i]  = beta[1] + (   X_1[i] *beta[2] +   X_2[i] *beta[3] ) +  Z1_1[i]  * beta[4] +  Z1_2[i]  * beta[5] +  Z1_3[i]  * beta[6]  +  rnorm(1, mean = 0, sd = 0.3)  + TrtEff_adhpbo                                          
@@ -115,68 +115,86 @@ f_sim = function(seed,n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_ad
     }
     
   }
-   
+  
   #---------------
   # full_wide
   #---------------
   { 
-  full_wide   = cbind.data.frame( USUBJID,X_1,X_2,TRT, 
-                                  Y0,Y1,Y,d,
-                                  Z0_1,Z1_1,Z_1,
-                                  Z0_2,Z1_2,Z_2,
-                                  Z0_3,Z1_3,Z_3,
-                                  A0_1,A1_1,A_1,
-                                  A0_2,A1_2,A_2,
-                                  A0_3,A1_3,A_3) %>% 
-    mutate( U_1 = U_1,U_2 = U_2 ,U_3 = U_3 )
+    full_wide   = cbind.data.frame( USUBJID,X_1,X_2,TRT, 
+                                    Y0,Y1,Y,d,
+                                    Z0_1,Z1_1,Z_1,
+                                    Z0_2,Z1_2,Z_2,
+                                    Z0_3,Z1_3,Z_3,
+                                    A0_1,A1_1,A_1,
+                                    A0_2,A1_2,A_2,
+                                    A0_3,A1_3,A_3) %>% 
+      mutate( U_1 = U_1,U_2 = U_2 ,U_3 = U_3 )
   }
- 
+  
   #---------------
   # full_long
   #---------------
   {
-  X_cov           = full_wide %>% select(USUBJID,X_1,X_2,TRT,Z_1) %>% rename(BASE = Z_1)
-  full_long       = cbind.data.frame( USUBJID  = rep(1:n, 3), 
-                                      AVISITN  = rep(1:3, each=n), 
-                                      Y0       =   c( rep(NA,2*nrow(full_wide)), full_wide %>% pull(Y0)), 
-                                      Y1       =   c( rep(NA,2*nrow(full_wide)), full_wide %>% pull(Y1)), 
-                                      Y        =   c( rep(NA,2*nrow(full_wide)), full_wide %>% pull(Y)),
-                                      d        =   c( rep(NA,2*nrow(full_wide)), full_wide %>% pull(d)),  
-                                      ICE      = 1-c( full_wide %>% pull(A_1), full_wide %>% pull(A_2), full_wide %>% pull(A_3)),
-                                      U        =   c( full_wide %>% pull(U_1), full_wide %>% pull(U_2), full_wide %>% pull(U_3))
-  ) %>% 
-    left_join(X_cov, by=c("USUBJID")) %>% 
-    arrange(USUBJID) 
-  
+    X_cov           = full_wide %>% select(USUBJID,X_1,X_2,TRT,Z_1) %>% rename(BASE = Z_1)
+    full_long       = cbind.data.frame( USUBJID  = rep(1:n, 3), 
+                                        AVISITN  = rep(1:3, each=n), 
+                                        Y0       =   c( rep(NA,2*nrow(full_wide)), full_wide %>% pull(Y0)), 
+                                        Y1       =   c( rep(NA,2*nrow(full_wide)), full_wide %>% pull(Y1)), 
+                                        Y        =   c( rep(NA,2*nrow(full_wide)), full_wide %>% pull(Y)),
+                                        d        =   c( rep(NA,2*nrow(full_wide)), full_wide %>% pull(d)),  
+                                        ICE      = 1-c( full_wide %>% pull(A_1), full_wide %>% pull(A_2), full_wide %>% pull(A_3)),
+                                        U        =   c( full_wide %>% pull(U_1), full_wide %>% pull(U_2), full_wide %>% pull(U_3))
+    ) %>% 
+      left_join(X_cov, by=c("USUBJID")) %>% 
+      arrange(USUBJID) 
+    
   }
   
   #---------------
   # obs_long
   #---------------
   
-  obs_long       = full_long %>% mutate(Y = ifelse(ICE == 1, NA, Y)) %>%
-                                 select(-c(Y0,Y1,U,d))
+  obs_long       = full_long %>% mutate(Y = ifelse(ICE == 1, NA, Y)) %>%  select(-c(Y0,Y1,U,d))
   
   #---------------
   # true ACE at T3
   #---------------
   {
-  true_d_T3_adhact  = mean( full_long %>% filter(AVISITN==3 & U=='AdhereToACT/10/D') %>% pull(d) )
-  true_d_T3_adhpbo  = mean( full_long %>% filter(AVISITN==3 & U=='AdhereToPBO/01/C') %>% pull(d) )
-  true_d_T3_adhboth = mean( full_long %>% filter(AVISITN==3 & U=='AlwaysAdhere/00/N') %>% pull(d) )
-  true_d_T3_adhnei  = mean( full_long %>% filter(AVISITN==3 & U=='NeverAdhere/11/A') %>% pull(d) )
-  true_d_T3         = list( true_d_T3_adhact  = true_d_T3_adhact ,
-                            true_d_T3_adhpbo  = true_d_T3_adhpbo ,
-                            true_d_T3_adhboth = true_d_T3_adhboth,
-                            true_d_T3_adhnei  = true_d_T3_adhnei )
-   }     
+    true_d_T3_adhact  = mean( full_long %>% filter(AVISITN==3 & U=='AdhereToACT/10/A') %>% pull(d) )
+    true_d_T3_adhpbo  = mean( full_long %>% filter(AVISITN==3 & U=='AdhereToPBO/01/N') %>% pull(d) )
+    true_d_T3_adhboth = mean( full_long %>% filter(AVISITN==3 & U=='AlwaysAdhere/00/C') %>% pull(d) )
+    true_d_T3_adhnei  = mean( full_long %>% filter(AVISITN==3 & U=='NeverAdhere/11/D') %>% pull(d) )
+    true_d_T3         = list( true_d_T3_adhact  = true_d_T3_adhact ,
+                              true_d_T3_adhpbo  = true_d_T3_adhpbo ,
+                              true_d_T3_adhboth = true_d_T3_adhboth,
+                              true_d_T3_adhnei  = true_d_T3_adhnei )
+  }   
+  
+  {
+    true_d_T3_adhact_nsl  = mean( full_long %>% filter(AVISITN==3 & U=='AdhereToACT/10/A' & TRT==1) %>% pull(Y) )-
+                            mean( full_long %>% filter(AVISITN==3 & U=='AdhereToACT/10/A' & TRT==0) %>% pull(Y) )
+    true_d_T3_adhpbo_nsl  = mean( full_long %>% filter(AVISITN==3 & U=='AdhereToPBO/01/N' & TRT==1) %>% pull(Y) )-
+                            mean( full_long %>% filter(AVISITN==3 & U=='AdhereToPBO/01/N' & TRT==0) %>% pull(Y) )
+    true_d_T3_adhboth_nsl = mean( full_long %>% filter(AVISITN==3 & U=='AlwaysAdhere/00/C' & TRT==1) %>% pull(Y) )-
+                            mean( full_long %>% filter(AVISITN==3 & U=='AlwaysAdhere/00/C' & TRT==0) %>% pull(Y))
+    true_d_T3_adhnei_nsl  = mean( full_long %>% filter(AVISITN==3 & U=='NeverAdhere/11/D' & TRT==1) %>% pull(Y) )-
+                            mean( full_long %>% filter(AVISITN==3 & U=='NeverAdhere/11/D' & TRT==0) %>% pull(Y) )
+    true_d_T3_nsl         = list( true_d_T3_adhact_nsl  = true_d_T3_adhact_nsl ,
+                                  true_d_T3_adhpbo_nsl  = true_d_T3_adhpbo_nsl ,
+                                  true_d_T3_adhboth_nsl = true_d_T3_adhboth_nsl,
+                                  true_d_T3_adhnei_nsl  = true_d_T3_adhnei_nsl )
+  } 
   
   
   return(list(full_wide   = full_wide,
               full_long   = full_long,
               obs_long    = obs_long,
-              true_d_T3   = true_d_T3 )
+              true_d_T3   = true_d_T3,
+              true_d_T3_nsl=true_d_T3_nsl)
   )
   
   
 }  
+
+
+ 
