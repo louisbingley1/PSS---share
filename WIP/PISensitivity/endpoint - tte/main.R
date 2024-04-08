@@ -3,7 +3,6 @@
 ###           Type of Endpoint: Time to Event  
 ################################################################################################
 rm(list=ls())
-setwd("C:/Users/liubing8/OneDrive - Merck Sharp & Dohme LLC/Documents/Github Ripos/PSS---share/WIP/PISensitivity/endpoint - tte")
 library(survival)
 library(rjags)
 library(dplyr)
@@ -13,16 +12,16 @@ library(R2jags)
 # Functions
 ##################################
 {
-source('f_sim.r')                                     # Function to simulate data
-source('f_trueHR.r')                                  # Function to calculate the true causal effect(HR) for simulated datasets  
-source('f_mod.r')                                     # Function to define model and write to file
-source('f_datjags.r')                                 # Function to define dat.jags
-source('f_pm.r')                                      # Function to define the prior means in the model:
-source('f_inits.r')                                   # Function to define all initial values    
-source('f_postparam_jags.r')                          # Function to compute postparam
-source('f_postparam_jagsmodel.r')                     # Function to compute postparam
-source('f_ace_1sim.r')                                # Function to compute ACE -> Hazard Ratio for each Stratum of Interest
-source('f_cutoff.r')                                  # Function to determine cutoff  
+source('WIP/PISensitivity/endpoint - tte/f_sim.r')                                     # Function to simulate data
+source('WIP/PISensitivity/endpoint - tte/f_trueHR.r')                                  # Function to calculate the true causal effect(HR) for simulated datasets  
+source('WIP/PISensitivity/endpoint - tte/f_mod.r')                                     # Function to define model and write to file
+source('WIP/PISensitivity/endpoint - tte/f_datjags.r')                                 # Function to define dat.jags
+source('WIP/PISensitivity/endpoint - tte/f_pm.r')                                      # Function to define the prior means in the model:
+source('WIP/PISensitivity/endpoint - tte/f_inits.r')                                   # Function to define all initial values    
+source('WIP/PISensitivity/endpoint - tte/f_postparam_jags.r')                          # Function to compute postparam
+source('WIP/PISensitivity/endpoint - tte/f_postparam_jagsmodel.r')                     # Function to compute postparam
+source('WIP/PISensitivity/endpoint - tte/f_ace_1sim.r')                                # Function to compute ACE -> Hazard Ratio for each Stratum of Interest
+source('WIP/PISensitivity/endpoint - tte/f_cutoff.r')                                  # Function to determine cutoff  
 }
 ##################################
 # set parameters
@@ -43,7 +42,7 @@ alpha2                  = 0
 beta0                   = -3 
 beta1                   = 0.5  
 beta2                   = -0.5 
-nSim                    = 10          
+nSim                    = 30          
 n.chains                = 3
 n.burnin                = 30
 n.adapt                 = 1000

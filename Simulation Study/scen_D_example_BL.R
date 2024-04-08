@@ -1,15 +1,14 @@
 rm(list=ls())
-setwd("C:/Users/liubing8/OneDrive - Merck Sharp & Dohme LLC/Documents/Github Ripos/PSS---share/Simulation Study")
 library(cities)
 library(dplyr)
 library(tidyr)
 library(plotly)
 library(ggplot2)
 library(ggthemes)
-#source('original/splpl_utilities.R')
-#source('original/splpl_utilities_BL.R')
-source('splpl_utilities_BL_1.R')
-source('f_settings.r')
+#source('Simulation Study/original/splpl_utilities.R')
+#source('Simulation Study/original/splpl_utilities_BL.R')
+source('Simulation Study/splpl_utilities_BL_1.R')
+source('Simulation Study/f_settings.r')
  
 
 data_out = data_generator_loop1(n_patient_vector,

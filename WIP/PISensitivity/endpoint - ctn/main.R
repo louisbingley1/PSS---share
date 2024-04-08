@@ -4,7 +4,6 @@
 ###          Type of Endpoint: Continuous
 ################################################################################################
 rm(list=ls())
-setwd("C:/Users/liubing8/OneDrive - Merck Sharp & Dohme LLC/Documents/Github Ripos/PSS---share/WIP/PISensitivity/endpoint - ctn")
 library(rjags)
 library(dplyr)
 library(R2jags)
@@ -13,15 +12,15 @@ library(R2jags)
 # Functions
 ##################################
 {
-  source('f_sim.r')                     # Function to simulate data
-  source('f_delta_XXX.r')               # Function to calculate the delta|strata of interest
-  source('f_mod.r')                     # Function to define model
-  source('f_datjags.r')                 # Function to define dat.jags
-  source('f_pm.r')                      # Function to define prior means
-  source('f_inits.r')                   # Function to define initial values
-  source('f_postparam_jags.r')
-  source('f_postparam_jagsmodel.r') 
-  source('f_ace_1sim.r')
+  source('WIP/PISensitivity/endpoint - ctn/f_sim.r')                     # Function to simulate data
+  source('WIP/PISensitivity/endpoint - ctn/f_delta_XXX.r')               # Function to calculate the delta|strata of interest
+  source('WIP/PISensitivity/endpoint - ctn/f_mod.r')                     # Function to define model
+  source('WIP/PISensitivity/endpoint - ctn/f_datjags.r')                 # Function to define dat.jags
+  source('WIP/PISensitivity/endpoint - ctn/f_pm.r')                      # Function to define prior means
+  source('WIP/PISensitivity/endpoint - ctn/f_inits.r')                   # Function to define initial values
+  source('WIP/PISensitivity/endpoint - ctn/f_postparam_jags.r')
+  source('WIP/PISensitivity/endpoint - ctn/f_postparam_jagsmodel.r') 
+  source('WIP/PISensitivity/endpoint - ctn/f_ace_1sim.r')
 }
 
 ##################################
@@ -43,7 +42,7 @@ library(R2jags)
   beta0                   = 0           
   beta1                   = 0.5  
   beta2                   = -0.5 
-  nSim                    = 10           
+  nSim                    = 30           
   n.chains                = 3            
   n.adapt                 = 1000
   n.burnin                = 30

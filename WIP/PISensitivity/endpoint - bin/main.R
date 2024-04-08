@@ -3,7 +3,6 @@
 ###          Type of Endpoint: Binary
 ################################################################################################
 rm(list=ls())
-setwd("C:/Users/liubing8/OneDrive - Merck Sharp & Dohme LLC/Documents/Github Ripos/PSS---share/WIP/PISensitivity/endpoint - bin")
 library(survival)
 library(mvtnorm)
 library(rjags)
@@ -14,15 +13,15 @@ library(R2jags)
 # Functions
 ##################################
 {
-source('f_sim.r')                    # Function to simulate data
-source('f_OR_XXX.r')                 # Function to calculate the sample causal effect from simulated data
-source('f_mod.r')                    # Function to define model and write to file
-source('f_datjags.r')                # Function to define dat.jags
-source('f_pm.r')                     # Function to define prior means
-source('f_inits.r')                  # Function to define all initial values
-source('f_postparam_jags.r')         # Function to compute postparam
-source('f_postparam_jagsmodel.r')    # Function to compute postparam (not used)
-source('f_ace_1sim.r')               # Function to compute ACE -> Odds Ratio within each Stratum of Interest
+source('WIP/PISensitivity/endpoint - bin/f_sim.r')                    # Function to simulate data
+source('WIP/PISensitivity/endpoint - bin/f_OR_XXX.r')                 # Function to calculate the sample causal effect from simulated data
+source('WIP/PISensitivity/endpoint - bin/f_mod.r')                    # Function to define model and write to file
+source('WIP/PISensitivity/endpoint - bin/f_datjags.r')                # Function to define dat.jags
+source('WIP/PISensitivity/endpoint - bin/f_pm.r')                     # Function to define prior means
+source('WIP/PISensitivity/endpoint - bin/f_inits.r')                  # Function to define all initial values
+source('WIP/PISensitivity/endpoint - bin/f_postparam_jags.r')         # Function to compute postparam
+source('WIP/PISensitivity/endpoint - bin/f_postparam_jagsmodel.r')    # Function to compute postparam (not used)
+source('WIP/PISensitivity/endpoint - bin/f_ace_1sim.r')               # Function to compute ACE -> Odds Ratio within each Stratum of Interest
 
 }
 

@@ -1,21 +1,20 @@
 rm(list=ls())
 library(R2jags)  ;
 library(dplyr)
-setwd("C:/Users/liubing8/OneDrive - Merck Sharp & Dohme LLC/Documents/Github Ripos/PSS---share/WIP/magnusson/endpoint - ctn")
 
 #------------------#
 # Functions
 #------------------#
 {
-source('f_sim.r')                                   # Function to simulate data  
-source('f_mod.r')                                   # Function to define model and write to file
-source('f_I.r')                                     # Function to create matrix I
-source('f_pm.r')                                    # Function to calculate prior means of delta using sample treatment effect estimates 
-source('f_datjags.r')                               # Function to define dat.jags 
-source('f_inits.r')                                 # Function to define all initial values  - starting values for MCMC
-source('f_postparam_jags.r')                        # Function to compute postparam
-source('f_postparam_jagsmodel.r')                   # Function to compute postparam (another way)
-source('f_ace_1sim.r')                              # Function to compute ACE within 1 dataset
+source('WIP/magnusson/endpoint - ctn/f_sim.r')                                   # Function to simulate data  
+source('WIP/magnusson/endpoint - ctn/f_mod.r')                                   # Function to define model and write to file
+source('WIP/magnusson/endpoint - ctn/f_I.r')                                     # Function to create matrix I
+source('WIP/magnusson/endpoint - ctn/f_pm.r')                                    # Function to calculate prior means of delta using sample treatment effect estimates 
+source('WIP/magnusson/endpoint - ctn/f_datjags.r')                               # Function to define dat.jags 
+source('WIP/magnusson/endpoint - ctn/f_inits.r')                                 # Function to define all initial values  - starting values for MCMC
+source('WIP/magnusson/endpoint - ctn/f_postparam_jags.r')                        # Function to compute postparam
+source('WIP/magnusson/endpoint - ctn/f_postparam_jagsmodel.r')                   # Function to compute postparam (another way)
+source('WIP/magnusson/endpoint - ctn/f_ace_1sim.r')                              # Function to compute ACE within 1 dataset
 
 }
 
@@ -39,7 +38,7 @@ TrtEff_adhact  = 1.5                                # argument of f_sim: true tr
 nSim           = 30                                 # number of simulated trials
 parSave        = c("delta","S0","S1","Y0","Y1")     # argument of jags() 
 n.chains       = 2                                  # argument of jags()
-n.burnin       = 100                                 # argument of jags()
+n.burnin       = 100                                # argument of jags()
 n.iter         = 300                                # argument of jags()
 thin           = 2                                  # argument of jags()
 file           = "mod.txt"                          # argument of jags()

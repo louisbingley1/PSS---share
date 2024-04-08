@@ -5,7 +5,7 @@ library(tidyr)
 library(plotly)
 library(ggplot2)
 library(ggthemes)
-source("C:/Users/liubing8/OneDrive - Merck Sharp & Dohme LLC/Documents/Github Ripos/simulation study/original/splpl_utilities.R")
+source("Simulation Study/original/splpl_utilities.R")
 
 total_data = 1
 starting_seed_val = 1
