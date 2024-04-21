@@ -55,8 +55,7 @@ data_generator1 = function (n_patient_vector, p_loe_max, z_l_loe, z_u_loe, p_ee_
                                             
                                             if (is.na(sum(unlist(beta_list))) | sum(((unlist(beta_list))) ==   0) == length(unlist(beta_list))) {
                                               mean_subject_list[[i]] = cbind(rep_row(mean_list[[i]][1],   total_patients), rep_row(mean_list[[i]][-1],  total_patients))
-                                            }
-                                            else {
+                                            }  else {
                                               mean_subject_list[[i]] = cbind(rep_row(mean_list[[i]][1],  total_patients), rep_row(mean_list[[i]][-1],  total_patients) + rep_col(as.matrix(covariate_df) %*%  as.matrix(beta_list[[i]], ncol = 1), n_repeat -   1))
                                             }
                                             
