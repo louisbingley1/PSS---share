@@ -103,9 +103,9 @@ mean(result_df$CACE); mean(result_df$CACE.adj)
  
 
 # causal/trt effect in simulated data (at visit 3)
-mean(result_df$trued_A); mean(result_df$trued_A_nsl)
-mean(result_df$trued_N); mean(result_df$trued_N_nsl)
-mean(result_df$trued_C); mean(result_df$trued_C_nsl) 
+mean(result_df$trued_A_10); mean(result_df$trued_A_10_nsl)
+mean(result_df$trued_N_01); mean(result_df$trued_N_01_nsl)
+mean(result_df$trued_C_00); mean(result_df$trued_C_00_nsl) 
 
 
 # true/theoretical value of causal/trt effect (defined in f_setting)

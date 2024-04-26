@@ -6,17 +6,17 @@ library(dplyr)
 # Functions
 #------------------#
 {
-source('WIP/Magnusson/endpoint - ctn/f_sim.r')                                   # Function to simulate data  
-source('WIP/Magnusson/endpoint - ctn/f_mod.r')                                   # Function to define model and write to file
-source('WIP/Magnusson/endpoint - ctn/f_I.r')                                     # Function to create matrix I
-source('WIP/Magnusson/endpoint - ctn/f_pm.r')                                    # Function to calculate prior means of delta using sample treatment effect estimates 
-source('WIP/Magnusson/endpoint - ctn/f_datjags.r')                               # Function to define dat.jags 
-source('WIP/Magnusson/endpoint - ctn/f_inits.r')                                 # Function to define all initial values  - starting values for MCMC
-source('WIP/Magnusson/endpoint - ctn/f_postparam_jags.r')                        # Function to compute postparam
-source('WIP/Magnusson/endpoint - ctn/f_postparam_jagsmodel.r')                   # Function to compute postparam (another way)
-source('WIP/Magnusson/endpoint - ctn/f_ace_1sim.r')                              # Function to compute ACE within 1 dataset
-source('WIP/Magnusson/endpoint - ctn/f_Uhat_Utrue.r')
-source('WIP/Magnusson/endpoint - ctn/f_rubins_rule.r')
+source('Magnusson/endpoint - ctn/main/f_sim.r')                                   # Function to simulate data  
+source('Magnusson/endpoint - ctn/main/f_mod.r')                                   # Function to define model and write to file
+source('Magnusson/endpoint - ctn/main/f_I.r')                                     # Function to create matrix I
+source('Magnusson/endpoint - ctn/main/f_pm.r')                                    # Function to calculate prior means of delta using sample treatment effect estimates 
+source('Magnusson/endpoint - ctn/main/f_datjags.r')                               # Function to define dat.jags 
+source('Magnusson/endpoint - ctn/main/f_inits.r')                                 # Function to define all initial values  - starting values for MCMC
+source('Magnusson/endpoint - ctn/main/f_postparam_jags.r')                        # Function to compute postparam
+source('Magnusson/endpoint - ctn/main/f_postparam_jagsmodel.r')                   # Function to compute postparam (another way)
+source('Magnusson/endpoint - ctn/main/f_ace_1sim.r')                              # Function to compute ACE within 1 dataset
+source('Magnusson/endpoint - ctn/main/f_Uhat_Utrue.r')
+source('Magnusson/endpoint - ctn/main/f_rubins_rule.r')
 }
 
 #------------------#
