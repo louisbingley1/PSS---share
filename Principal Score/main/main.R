@@ -7,7 +7,7 @@ library(dplyr)
 #  Functions
 #----------------------
 {
-source("Data Simulation/adace simulator/f_sim.r")         #source("Principal Score/main/f_sim.r")
+source("Data Simulator/adace simulator/f_sim.r")         #source("Principal Score/main/f_sim.r")
 source("Principal Score/main/f_augdata.r")
 source("Principal Score/main/f_EM_betas.r")
 source("Principal Score/main/f_pi.r")
