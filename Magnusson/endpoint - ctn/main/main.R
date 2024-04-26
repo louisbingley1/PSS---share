@@ -6,7 +6,7 @@ library(dplyr)
 # Functions
 #------------------#
 {
-source('Magnusson/endpoint - ctn/main/f_sim.r')                                   # Function to simulate data  
+source("Data Simulator/adace simulator/f_sim.r")            #source('Magnusson/endpoint - ctn/main/f_sim.r')                                   # Function to simulate data  
 source('Magnusson/endpoint - ctn/main/f_mod.r')                                   # Function to define model and write to file
 source('Magnusson/endpoint - ctn/main/f_I.r')                                     # Function to create matrix I
 source('Magnusson/endpoint - ctn/main/f_pm.r')                                    # Function to calculate prior means of delta using sample treatment effect estimates 
@@ -110,10 +110,10 @@ mean(result_df$delta_IB); mean(result_df$ITT_IB)
 
 
 # causal/trt effect in simulated data (at visit 3)
-mean(result_df$trued_H)
-mean(result_df$trued_D)
-mean(result_df$trued_I)
-mean(result_df$trued_B)
+mean(result_df$trued_H_01)
+mean(result_df$trued_D_11)
+mean(result_df$trued_I_00)
+mean(result_df$trued_B_10)
 
 # true/theoretical value of causal/trt effect (defined in f_setting)
 # TrtEff_adhpbo  = 0.5                             # true treatment/causal effect in stratum [H][1]
