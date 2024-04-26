@@ -36,11 +36,11 @@ TrtEff_adhpbo  = 0.5                                # argument of f_sim: true tr
 TrtEff_adhnei  = 0                                  # argument of f_sim: true treatment/causal effect in stratum [D][2]
 TrtEff_adhboth = 2                                  # argument of f_sim: true treatment/causal effect in stratum [I][3]
 TrtEff_adhact  = 1.5                                # argument of f_sim: true treatment/causal effect in stratum [B][4]
-nSim           = 10                                 # number of simulated trials
+nSim           = 3                                  # number of simulated trials
 parSave        = c("delta","S0","S1","Y0","Y1","w") # argument of jags() 
 n.chains       = 2                                  # argument of jags()
-n.burnin       = 200                                # argument of jags()
-n.iter         = 1000                                # argument of jags()
+n.burnin       = 20                                # argument of jags()
+n.iter         = 100                               # argument of jags()
 thin           = 2                                  # argument of jags()
 file           = "mod.txt"                          # argument of jags()
 n.adapt        = 1000                               # argument of jags.model()
@@ -68,7 +68,7 @@ for (i in 1:nSim) {
                                    X_2_standardized  = X_2, #X_2-mean(X_2),
                                    base_standardized = BASE #-mean(BASE)   
                                    )
-  for(i in 1:nrow(dat_in)){dat_in$Utrue[i] = strsplit(dat_in$U[i],"/")[[1]][3] }
+  for(r in 1:nrow(dat_in)){dat_in$Utrue[r] = strsplit(dat_in$U[r],"/")[[1]][3] }
   
   # true causal effect (the true 'd' of stratum D/I/H/B)
   trued_H       = sim$true_d_T3$true_d_T3_adhpbo
@@ -89,11 +89,11 @@ for (i in 1:nSim) {
   # stack results of all simulations
   
   result_df     =  rbind.data.frame(result_df, 
-                                    data.frame(Sim = i, 
-                                               trued_H = trued_H,
-                                               trued_D = trued_D,
-                                               trued_I = trued_I, 
-                                               trued_B = trued_B,
+                                    data.frame(Sim = i,                                                 
+                                               trued_H_01 = trued_H,
+                                               trued_D_11 = trued_D,
+                                               trued_I_00 = trued_I, 
+                                               trued_B_10 = trued_B,
                                                ace) 
                                     )
   
@@ -106,6 +106,7 @@ mean(result_df$delta_H); mean(result_df$ITT_H)
 mean(result_df$delta_D); mean(result_df$ITT_D)
 mean(result_df$delta_I); mean(result_df$ITT_I)
 mean(result_df$delta_B); mean(result_df$ITT_B)
+mean(result_df$delta_IB); mean(result_df$ITT_IB)
 
 
 # causal/trt effect in simulated data (at visit 3)

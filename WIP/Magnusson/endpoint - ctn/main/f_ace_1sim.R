@@ -51,11 +51,11 @@ f_ace_1sim      =  function(postparam,dat,I) {
   # Pull ACE,PCP from all iterations
   #---------------------------------------------------
   
-  ITTmean_H  = ITTmean_D  = ITTmean_I  = ITTmean_B  = rep(NA, niter)
-  ITTse_H    = ITTse_D    = ITTse_I    = ITTse_B    = rep(NA, niter)
-  delta_se_H = delta_se_D = delta_se_I = delta_se_B = rep(NA, niter)
+  ITTmean_H  = ITTmean_D  = ITTmean_I  = ITTmean_B  = ITTmean_IB  = rep(NA, niter)
+  ITTse_H    = ITTse_D    = ITTse_I    = ITTse_B    = ITTse_IB    = rep(NA, niter)
+  delta_se_H = delta_se_D = delta_se_I = delta_se_B = delta_se_IB = rep(NA, niter)
   PCP_H      = PCP_D      = PCP_I      = PCP_B      = rep(NA, niter)
-  nH         = nD         = nI         = nB         = rep(NA, niter)
+  nH         = nD         = nI         = nB         = nIB         = rep(NA, niter)
   for (iter in 1:niter){
     
     W = w[iter,] 
@@ -111,7 +111,8 @@ f_ace_1sim      =  function(postparam,dat,I) {
     nD_    = nrow(ITT_tb %>% filter(S0_imp==1 & S1_imp==1) )
     nI_    = nrow(ITT_tb %>% filter(S0_imp==0 & S1_imp==0) )
     nB_    = nrow(ITT_tb %>% filter(S0_imp==1 & S1_imp==0) )
-    
+    nIB_   = nI_ +  nB_ 
+      
     nH__    = nrow(ITT_tb %>% filter(Uhat=="H") )
     nD__    = nrow(ITT_tb %>% filter(Uhat=="D") )
     nI__    = nrow(ITT_tb %>% filter(Uhat=="I") )
@@ -123,6 +124,7 @@ f_ace_1sim      =  function(postparam,dat,I) {
     ITTvec_D  = (   ITT_tb %>% filter(S0_imp==1 & S1_imp==1) %>% pull(ITT_imp) )   # S(0)=1, S(1)=1 -->  stratum D
     ITTvec_I  = (   ITT_tb %>% filter(S0_imp==0 & S1_imp==0) %>% pull(ITT_imp) )   # S(0)=0, S(1)=0 -->  stratum I
     ITTvec_B  = (   ITT_tb %>% filter(S0_imp==1 & S1_imp==0) %>% pull(ITT_imp) )   # S(0)=1, S(1)=0 -->  stratum B
+    ITTvec_IB  = c(ITTvec_I, ITTvec_B)
     
     # estimate -- ITTmean_U
     
@@ -130,6 +132,7 @@ f_ace_1sim      =  function(postparam,dat,I) {
     ITTmean_D[iter]  = mean(   ITTvec_D )    
     ITTmean_I[iter]  = mean(   ITTvec_I )    
     ITTmean_B[iter]  = mean(   ITTvec_B ) 
+    ITTmean_IB[iter]  = mean(   ITTvec_IB ) 
     
     # se(estimate)
     
@@ -137,6 +140,7 @@ f_ace_1sim      =  function(postparam,dat,I) {
     ITTse_D[iter] = sd(ITTvec_D)/sqrt(nD_)
     ITTse_I[iter] = sd(ITTvec_I)/sqrt(nI_)
     ITTse_B[iter] = sd(ITTvec_B)/sqrt(nB_)
+    ITTse_IB[iter] = sd(ITTvec_IB)/sqrt(nIB_)
     
     # (1.2) Delta version ACE
     
@@ -146,6 +150,7 @@ f_ace_1sim      =  function(postparam,dat,I) {
     delta_D = delta_pot[,2]
     delta_I = delta_pot[,3]
     delta_B = delta_pot[,4]
+    delta_IB = delta_I * (nI_/nIB_) + delta_B * (nB_/nIB_)
     
     # se(estimate)
     
@@ -155,6 +160,8 @@ f_ace_1sim      =  function(postparam,dat,I) {
     delta_se_D[iter]      = 1/(prior_precision + 1/ITTse_D[iter])
     delta_se_I[iter]      = 1/(prior_precision + 1/ITTse_I[iter])
     delta_se_B[iter]      = 1/(prior_precision + 1/ITTse_B[iter])
+    delta_se_IB[iter]      = 1/(prior_precision + 1/ITTse_IB[iter])
+    
     
     #-------------------------
     #  2. PCP
@@ -166,6 +173,7 @@ f_ace_1sim      =  function(postparam,dat,I) {
     nD[iter]    = nrow(ITT_tb %>% filter(Utrue == "D") )
     nI[iter]    = nrow(ITT_tb %>% filter(Utrue == "I") )
     nB[iter]    = nrow(ITT_tb %>% filter(Utrue == "B") )
+    nIB[iter]    =  nI[iter] + nB[iter]
     
     # PCP
     
@@ -186,10 +194,14 @@ f_ace_1sim      =  function(postparam,dat,I) {
   ITT_D_results   = f_rubins_rule(estimate = ITTmean_D, se = ITTse_D)
   ITT_I_results   = f_rubins_rule(estimate = ITTmean_I, se = ITTse_I)
   ITT_B_results   = f_rubins_rule(estimate = ITTmean_B, se = ITTse_B)
+  ITT_IB_results   = f_rubins_rule(estimate = ITTmean_IB, se = ITTse_IB)
+  
   delta_H_results = f_rubins_rule(estimate = delta_H, se = delta_se_H)
   delta_D_results = f_rubins_rule(estimate = delta_D, se = delta_se_D)
   delta_I_results = f_rubins_rule(estimate = delta_I, se = delta_se_I)
   delta_B_results = f_rubins_rule(estimate = delta_B, se = delta_se_B)
+  delta_IB_results = f_rubins_rule(estimate = delta_IB, se = delta_se_IB)
+  
   }
   
   #-------------------- 
@@ -200,51 +212,61 @@ f_ace_1sim      =  function(postparam,dat,I) {
                     ITT_D   =  ITT_D_results$est_mean,
                     ITT_I   =  ITT_I_results$est_mean, 
                     ITT_B   =  ITT_B_results$est_mean, 
+                    ITT_IB   =  ITT_IB_results$est_mean, 
                      
                     ITT_se_H   =  ITT_H_results$est_se,
                     ITT_se_D   =  ITT_D_results$est_se,
                     ITT_se_I   =  ITT_I_results$est_se, 
                     ITT_se_B   =  ITT_B_results$est_se, 
+                    ITT_se_IB   =  ITT_IB_results$est_se, 
                     
                     ITT_lb_H   =  ITT_H_results$lb,
                     ITT_lb_D   =  ITT_D_results$lb,
                     ITT_lb_I   =  ITT_I_results$lb, 
                     ITT_lb_B   =  ITT_B_results$lb,  
+                    ITT_lb_IB   =  ITT_IB_results$lb,  
                     
                     ITT_ub_H   =  ITT_H_results$ub,
                     ITT_ub_D   =  ITT_D_results$ub,
                     ITT_ub_I   =  ITT_I_results$ub, 
                     ITT_ub_B   =  ITT_B_results$ub,  
+                    ITT_ub_IB   =  ITT_IB_results$ub,
                     
                     ITT_pvalue_H   =  ITT_H_results$pvalue,
                     ITT_pvalue_D   =  ITT_D_results$pvalue,
                     ITT_pvalue_I   =  ITT_I_results$pvalue, 
                     ITT_pvalue_B   =  ITT_B_results$pvalue, 
+                    ITT_pvalue_IB   =  ITT_IB_results$pvalue, 
                     
                     delta_H =  delta_H_results$est_mean,
                     delta_D =  delta_D_results$est_mean,
                     delta_I =  delta_I_results$est_mean,
                     delta_B =  delta_B_results$est_mean,
+                    delta_IB =  delta_IB_results$est_mean,
                     
                     delta_se_H =  delta_H_results$est_se,
                     delta_se_D =  delta_D_results$est_se,
                     delta_se_I =  delta_I_results$est_se,
                     delta_se_B =  delta_B_results$est_se,
+                    delta_se_IB =  delta_IB_results$est_se,
                     
                     delta_lb_H =  delta_H_results$lb,
                     delta_lb_D =  delta_D_results$lb,
                     delta_lb_I =  delta_I_results$lb,
                     delta_lb_B =  delta_B_results$lb,
+                    delta_lb_IB =  delta_IB_results$lb,
                     
                     delta_ub_H =  delta_H_results$ub,
                     delta_ub_D =  delta_D_results$ub,
                     delta_ub_I =  delta_I_results$ub,
                     delta_ub_B =  delta_B_results$ub,
+                    delta_ub_IB =  delta_IB_results$ub,
                     
                     delta_pvalue_H =  delta_H_results$pvalue,
                     delta_pvalue_D =  delta_D_results$pvalue,
                     delta_pvalue_I =  delta_I_results$pvalue,
                     delta_pvalue_B =  delta_B_results$pvalue,
+                    delta_pvalue_IB =  delta_IB_results$pvalue,
                     
                     PCP_H   =  mean(PCP_H),
                     PCP_D   =  mean(PCP_D),
@@ -254,7 +276,8 @@ f_ace_1sim      =  function(postparam,dat,I) {
                     nH      =  mean(nH),
                     nD      =  mean(nD),
                     nI      =  mean(nI),
-                    nB      =  mean(nB))
+                    nB      =  mean(nB),
+                    nIB      =  mean(nIB))
   }
   
   return(est)   
