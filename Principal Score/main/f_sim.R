@@ -64,7 +64,7 @@ f_sim = function(seed,n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_ad
     A_1     =  A1_1  *  TRT  +  A0_1  * (1 -  TRT )
     A_2     =  A1_2  *  TRT  +  A0_2  * (1 -  TRT )
     A_3     =  A1_3  *  TRT  +  A0_3  * (1 -  TRT )
-    
+    A       = cbind(A_1, A_2, A_3)
     
     # Y   ~ X, Z  [through beta]
     
@@ -190,7 +190,9 @@ f_sim = function(seed,n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_ad
               full_long   = full_long,
               obs_long    = obs_long,
               true_d_T3   = true_d_T3,
-              true_d_T3_nsl=true_d_T3_nsl)
+              true_d_T3_nsl=true_d_T3_nsl,
+              Z_forAdACE   = Z,
+              A_forAdACE   = A)
   )
   
   
