@@ -22,16 +22,16 @@ source("Principal Score/main/f_sim.r")
  
 } 
 {
-  source('WIP-PSScopy/magnusson/endpoint - ctn/f_mod.r')                                   # Function to define model and write to file
-  source('WIP-PSScopy/magnusson/endpoint - ctn/f_I.r')                                     # Function to create matrix I
-  source('WIP-PSScopy/magnusson/endpoint - ctn/f_pm.r')                                    # Function to calculate prior means of delta using sample treatment effect estimates 
-  source('WIP-PSScopy/magnusson/endpoint - ctn/f_datjags.r')                               # Function to define dat.jags 
-  source('WIP-PSScopy/magnusson/endpoint - ctn/f_inits.r')                                 # Function to define all initial values  - starting values for MCMC
-  source('WIP-PSScopy/magnusson/endpoint - ctn/f_postparam_jags.r')                        # Function to compute postparam
-  source('WIP-PSScopy/magnusson/endpoint - ctn/f_postparam_jagsmodel.r')                   # Function to compute postparam (another way)
-  source('WIP-PSScopy/magnusson/endpoint - ctn/f_ace_1sim.r')                              # Function to compute ACE within 1 dataset
-  source('WIP-PSScopy/magnusson/endpoint - ctn/f_Uhat_Utrue.r')
-  source('WIP-PSScopy/magnusson/endpoint - ctn/f_rubins_rule.r')
+  source('Magnusson/endpoint - ctn/main/f_mod.r')                                   # Function to define model and write to file
+  source('Magnusson/endpoint - ctn/main/f_I.r')                                     # Function to create matrix I
+  source('Magnusson/endpoint - ctn/main/f_pm.r')                                    # Function to calculate prior means of delta using sample treatment effect estimates 
+  source('Magnusson/endpoint - ctn/main/f_datjags.r')                               # Function to define dat.jags 
+  source('Magnusson/endpoint - ctn/main/f_inits.r')                                 # Function to define all initial values  - starting values for MCMC
+  source('Magnusson/endpoint - ctn/main/f_postparam_jags.r')                        # Function to compute postparam
+  source('Magnusson/endpoint - ctn/main/f_postparam_jagsmodel.r')                   # Function to compute postparam (another way)
+  source('Magnusson/endpoint - ctn/main/f_ace_1sim.r')                              # Function to compute ACE within 1 dataset
+  source('Magnusson/endpoint - ctn/main/f_Uhat_Utrue.r')
+  source('Magnusson/endpoint - ctn/main/f_rubins_rule.r')
   
 }
 
@@ -42,10 +42,10 @@ source("Principal Score/main/f_sim.r")
 { # simulation
 n              = 1000
 seed_0         = 2020                               # for f_sim
-nsim           = 100                                 # for f_sim
+nsim           = 100                                # for f_sim
 seed_v         = seq(seed_0, seed_0+nsim-1,1)       # for f_sim (for argument of f_sim -- seed := seed_v[i] for the ith simulation)
 #n_bs           = 1000
-#seed           = seq(1,n,1)                         # argument of f_sim: set seed
+#seed           = seq(1,n,1)                        # argument of f_sim: set seed
 alpha1         = c(1.3,  0.3, -0.3)                 # argument of f_sim: coefficient of lm(Z_1 ~ X_1 X_2) at time 1, Z_1 is set to be the BASELINE variable
 alpha2         = c(  0,    0,    0)                 # argument of f_sim: coefficient of lm(Z_2 ~ X_1 X_2) at time 2, set to 0 s.t. there's no other covariates besides X & BASE
 alpha3         = c(  0,    0,    0)                 # argument of f_sim: coefficient of lm(Z_3 ~ X_1 X_2) at time 3, set to 0 s.t. there's no other covariates besides X & BASE
@@ -64,7 +64,7 @@ visit          = 3
 { # bayesian
   parSave        = c("delta","S0","S1","Y0","Y1","w")     # argument of jags() 
   n.chains       = 1                                      # argument of jags()
-  n.burnin       = 200                                    # argument of jags()
+  n.burnin       = 200                                     # argument of jags()
   n.iter         = 500                                     # argument of jags()
   thin           = 1                                      # argument of jags()
   file           = "mod.txt"                              # argument of jags()
