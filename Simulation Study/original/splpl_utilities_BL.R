@@ -415,7 +415,7 @@ data_generator_loop1 = function (n_patient_vector, p_loe_max, z_l_loe, z_u_loe, 
     pb       = txtProgressBar(min = (seed_val), max = (seed_val +  total_data - 1), style = 3, width = 50, char = "=")
     m        = ifelse(length(delta_adjustment_in) == 0 | is.na(sum(delta_adjustment_in)),  3, 4)
     
-    for (seed_val in (seed_val + 1):(seed_val + total_data -   1)) {
+    for (seed_val in (seed_val):(seed_val + total_data -   1)) {               #  (seed_val + 1):(seed_val + total_data -   1
       
       data_temp = data_generator1(n_patient_vector, p_loe_max, 
                                   z_l_loe, z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, 
@@ -427,8 +427,7 @@ data_generator_loop1 = function (n_patient_vector, p_loe_max, z_l_loe, z_u_loe, 
       for (i in 1:(length(data_out) - m)) {
         for (j in 1:length(data_out[[i]])) {
           for (k in 1:length(data_out[[i]][[j]])) {
-            data_out[[i]][[j]][[k]] = rbind(data_out[[i]][[j]][[k]], 
-                                            data_temp[[i]][[j]][[k]])
+            data_out[[i]][[j]][[k]] = rbind(data_out[[i]][[j]][[k]],    data_temp[[i]][[j]][[k]])
           }
         }
       }
