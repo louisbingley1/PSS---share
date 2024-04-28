@@ -2,7 +2,7 @@
 f_PS = function(data, ep1,ep0,beta.a= NULL,beta.n=NULL, iter.max,error0){  
   
   N         =  nrow(data)
-  X_in      =  data %>%  dplyr::select(starts_with("X_")) %>% cbind(data %>% dplyr::select(BASE)) %>% as.matrix       
+  X_in      =  data %>%  dplyr::select("X_1","X_2") %>% cbind(data %>% dplyr::select(BASE)) %>% as.matrix       
   X         =  cbind(rep(1, N), X_in)
   V         =  ncol(X)
   Z         =  data %>%  pull(Z) %>% as.numeric()   

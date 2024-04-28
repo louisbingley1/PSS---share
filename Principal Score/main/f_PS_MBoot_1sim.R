@@ -20,6 +20,7 @@ f_PS_MBoot_1sim = function(data_in, ep0,ep1,M,iter.max,error0,seed_M_v){
     set.seed(seed_M_v[m])
 
     boot            = data_in[sample(1:N,n,replace=F),] ;head(boot) # re-sample data with replacement
+    boot            = as.data.frame(boot)
     result          = f_PS( data <- boot, ep1,ep0,beta.a,beta.n, iter.max,error0)
     
     AACE_bs[m]      =  result$AACE

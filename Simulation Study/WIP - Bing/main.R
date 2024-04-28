@@ -25,8 +25,26 @@ source('Magnusson/endpoint - ctn/main/f_rubins_rule.r')
 # set parameters
 #------------------#
 
-source("Data Simulator/adace simulator/setting_adace.r")                           # adace simulator
-source("Data Simulator/cities simulator/scenarios/trt_large_scen_D.r")             # cities simulator, scenario D
+# source("Data Simulator/adace simulator/setting_adace.r")                           # adace simulator
+
+# source("Data Simulator/cities simulator/scenarios/trt_large_scen_A.r")             # cities simulator: large  trt effect,  scenario A
+# source("Data Simulator/cities simulator/scenarios/trt_large_scen_B.r")             # cities simulator: large  trt effect,  scenario B
+# source("Data Simulator/cities simulator/scenarios/trt_large_scen_C.r")             # cities simulator: large  trt effect,  scenario C
+# source("Data Simulator/cities simulator/scenarios/trt_large_scen_D.r")             # cities simulator: large  trt effect,  scenario D
+# source("Data Simulator/cities simulator/scenarios/trt_modest_scen_A.r")            # cities simulator: modest trt effect,  scenario A
+# source("Data Simulator/cities simulator/scenarios/trt_modest_scen_B.r")            # cities simulator: modest trt effect,  scenario B
+# source("Data Simulator/cities simulator/scenarios/trt_modest_scen_C.r")            # cities simulator: modest trt effect,  scenario C
+# source("Data Simulator/cities simulator/scenarios/trt_modest_scen_D.r")            # cities simulator: modest trt effect,  scenario D
+# source("Data Simulator/cities simulator/scenarios/trt_null_scen_A.r")              # cities simulator: null   trt effect,  scenario A
+# source("Data Simulator/cities simulator/scenarios/trt_null_scen_B.r")              # cities simulator: null   trt effect,  scenario B
+# source("Data Simulator/cities simulator/scenarios/trt_null_scen_C.r")              # cities simulator: null   trt effect,  scenario C
+# source("Data Simulator/cities simulator/scenarios/trt_null_scen_D.r")              # cities simulator: null   trt effect,  scenario D
+ source("Data Simulator/cities simulator/scenarios/diff_1_scen_1.R")                 # cities simulator:
+# source("Data Simulator/cities simulator/scenarios/diff_1_scen_2.R")                 # cities simulator:
+# source("Data Simulator/cities simulator/scenarios/diff_1_scen_3.R")                 # cities simulator:
+# source("Data Simulator/cities simulator/scenarios/diff_1_scen_4.R")                 # cities simulator:
+# source("Data Simulator/cities simulator/scenarios/diff_1_scen_5.R")                 # cities simulator:
+# source("Data Simulator/cities simulator/scenarios/diff_1_scen_6.R")                 # cities simulator:
 
 {
 parSave        = c("delta","S0","S1","Y0","Y1","w")                                # argument of jags() 
@@ -121,5 +139,5 @@ mean(result_df$trued_B_10)
 }
 
 
-
+# source("Data Simulator/cities simulator/utility functions/Asymptotic Estimate of Estimand.R")
     
