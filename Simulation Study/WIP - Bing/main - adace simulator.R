@@ -242,18 +242,18 @@ for(i in 1:nSim){
      
     # adace simulator:
      {
-      # sim          = f_sim(seed_v[i],n<-n_ps,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_adhnei,TrtEff_adhboth,TrtEff_adhact,TrtEff_adhpbo)
-      # full         = sim$full_long %>% filter(AVISITN==visit)  
-      # full         = f_D(full)
-      # ps_in        = full %>% filter(U!=UtoRemove) %>%   rename( Z=TRT) %>%  mutate(indexZD=paste0(Z,D))
+       sim          = f_sim(seed_v[i],n<-n_ps,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_adhnei,TrtEff_adhboth,TrtEff_adhact,TrtEff_adhpbo)
+       full         = sim$full_long %>% filter(AVISITN==visit)  
+       full         = f_D(full)
+       ps_in        = full %>% filter(U!=UtoRemove) %>%   rename( Z=TRT) %>%  mutate(indexZD=paste0(Z,D))
      } 
      
     # cities simulator : simulate 1 dataset and prepare for variables
      {  
-         sim          = f_sim(seed_val <- seed_vec[i], n_patient_vector<-n_patient_vector_ps, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) 
-         full         = sim$observed_out %>% filter(AVISITN==maxtime) 
-         full         = f_D(full)
-         ps_in        = full %>% filter(U!=UtoRemove) %>%   rename( Z=TRT) %>%  mutate(indexZD=paste0(Z,D))
+      #   sim          = f_sim(seed_val <- seed_vec[i], n_patient_vector<-n_patient_vector_ps, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) 
+      #   full         = sim$observed_out %>% filter(AVISITN==maxtime) 
+      #   full         = f_D(full)
+      #   ps_in        = full %>% filter(U!=UtoRemove) %>%   rename( Z=TRT) %>%  mutate(indexZD=paste0(Z,D))
      }  
      
     # TRUE 
