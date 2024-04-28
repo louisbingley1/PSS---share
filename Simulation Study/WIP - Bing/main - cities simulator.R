@@ -9,7 +9,7 @@ library(adace)
 #  Functions
 #----------------------
 #source("Data Simulator/adace simulator/f_sim.r")                                  # adace simulator: or source('Magnusson/endpoint - ctn/main/f_sim.r')                                   # Function to simulate data  
-source("Data Simulator/cities simulator/f_sim.r")                                 # cities simulator
+source("Data Simulator/cities simulator/f_sim.r")                                  # cities simulator
 {
   source("Principal Score/main/f_augdata.r")
   source("Principal Score/main/f_EM_betas.r")
@@ -292,9 +292,9 @@ colMeans(result_df_BS)
 colMeans(result_df_AD)
 
  
-# write.csv(result_df_PS,"Comparison/resultprint/adace simulator/PS.csv")
-# write.csv(result_df_BS,"Comparison/resultprint/adace simulator/BS.csv")
-# write.csv(result_df_AD,"Comparison/resultprint/adace simulator/AD.csv")
- write.csv(result_df_PS,"Comparison/resultprint/cities simulator/PS.csv")
- write.csv(result_df_BS,"Comparison/resultprint/cities simulator/BS.csv")
- write.csv(result_df_AD,"Comparison/resultprint/cities simulator/AD.csv")
+# write.csv(result_df_PS,"Comparison/resultprint/adace simulator/PS_adacesimulator.csv")
+# write.csv(result_df_BS,"Comparison/resultprint/adace simulator/BS_adacesimulator.csv")
+# write.csv(result_df_AD,"Comparison/resultprint/adace simulator/AD_adacesimulator.csv")
+ write.csv(result_df_PS,"WIP - Bing/resultprint/cities simulator/PS_citiesimulator.csv")
+ write.csv(result_df_BS,"WIP - Bing/resultprint/cities simulator/BS_citiesimulator.csv")
+ write.csv(result_df_AD,"WIP - Bing/resultprint/cities simulator/AD_citiesimulator.csv")

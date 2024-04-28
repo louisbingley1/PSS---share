@@ -1,4 +1,4 @@
-total_data = 10
+total_data = nSim
 starting_seed_val = 1
 
 reference_id = 1
@@ -7,8 +7,8 @@ timepoints = c(0,12,24,48,55)
 IR_display = TRUE
 delta_adjustment_in = NA
 
-n_patient_ctrl = 200
-n_patient_expt = 200
+n_patient_ctrl      = n_patient_ctrl
+n_patient_expt      = n_patient_expt
 n_patient_vector = c(n_patient_ctrl, n_patient_expt)
 n_total = sum(n_patient_vector)
 

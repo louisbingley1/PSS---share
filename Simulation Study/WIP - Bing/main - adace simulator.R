@@ -8,8 +8,8 @@ library(adace)
 #----------------------
 #  Functions
 #----------------------
-#source("Data Simulator/adace simulator/f_sim.r")                                  # adace simulator: or source('Magnusson/endpoint - ctn/main/f_sim.r')                                   # Function to simulate data  
-source("Data Simulator/cities simulator/f_sim.r")                                 # cities simulator
+source("Data Simulator/adace simulator/f_sim.r")                                  # adace simulator: or source('Magnusson/endpoint - ctn/main/f_sim.r')                                   # Function to simulate data  
+#source("Data Simulator/cities simulator/f_sim.r")                                 # cities simulator
 {
   source("Principal Score/main/f_augdata.r")
   source("Principal Score/main/f_EM_betas.r")
@@ -41,18 +41,18 @@ source("Data Simulator/cities simulator/f_sim.r")                               
 #----------------------
 
 # adace simulator
-#  nSim  = 10                                                                         # number of simulated trials
-#  n     = 1000                                                                       # sample size per trial
-#  source("Data Simulator/adace simulator/setting_adace.r")                           # adace simulator
+  nSim  = 10                                                                         # number of simulated trials
+  n     = 1000                                                                       # sample size per trial
+  source("Data Simulator/adace simulator/setting_adace.r")                           # adace simulator
 
 # cities simulator
 {
-   nSim  = 10                                                                         # number of simulated trials
-   n_patient_ctrl = 200
-   n_patient_expt = 200
+#   nSim  = 10                                                                         # number of simulated trials
+#   n_patient_ctrl = 200
+#   n_patient_expt = 200
   
   # source("Data Simulator/cities simulator/scenarios/trt_large_scen_A.r")             # cities simulator: large  trt effect,  scenario A
-   source("Data Simulator/cities simulator/scenarios/trt_large_scen_B.r")             # cities simulator: large  trt effect,  scenario B
+  # source("Data Simulator/cities simulator/scenarios/trt_large_scen_B.r")             # cities simulator: large  trt effect,  scenario B
   # source("Data Simulator/cities simulator/scenarios/trt_large_scen_C.r")             # cities simulator: large  trt effect,  scenario C
   # source("Data Simulator/cities simulator/scenarios/trt_large_scen_D.r")             # cities simulator: large  trt effect,  scenario D
   # source("Data Simulator/cities simulator/scenarios/trt_modest_scen_A.r")            # cities simulator: modest trt effect,  scenario A
@@ -84,8 +84,8 @@ source("Data Simulator/cities simulator/f_sim.r")                               
 
 # Principal Score
 {
-  #n_ps                 = 5000                                                           # update n with a larger n -- for bootstrap [adace simulator]
-  n_patient_vector_ps  = 3*n_patient_vector                                             # update n with a larger n -- for bootstrap [cities simulator]     
+  n_ps                 = 5000                                                           # update n with a larger n -- for bootstrap [adace simulator]
+  #n_patient_vector_ps  = 3*n_patient_vector                                             # update n with a larger n -- for bootstrap [cities simulator]     
   seed_M_0             = 2020
   M                    = 5
   seed_M_v             = seq(seed_M_0, seed_M_0+M-1,1)
@@ -109,7 +109,7 @@ for(i in 1:nSim){
   
   #  adace simulator :  
   { 
-#   sim     = f_sim(seed_v[i],n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_adhnei,TrtEff_adhboth,TrtEff_adhact,TrtEff_adhpbo)
+#    sim     = f_sim(seed_v[i],n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_adhnei,TrtEff_adhboth,TrtEff_adhact,TrtEff_adhpbo)
 #    dat_    = sim$full_long %>% filter(AVISITN==visit)  ; for(r in 1:nrow(dat_)){dat_$Utrue[r] = strsplit(dat_$U[r],"/")[[1]][3] }
 #    dat_in  = dat_ %>%  mutate(      Y0                = ifelse(TRT==0, Y, NA),
 #                                     Y1                = ifelse(TRT==1, Y, NA),
@@ -292,9 +292,9 @@ colMeans(result_df_BS)
 colMeans(result_df_AD)
 
  
-# write.csv(result_df_PS,"Comparison/resultprint/adace simulator/PS.csv")
-# write.csv(result_df_BS,"Comparison/resultprint/adace simulator/BS.csv")
-# write.csv(result_df_AD,"Comparison/resultprint/adace simulator/AD.csv")
- write.csv(result_df_PS,"Comparison/resultprint/cities simulator/PS.csv")
- write.csv(result_df_BS,"Comparison/resultprint/cities simulator/BS.csv")
- write.csv(result_df_AD,"Comparison/resultprint/cities simulator/AD.csv")
+ write.csv(result_df_PS,"Comparison/resultprint/adace simulator/PS_adacesimulator.csv")
+ write.csv(result_df_BS,"Comparison/resultprint/adace simulator/BS_adacesimulator.csv")
+ write.csv(result_df_AD,"Comparison/resultprint/adace simulator/AD_adacesimulator.csv")
+# write.csv(result_df_PS,"WIP - Bing/resultprint/cities simulator/PS_citiesimulator.csv")
+# write.csv(result_df_BS,"WIP - Bing/resultprint/cities simulator/BS_citiesimulator.csv")
+# write.csv(result_df_AD,"WIP - Bing/resultprint/cities simulator/AD_citiesimulator.csv")

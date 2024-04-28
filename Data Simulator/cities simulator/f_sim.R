@@ -31,11 +31,11 @@ observed_out  = observed_mar %>%
                     left_join(observed_mar  %>% dplyr::select(-dc_loe, -dc_admin, -dc_ee, -dc_ae, -continuous, -binary, -base),              by=c("seed", "subject", "arm", "timepoints")) %>%
                     left_join(data_out$po_df%>% dplyr::select(-dc_loe, -dc_admin, -dc_ee, -dc_ae, -continuous, -binary, -base, -observed),   by=c("seed", "subject", "arm", "timepoints")) 
 
-# update observed_out:
+# update observed_out: Add DC indicator
 
-observed_out  = observed_out   %>% mutate(DC = ifelse( dc_loe+dc_ee+dc_admin+dc_ae > 0 ,1 ,0))
+observed_out_1  = observed_out   %>% mutate(DC = ifelse( dc_loe+dc_ee+dc_admin+dc_ae > 0 ,1 ,0))
 
-# update po_df:
+# update po_df : two arms on the same row
 
 po_df         = data_out$po_df %>% mutate(DC = ifelse( dc_loe+dc_ee+dc_admin+dc_ae > 0 ,1 ,0))
 po1           = po_df %>% filter(arm == 1) %>% rename(arm0=arm,Y0=aval,dc0_loe=dc_loe,dc0_ee=dc_ee,dc0_admin=dc_admin,dc0_ae=dc_ae,DC0=DC) 
@@ -44,8 +44,8 @@ po_df         = po1 %>% left_join( po2 %>% dplyr::select(-base, -continuous,-bin
 for(r in 1:nrow(po_df)){ po_df$U[r] = f_U( A0 = 1-po_df$DC0[r] , A1=1-po_df$DC1[r] )}
 
 
-# merge  observed_out & po_df: 
-observed_out  = observed_out %>%  
+# merge  observed_out_1 & po_df: 
+observed_out  = observed_out_1 %>%  
                     left_join(po_df %>% dplyr::select(-base,-continuous,-binary),by=c("seed","subject","timepoints")) %>%
                     left_join(cbind.data.frame(timepoints=c(12,24,48,55),AVISITN=c(1,2,3,4)),by="timepoints") %>%
                     select(-arm0,-arm1,-timepoints,-observed)%>%
@@ -54,8 +54,20 @@ observed_out  = observed_out %>%
                     
 for(r in 1:nrow(observed_out)){observed_out$Utrue[r] = strsplit(observed_out$U[r],"/")[[1]][3] }
  
+# create adhereance matrix A for ADACE
+A_1 = 1- observed_out_1 %>% filter(timepoints==12) %>% pull(DC)
+A_2 = 1- observed_out_1 %>% filter(timepoints==24) %>% pull(DC)
+A_3 = 1- observed_out_1 %>% filter(timepoints==48) %>% pull(DC)
+A_4 = 1- observed_out_1 %>% filter(timepoints==55) %>% pull(DC)
+A   = cbind(A_1, A_2, A_3,A_4)
 
- 
+# create list Z = list(BASE, Y1,Y2,Y3) for ADACE
+Z_1 = observed_out_1 %>% filter(timepoints==12) %>% pull(base)
+Z_2 = observed_out_1 %>% filter(timepoints==12) %>% pull(aval)
+Z_3 = observed_out_1 %>% filter(timepoints==24) %>% pull(aval)
+Z_4 = observed_out_1 %>% filter(timepoints==48) %>% pull(aval)
+Z   = list(Z_1,Z_2,Z_3,Z_4)
+
 #---------------
 # true ACE at Tm
 #---------------
@@ -86,7 +98,9 @@ for(r in 1:nrow(observed_out)){observed_out$Utrue[r] = strsplit(observed_out$U[r
 
 return(list(observed_out  = observed_out, 
             true_d_Tm     = true_d_Tm,
-            true_d_Tm_nsl = true_d_Tm_nsl ))
+            true_d_Tm_nsl = true_d_Tm_nsl,
+            Z_forAdACE    = Z,
+            A_forAdACE    = A))
 
 
 }
