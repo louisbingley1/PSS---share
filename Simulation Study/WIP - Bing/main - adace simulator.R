@@ -109,24 +109,9 @@ for(i in 1:nSim){
   
   #  adace simulator :  
   { 
-#    sim     = f_sim(seed_v[i],n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_adhnei,TrtEff_adhboth,TrtEff_adhact,TrtEff_adhpbo)
-#    dat_    = sim$full_long %>% filter(AVISITN==visit)  ; for(r in 1:nrow(dat_)){dat_$Utrue[r] = strsplit(dat_$U[r],"/")[[1]][3] }
-#    dat_in  = dat_ %>%  mutate(      Y0                = ifelse(TRT==0, Y, NA),
-#                                     Y1                = ifelse(TRT==1, Y, NA),
-#                                     Z                 = TRT,
-#                                     S                 = ICE,
-#                                     S0                = ifelse(TRT==0, S, NA),
-#                                     S1                = ifelse(TRT==1, S, NA),
-#                                     X_1_standardized  = X_1-mean(X_1),
-#                                     X_2_standardized  = X_2-mean(X_2),
-#                                     base_standardized = BASE-mean(BASE)   )
-  }
-  
-  # cities simulator : simulate 1 dataset and prepare for variables
-  {
-      sim     = f_sim(seed_val <- seed_vec[i], n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) 
-      dat_    = sim$observed_out %>% filter(AVISITN==maxtime) 
-      dat_in  = dat_ %>%  mutate(    Y0                = ifelse(TRT==0, Y, NA),
+    sim     = f_sim(seed_v[i],n,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_adhnei,TrtEff_adhboth,TrtEff_adhact,TrtEff_adhpbo)
+    dat_    = sim$full_long %>% filter(AVISITN==visit)  ; for(r in 1:nrow(dat_)){dat_$Utrue[r] = strsplit(dat_$U[r],"/")[[1]][3] }
+    dat_in  = dat_ %>%  mutate(      Y0                = ifelse(TRT==0, Y, NA),
                                      Y1                = ifelse(TRT==1, Y, NA),
                                      Z                 = TRT,
                                      S                 = ICE,
@@ -135,6 +120,21 @@ for(i in 1:nSim){
                                      X_1_standardized  = X_1-mean(X_1),
                                      X_2_standardized  = X_2-mean(X_2),
                                      base_standardized = BASE-mean(BASE)   )
+  }
+  
+  # cities simulator : simulate 1 dataset and prepare for variables
+  {
+#      sim     = f_sim(seed_val <- seed_vec[i], n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) 
+#      dat_    = sim$observed_out %>% filter(AVISITN==maxtime) 
+#      dat_in  = dat_ %>%  mutate(    Y0                = ifelse(TRT==0, Y, NA),
+#                                     Y1                = ifelse(TRT==1, Y, NA),
+#                                     Z                 = TRT,
+#                                     S                 = ICE,
+#                                     S0                = ifelse(TRT==0, S, NA),
+#                                     S1                = ifelse(TRT==1, S, NA),
+#                                     X_1_standardized  = X_1-mean(X_1),
+#                                     X_2_standardized  = X_2-mean(X_2),
+#                                     base_standardized = BASE-mean(BASE)   )
   }
   
   # BAYESIAN  
@@ -292,9 +292,9 @@ colMeans(result_df_BS)
 colMeans(result_df_AD)
 
  
- write.csv(result_df_PS,"Comparison/resultprint/adace simulator/PS_adacesimulator.csv")
- write.csv(result_df_BS,"Comparison/resultprint/adace simulator/BS_adacesimulator.csv")
- write.csv(result_df_AD,"Comparison/resultprint/adace simulator/AD_adacesimulator.csv")
-# write.csv(result_df_PS,"WIP - Bing/resultprint/cities simulator/PS_citiesimulator.csv")
-# write.csv(result_df_BS,"WIP - Bing/resultprint/cities simulator/BS_citiesimulator.csv")
-# write.csv(result_df_AD,"WIP - Bing/resultprint/cities simulator/AD_citiesimulator.csv")
+ write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/adace simulator/PS_adacesimulator.csv")
+ write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/adace simulator/BS_adacesimulator.csv")
+ write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/adace simulator/AD_adacesimulator.csv")
+# write.csv(result_df_PS,"Simulation Study/WIP - Bing/WIP - Bing/resultprint/cities simulator/PS_citiesimulator.csv")
+# write.csv(result_df_BS,"Simulation Study/WIP - Bing/WIP - Bing/resultprint/cities simulator/BS_citiesimulator.csv")
+# write.csv(result_df_AD,"Simulation Study/WIP - Bing/WIP - Bing/resultprint/cities simulator/AD_citiesimulator.csv")

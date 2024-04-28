@@ -292,9 +292,10 @@ colMeans(result_df_BS)
 colMeans(result_df_AD)
 
  
-# write.csv(result_df_PS,"Comparison/resultprint/adace simulator/PS_adacesimulator.csv")
-# write.csv(result_df_BS,"Comparison/resultprint/adace simulator/BS_adacesimulator.csv")
-# write.csv(result_df_AD,"Comparison/resultprint/adace simulator/AD_adacesimulator.csv")
- write.csv(result_df_PS,"WIP - Bing/resultprint/cities simulator/PS_citiesimulator.csv")
- write.csv(result_df_BS,"WIP - Bing/resultprint/cities simulator/BS_citiesimulator.csv")
- write.csv(result_df_AD,"WIP - Bing/resultprint/cities simulator/AD_citiesimulator.csv")
+# write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/adace simulator/PS_adacesimulator.csv")
+# write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/adace simulator/BS_adacesimulator.csv")
+# write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/adace simulator/AD_adacesimulator.csv")
+ write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator.csv")
+ write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator.csv")
+ write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator.csv")
+ 
