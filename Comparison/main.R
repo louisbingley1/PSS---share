@@ -115,10 +115,10 @@ for(i in 1:nsim){
    # DATA SIMULATION : done.
    
    # TRUE 
-    trued_H       = sim$true_d_T3$true_d_T3_adhpbo
-    trued_D       = sim$true_d_T3$true_d_T3_adhnei
-    trued_I       = sim$true_d_T3$true_d_T3_adhboth
-    trued_B       = sim$true_d_T3$true_d_T3_adhact 
+    trued_H       = sim$true_d_Tm$true_d_Tm_adhpbo
+    trued_D       = sim$true_d_Tm$true_d_Tm_adhnei
+    trued_I       = sim$true_d_Tm$true_d_Tm_adhboth
+    trued_B       = sim$true_d_Tm$true_d_Tm_adhact 
     
     # ACE
     I             = f_I(dat=dat_in)
@@ -146,10 +146,10 @@ for(i in 1:nsim){
      
     # TRUE
      
-     trued_adhpbo       = sim$true_d_T3$true_d_T3_adhpbo
-     trued_adhnei       = sim$true_d_T3$true_d_T3_adhnei
-     trued_adhboth      = sim$true_d_T3$true_d_T3_adhboth
-     trued_adhact       = sim$true_d_T3$true_d_T3_adhact 
+     trued_adhpbo       = sim$true_d_Tm$true_d_Tm_adhpbo
+     trued_adhnei       = sim$true_d_Tm$true_d_Tm_adhnei
+     trued_adhboth      = sim$true_d_Tm$true_d_Tm_adhboth
+     trued_adhact       = sim$true_d_Tm$true_d_Tm_adhact 
     
     # ACE 
      
@@ -216,12 +216,12 @@ for(i in 1:nsim){
     ps_in        = full %>% filter(U!=UtoRemove) %>%   rename( Z=TRT) %>% mutate(indexZD=paste0(Z,D))
     
     # TRUE 
-    trued_A      = sim$true_d_T3$true_d_T3_adhact
-    trued_C      = sim$true_d_T3$true_d_T3_adhboth
-    trued_N      = sim$true_d_T3$true_d_T3_adhpbo
-    trued_A_nsl  = sim$true_d_T3_nsl$true_d_T3_adhact_nsl
-    trued_C_nsl  = sim$true_d_T3_nsl$true_d_T3_adhboth_nsl
-    trued_N_nsl  = sim$true_d_T3_nsl$true_d_T3_adhpbo_nsl
+    trued_A      = sim$true_d_Tm$true_d_Tm_adhact
+    trued_C      = sim$true_d_Tm$true_d_Tm_adhboth
+    trued_N      = sim$true_d_Tm$true_d_Tm_adhpbo
+    trued_A_nsl  = sim$true_d_Tm_nsl$true_d_Tm_adhact_nsl
+    trued_C_nsl  = sim$true_d_Tm_nsl$true_d_Tm_adhboth_nsl
+    trued_N_nsl  = sim$true_d_Tm_nsl$true_d_Tm_adhpbo_nsl
     
     # ACE 
     ace_PS          = f_PS_MBoot_1sim(data_boot <- ps_in, ep0,ep1,M,iter.max,error0,seed_M_v)

@@ -71,10 +71,10 @@ for (i in 1:nSim) {
   for(r in 1:nrow(dat_in)){dat_in$Utrue[r] = strsplit(dat_in$U[r],"/")[[1]][3] }
   
   # true causal effect (the true 'd' of stratum D/I/H/B)
-  trued_H       = sim$true_d_T3$true_d_T3_adhpbo
-  trued_D       = sim$true_d_T3$true_d_T3_adhnei
-  trued_I       = sim$true_d_T3$true_d_T3_adhboth
-  trued_B       = sim$true_d_T3$true_d_T3_adhact 
+  trued_H       = sim$true_d_Tm$true_d_Tm_adhpbo
+  trued_D       = sim$true_d_Tm$true_d_Tm_adhnei
+  trued_I       = sim$true_d_Tm$true_d_Tm_adhboth
+  trued_B       = sim$true_d_Tm$true_d_Tm_adhact 
   
   # ace calculation for 1 simulated dataset
   

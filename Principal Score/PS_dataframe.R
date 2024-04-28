@@ -70,12 +70,12 @@ full         = f_D(full)
 data_in      = full %>% filter(U!=UtoRemove) %>%   rename( Z=TRT) %>%  mutate(indexZD=paste0(Z,D))
 
 # TRUE 
-trued_A      = sim$true_d_T3$true_d_T3_adhact
-trued_C      = sim$true_d_T3$true_d_T3_adhboth
-trued_N      = sim$true_d_T3$true_d_T3_adhpbo
-trued_A_nsl  = sim$true_d_T3_nsl$true_d_T3_adhact_nsl
-trued_C_nsl  = sim$true_d_T3_nsl$true_d_T3_adhboth_nsl
-trued_N_nsl  = sim$true_d_T3_nsl$true_d_T3_adhpbo_nsl
+trued_A      = sim$true_d_Tm$true_d_Tm_adhact
+trued_C      = sim$true_d_Tm$true_d_Tm_adhboth
+trued_N      = sim$true_d_Tm$true_d_Tm_adhpbo
+trued_A_nsl  = sim$true_d_Tm_nsl$true_d_Tm_adhact_nsl
+trued_C_nsl  = sim$true_d_Tm_nsl$true_d_Tm_adhboth_nsl
+trued_N_nsl  = sim$true_d_Tm_nsl$true_d_Tm_adhpbo_nsl
 
 # f_PS_MBoot_1sim(data_in, ep0,ep1,M,iter.max,error0,seed_M_v)
 N            = nrow(data_in)                     # number of subjects in data
