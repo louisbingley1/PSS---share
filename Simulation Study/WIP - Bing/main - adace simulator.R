@@ -5,11 +5,13 @@ library(dplyr)
 library(R2jags)  ;
 library(dplyr)
 library(adace)
-#----------------------
+
+#======================
 #  Functions
-#----------------------
-source("Data Simulator/adace simulator/f_sim.r")                                  # adace simulator: or source('Magnusson/endpoint - ctn/main/f_sim.r')                                   # Function to simulate data  
-#source("Data Simulator/cities simulator/f_sim.r")                                 # cities simulator
+#======================
+
+source("Data Simulator/adace simulator/f_sim.r")                                      # adace simulator: or source('Magnusson/endpoint - ctn/main/f_sim.r')                                   # Function to simulate data  
+#source("Data Simulator/cities simulator/f_sim.r")                                    # cities simulator
 {
   source("Principal Score/main/f_augdata.r")
   source("Principal Score/main/f_EM_betas.r")
@@ -23,46 +25,48 @@ source("Data Simulator/adace simulator/f_sim.r")                                
  
 } 
 {
-  source('Magnusson/endpoint - ctn/main/f_mod.r')                                   # Function to define model and write to file
-  source('Magnusson/endpoint - ctn/main/f_I.r')                                     # Function to create matrix I
-  source('Magnusson/endpoint - ctn/main/f_pm.r')                                    # Function to calculate prior means of delta using sample treatment effect estimates 
-  source('Magnusson/endpoint - ctn/main/f_datjags.r')                               # Function to define dat.jags 
-  source('Magnusson/endpoint - ctn/main/f_inits.r')                                 # Function to define all initial values  - starting values for MCMC
-  source('Magnusson/endpoint - ctn/main/f_postparam_jags.r')                        # Function to compute postparam
-  source('Magnusson/endpoint - ctn/main/f_postparam_jagsmodel.r')                   # Function to compute postparam (another way)
-  source('Magnusson/endpoint - ctn/main/f_ace_1sim.r')                              # Function to compute ACE within 1 dataset
+  source('Magnusson/endpoint - ctn/main/f_mod.r')                                     # Function to define model and write to file
+  source('Magnusson/endpoint - ctn/main/f_I.r')                                       # Function to create matrix I
+  source('Magnusson/endpoint - ctn/main/f_pm.r')                                      # Function to calculate prior means of delta using sample treatment effect estimates 
+  source('Magnusson/endpoint - ctn/main/f_datjags.r')                                 # Function to define dat.jags 
+  source('Magnusson/endpoint - ctn/main/f_inits.r')                                   # Function to define all initial values  - starting values for MCMC
+  source('Magnusson/endpoint - ctn/main/f_postparam_jags.r')                          # Function to compute postparam
+  source('Magnusson/endpoint - ctn/main/f_postparam_jagsmodel.r')                     # Function to compute postparam (another way)
+  source('Magnusson/endpoint - ctn/main/f_ace_1sim.r')                                # Function to compute ACE within 1 dataset
   source('Magnusson/endpoint - ctn/main/f_Uhat_Utrue.r')
   source('Magnusson/endpoint - ctn/main/f_rubins_rule.r')
   
 }
 
-#----------------------
+#=======================
 #  Parameter Settings
-#----------------------
+#=======================
 
-# adace simulator
-  nSim  = 10                                                                         # number of simulated trials
-  n     = 1000                                                                       # sample size per trial
-  source("Data Simulator/adace simulator/setting_adace.r")                           # adace simulator
+# [1.a] Parameters in adace simulator
+{ 
+  nSim  = 10                                                                           # number of simulated trials
+  n     = 1000                                                                         # sample size per trial
+  source("Data Simulator/adace simulator/setting_adace.r")                             # adace simulator
+}
 
-# cities simulator
+# [1.b] Parameters in cities simulator
 {
-#   nSim  = 10                                                                         # number of simulated trials
-#   n_patient_ctrl = 200
-#   n_patient_expt = 200
+  # nSim  = 10                                                                         # number of simulated trials
+  # n_patient_ctrl = 200
+  # n_patient_expt = 200
   
-  # source("Data Simulator/cities simulator/scenarios/trt_large_scen_A.r")             # cities simulator: large  trt effect,  scenario A
-  # source("Data Simulator/cities simulator/scenarios/trt_large_scen_B.r")             # cities simulator: large  trt effect,  scenario B
-  # source("Data Simulator/cities simulator/scenarios/trt_large_scen_C.r")             # cities simulator: large  trt effect,  scenario C
-  # source("Data Simulator/cities simulator/scenarios/trt_large_scen_D.r")             # cities simulator: large  trt effect,  scenario D
-  # source("Data Simulator/cities simulator/scenarios/trt_modest_scen_A.r")            # cities simulator: modest trt effect,  scenario A
-  # source("Data Simulator/cities simulator/scenarios/trt_modest_scen_B.r")            # cities simulator: modest trt effect,  scenario B
-  # source("Data Simulator/cities simulator/scenarios/trt_modest_scen_C.r")            # cities simulator: modest trt effect,  scenario C
-  # source("Data Simulator/cities simulator/scenarios/trt_modest_scen_D.r")            # cities simulator: modest trt effect,  scenario D
-  # source("Data Simulator/cities simulator/scenarios/trt_null_scen_A.r")              # cities simulator: null   trt effect,  scenario A
-  # source("Data Simulator/cities simulator/scenarios/trt_null_scen_B.r")              # cities simulator: null   trt effect,  scenario B
-  # source("Data Simulator/cities simulator/scenarios/trt_null_scen_C.r")              # cities simulator: null   trt effect,  scenario C
-  # source("Data Simulator/cities simulator/scenarios/trt_null_scen_D.r")              # cities simulator: null   trt effect,  scenario D
+  # source("Data Simulator/cities simulator/scenarios/trt_large_scen_A.r")              # cities simulator: large  trt effect,  scenario A
+  # source("Data Simulator/cities simulator/scenarios/trt_large_scen_B.r")              # cities simulator: large  trt effect,  scenario B
+  # source("Data Simulator/cities simulator/scenarios/trt_large_scen_C.r")              # cities simulator: large  trt effect,  scenario C
+  # source("Data Simulator/cities simulator/scenarios/trt_large_scen_D.r")              # cities simulator: large  trt effect,  scenario D
+  # source("Data Simulator/cities simulator/scenarios/trt_modest_scen_A.r")             # cities simulator: modest trt effect,  scenario A
+  # source("Data Simulator/cities simulator/scenarios/trt_modest_scen_B.r")             # cities simulator: modest trt effect,  scenario B
+  # source("Data Simulator/cities simulator/scenarios/trt_modest_scen_C.r")             # cities simulator: modest trt effect,  scenario C
+  # source("Data Simulator/cities simulator/scenarios/trt_modest_scen_D.r")             # cities simulator: modest trt effect,  scenario D
+  # source("Data Simulator/cities simulator/scenarios/trt_null_scen_A.r")               # cities simulator: null   trt effect,  scenario A
+  # source("Data Simulator/cities simulator/scenarios/trt_null_scen_B.r")               # cities simulator: null   trt effect,  scenario B
+  # source("Data Simulator/cities simulator/scenarios/trt_null_scen_C.r")               # cities simulator: null   trt effect,  scenario C
+  # source("Data Simulator/cities simulator/scenarios/trt_null_scen_D.r")               # cities simulator: null   trt effect,  scenario D
   # source("Data Simulator/cities simulator/scenarios/diff_1_scen_1.R")                 # cities simulator:
   # source("Data Simulator/cities simulator/scenarios/diff_1_scen_2.R")                 # cities simulator:
   # source("Data Simulator/cities simulator/scenarios/diff_1_scen_3.R")                 # cities simulator:
@@ -71,18 +75,18 @@ source("Data Simulator/adace simulator/f_sim.r")                                
   # source("Data Simulator/cities simulator/scenarios/diff_1_scen_6.R")                 # cities simulator:
 }
 
-# Bayeisan/Magnusson
+# [2] Parameters in Bayeisan/Magnusson
 { 
-  parSave        = c("delta","S0","S1","Y0","Y1","w")                                # argument of jags() 
-  n.chains       = 2                                                                 # argument of jags()
-  n.burnin       = 20                                                                # argument of jags()
-  n.iter         = 100                                                               # argument of jags()
-  thin           = 2                                                                 # argument of jags()
-  file           = "mod.txt"                                                         # argument of jags()
-  #n.adapt        = 1000                                                              # argument of jags.model()
+  parSave        = c("delta","S0","S1","Y0","Y1","w")                                   # argument of jags() 
+  n.chains       = 2                                                                    # argument of jags()
+  n.burnin       = 20                                                                   # argument of jags()
+  n.iter         = 100                                                                  # argument of jags()
+  thin           = 2                                                                    # argument of jags()
+  file           = "mod.txt"                                                            # argument of jags()
+  #n.adapt        = 1000                                                                # argument of jags.model()
 }  
 
-# Principal Score
+# [3] Parameters in Principal Score
 {
   n_ps                 = 5000                                                           # update n with a larger n -- for bootstrap [adace simulator]
   #n_patient_vector_ps  = 3*n_patient_vector                                             # update n with a larger n -- for bootstrap [cities simulator]     
@@ -96,16 +100,20 @@ source("Data Simulator/adace simulator/f_sim.r")                                
   error0               = 10^-6
   UtoRemove            = 'NeverAdhere/11/D'
 }
-#----------------------
-#  nsim
-#----------------------
+
+#===============================
+#  ACE from nSim Simulations
+#===============================
+
 result_df_BS           = NULL
 result_df_AD           = NULL
 result_df_PS           = NULL  
 
 for(i in 1:nSim){
  
+  #--------------------
   # DATA SIMULATION
+  #--------------------
   
   #  adace simulator :  
   { 
@@ -122,7 +130,7 @@ for(i in 1:nSim){
                                      base_standardized = BASE-mean(BASE)   )
   }
   
-  # cities simulator : simulate 1 dataset and prepare for variables
+  # cities simulator :  
   {
 #      sim     = f_sim(seed_val <- seed_vec[i], n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) 
 #      dat_    = sim$observed_out %>% filter(AVISITN==maxtime) 
@@ -137,8 +145,9 @@ for(i in 1:nSim){
 #                                     base_standardized = BASE-mean(BASE)   )
   }
   
+  #--------------------
   # BAYESIAN  
-  
+  #--------------------  
    { 
    # DATA SIMULATION : done.
    
@@ -167,8 +176,9 @@ for(i in 1:nSim){
     )
  }
   
+  #--------------------
   # AdACE
-
+  #--------------------  
    {
     # DATA SIMULATION : done.
      
@@ -221,7 +231,6 @@ for(i in 1:nSim){
        
                                      )
   
-    
    
     # STACK 
     result_df_AD   =  rbind.data.frame(result_df_AD, 
@@ -235,8 +244,9 @@ for(i in 1:nSim){
   
 }
   
+  #--------------------
   # PRINCIPAL SCORE
-  
+  #--------------------  
    { 
     # DATA SIMULATION -- Re-Create data : Simulate a larger data pool (sample size: n_ps or n_patient_vector_ps) and bootstrap. 
      
@@ -291,10 +301,21 @@ colMeans(result_df_PS)
 colMeans(result_df_BS)
 colMeans(result_df_AD)
 
- 
+
+#==========================
+# deliver
+#==========================
+
+#----------------------------------
+# using sim data by adace simulator
+#----------------------------------
+
  write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/adace simulator/PS_adacesimulator.csv")
  write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/adace simulator/BS_adacesimulator.csv")
  write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/adace simulator/AD_adacesimulator.csv")
-# write.csv(result_df_PS,"Simulation Study/WIP - Bing/WIP - Bing/resultprint/cities simulator/PS_citiesimulator.csv")
-# write.csv(result_df_BS,"Simulation Study/WIP - Bing/WIP - Bing/resultprint/cities simulator/BS_citiesimulator.csv")
-# write.csv(result_df_AD,"Simulation Study/WIP - Bing/WIP - Bing/resultprint/cities simulator/AD_citiesimulator.csv")
+
+#----------------------------------
+# using sim data by cities simulator
+#----------------------------------
+
+# ...

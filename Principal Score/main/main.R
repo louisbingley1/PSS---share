@@ -3,9 +3,9 @@ rm(list=ls())
 library(nnet)
 library(dplyr)
 
-#----------------------
+#======================
 #  Functions
-#----------------------
+#======================
 {
 source("Data Simulator/adace simulator/f_sim.r")                                      # adace simulator: or source('Magnusson/endpoint - ctn/main/f_sim.r')                               
 #source("Data Simulator/cities simulator/f_sim.r")                                    # cities simulatorsource("Principal Score/main/f_augdata.r")
@@ -20,18 +20,18 @@ source("Principal Score/main/f_D.r")
 source("Principal Score/main/f_augdata.r")
 }
 
-#----------------------
+#=======================
 #  Parameter Settings
-#----------------------
+#=======================
 
-# adace simulator
+# [1.a] Parameters in adace simulator
 { 
   nSim   = 10                                                                          # number of simulated trials
   n      = 1000                                                                        # sample size per trial
   source("Data Simulator/adace simulator/setting_adace.r")                             # adace simulator
 }
 
-# cities simulator
+# [1.b] Parameters in cities simulator
 {
   # nSim  = 10                                                                         # number of simulated trials
   # n_patient_ctrl = 200
@@ -57,7 +57,7 @@ source("Principal Score/main/f_augdata.r")
   # source("Data Simulator/cities simulator/scenarios/diff_1_scen_6.R")                 # cities simulator:
 }
  
-# for ace main function
+# [2] Parameters in Principal Score
 {
 n_ps                 = 5000                                                           # update n with a larger n -- for bootstrap [adace simulator]
 #n_patient_vector_ps  = 3*n_patient_vector                                             # update n with a larger n -- for bootstrap [cities simulator]     
@@ -73,9 +73,10 @@ UtoRemove            = 'NeverAdhere/11/D'
 }
 
  
-#----------------------
-#  ACE
-#----------------------
+#===============================
+#  ACE from nSim Simulations
+#===============================
+
 result_df           = NULL #cbind.data.frame(sim=1:nsim,AACE=rep(NA,nsim))
 
 for(i in 1:nSim){
@@ -150,6 +151,16 @@ mean(result_df$trued_C_00); mean(result_df$trued_C_00_nsl)
 mean(result_df$APCP)
 mean(result_df$NPCP)
 mean(result_df$CPCP)
+
+
+#==========================
+# deliver
+#==========================
+
+write.csv(result_df_PS,"Principal Score/resultprint/adace simulator/PS.csv")
+write.csv(result_df_BS,"Principal Score/resultprint/adace simulator/BS.csv")
+write.csv(result_df_AD,"Principal Score/resultprint/adace simulator/AD.csv")
+ 
 
 # source("Data Simulator/cities simulator/utility functions/Asymptotic Estimate of Estimand.R")
 
