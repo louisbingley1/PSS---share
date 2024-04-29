@@ -6,8 +6,7 @@ library(ggplot2)
 library(ggthemes)
 
 
-source("Data Simulator/cities simulator/utility functions/data_generator1.R")
-source("Data Simulator/cities simulator/utility functions/data_generator_loop1.R")
+source("Data Simulator/cities simulator/utility functions/splpl_utilities_BL_1.R")
 source("Data Simulator/cities simulator/utility functions/f_nsim_true.R")
 source("Data Simulator/cities simulator/utility functions/f_U.R")
 

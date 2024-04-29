@@ -44,22 +44,6 @@ data_generator1 = function (n_patient_vector, p_loe_max, z_l_loe, z_u_loe, p_ee_
         baseline_outcome = round(rnorm(n = total_patients, mean = mean_list[[1]][1],  sd = 1), 2)
         
         #----------------------------------------------
-        # VarY -- Covariance Matrix of Y (Sigma Matrix)
-        #----------------------------------------------
-        
-        for (i in 1:length(mean_list)) {   
-                                            if (length(sigma_ar_vec) == 0 | is.na(sum(sigma_ar_vec))) {
-                                                           covariance_matrix = as.matrix(pacf_list[[i]])
-                                            } else {
-                                                           covariance_matrix = (sigma_ar_vec[i]^2) * pacf_vec_to_acf(pacf_vec = pacf_list[[i]],  n_repeat = n_repeat)
-                                            }
-                                            Sigma_12 = t(covariance_matrix[1, -1])
-                                            Sigma_22 = covariance_matrix[-1, -1]
-                                            Sigma_21 = as.matrix(covariance_matrix[-1, 1], ncol = 1)
-                                            Sigma_11_inv = as.matrix(1/(covariance_matrix[1, 1]))
-                                            variance_conditional_list[[i]] = Sigma_22 - Sigma_21 %*%  Sigma_11_inv %*% Sigma_12
-        } 
-        #----------------------------------------------
         # PO (before DC)
         #----------------------------------------------
         
@@ -71,10 +55,23 @@ data_generator1 = function (n_patient_vector, p_loe_max, z_l_loe, z_u_loe, p_ee_
                                             
                                             if (is.na(sum(unlist(beta_list))) | sum(((unlist(beta_list))) ==   0) == length(unlist(beta_list))) {
                                               mean_subject_list[[i]] = cbind(rep_row(mean_list[[i]][1],   total_patients), rep_row(mean_list[[i]][-1],  total_patients))
-                                            }
-                                            else {
+                                            }  else {
                                               mean_subject_list[[i]] = cbind(rep_row(mean_list[[i]][1],  total_patients), rep_row(mean_list[[i]][-1],  total_patients) + rep_col(as.matrix(covariate_df) %*%  as.matrix(beta_list[[i]], ncol = 1), n_repeat -   1))
                                             }
+                                            
+                                            # VarY -- Covariance Matrix of Y (Sigma Matrix)
+                                            
+                                            if (length(sigma_ar_vec) == 0 | is.na(sum(sigma_ar_vec))) {
+                                              covariance_matrix = as.matrix(pacf_list[[i]])
+                                            } else {
+                                              covariance_matrix = (sigma_ar_vec[i]^2) * pacf_vec_to_acf(pacf_vec = pacf_list[[i]],  n_repeat = n_repeat)
+                                            }
+                                            Sigma_12 = t(covariance_matrix[1, -1])
+                                            Sigma_22 = covariance_matrix[-1, -1]
+                                            Sigma_21 = as.matrix(covariance_matrix[-1, 1], ncol = 1)
+                                            Sigma_11_inv = as.matrix(1/(covariance_matrix[1, 1]))
+                                            variance_conditional_list[[i]] = Sigma_22 - Sigma_21 %*%  Sigma_11_inv %*% Sigma_12
+                                            
                                             
                                             # PO (before DC)
                                             
@@ -86,7 +83,6 @@ data_generator1 = function (n_patient_vector, p_loe_max, z_l_loe, z_u_loe, p_ee_
         }
   
   }
-  
   #===================
   # generate data
   #===================
@@ -376,7 +372,8 @@ data_generator1 = function (n_patient_vector, p_loe_max, z_l_loe, z_u_loe, p_ee_
                       observed_df   = observed_df, 
                       po_df         = po_df, 
                       ir_df         = ir_df))
-  }else {
+  }
+  else {
           return(list(estimand_mean = causal_estimand_mean, 
                       estimand_sd   = causal_estimand_sd, 
                       dc_mean_list  = dc_mean_list, 
@@ -389,4 +386,54 @@ data_generator1 = function (n_patient_vector, p_loe_max, z_l_loe, z_u_loe, p_ee_
   
 }
 
- 
+data_generator_loop1 = function (n_patient_vector, p_loe_max, z_l_loe, z_u_loe, p_ee_max, 
+                                 z_l_ee, z_u_ee, timepoints, pacf_list, sigma_ar_vec, mean_list, 
+                                 beta_list, p_admin, rate_dc_ae, prob_ae, seed_val, reference_id, 
+                                 plot_po = FALSE, up_good, threshold, total_data, delta_adjustment_in, 
+                                 covariate_df){
+  
+  `%notin%` = Negate(`%in%`)
+  
+  if(total_data==1){
+    #----------------------------
+    # Simulate 1 Dataset
+    #----------------------------
+    
+    data_out = data_generator1(n_patient_vector, p_loe_max, z_l_loe, 
+                               z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list, 
+                               sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae, 
+                               prob_ae, seed_val, reference_id, plot_po = FALSE, up_good, 
+                               threshold, delta_adjustment_in, covariate_df)
+  }else{
+    #----------------------------
+    # Simulate Multiple Datasets
+    #----------------------------
+    
+    pb       = txtProgressBar(min = (seed_val), max = (seed_val +  total_data - 1), style = 3, width = 50, char = "=")
+    m        = ifelse(length(delta_adjustment_in) == 0 | is.na(sum(delta_adjustment_in)),  3, 4)
+    
+    for (seed_val in (seed_val + 1):(seed_val + total_data -   1)) {
+      
+      data_temp = data_generator1(n_patient_vector, p_loe_max, 
+                                  z_l_loe, z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, 
+                                  pacf_list, sigma_ar_vec, mean_list, beta_list, 
+                                  p_admin, rate_dc_ae, prob_ae, seed_val, reference_id, 
+                                  plot_po = FALSE, up_good, threshold, delta_adjustment_in, 
+                                  covariate_df)
+      
+      for (i in 1:(length(data_out) - m)) {
+        for (j in 1:length(data_out[[i]])) {
+          for (k in 1:length(data_out[[i]][[j]])) {
+            data_out[[i]][[j]][[k]] = rbind(data_out[[i]][[j]][[k]], 
+                                            data_temp[[i]][[j]][[k]])
+          }
+        }
+      }
+      data_out$observed_df = rbind(data_out$observed_df,  data_temp$observed_df)
+      data_out$po_df = rbind(data_out$po_df, data_temp$po_df)
+      setTxtProgressBar(pb, seed_val)
+      
+    }
+  }
+  return(data_out)
+}
