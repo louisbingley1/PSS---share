@@ -51,7 +51,7 @@ source("Data Simulator/cities simulator/f_sim.r")                               
 
 # [1.b] Parameters in cities simulator
 {
-   nSim  = 10                                                                          # number of simulated trials
+   nSim  = 2                                                                        # number of simulated trials
    n_patient_ctrl = 200
    n_patient_expt = 200
   
