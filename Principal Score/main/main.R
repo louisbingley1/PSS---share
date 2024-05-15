@@ -104,9 +104,11 @@ for(i in 1:nSim){
   trued_A      = sim$true_d_Tm$true_d_Tm_adhact
   trued_C      = sim$true_d_Tm$true_d_Tm_adhboth
   trued_N      = sim$true_d_Tm$true_d_Tm_adhpbo
+  trued_AC     = sim$true_d_Tm$true_d_Tm_sp
   trued_A_nsl  = sim$true_d_Tm_nsl$true_d_Tm_adhact_nsl
   trued_C_nsl  = sim$true_d_Tm_nsl$true_d_Tm_adhboth_nsl
   trued_N_nsl  = sim$true_d_Tm_nsl$true_d_Tm_adhpbo_nsl
+  trued_AC_nsl = sim$true_d_Tm_nsl$true_d_Tm_sp_nsl
   
   # ACE 
   
@@ -122,6 +124,8 @@ for(i in 1:nSim){
                                                      trued_C_00_nsl  = trued_C_nsl,
                                                      trued_A_10      = trued_A,
                                                      trued_A_10_nsl  = trued_A_nsl,
+                                                     trued_AC_sp     = trued_AC,
+                                                     trued_AC_sp_nsl = trued_AC_nsl,
                                                      ace)  
   )
   
@@ -134,13 +138,13 @@ result_df
 mean(result_df$AACE); mean(result_df$AACE.adj)
 mean(result_df$NACE); mean(result_df$NACE.adj)
 mean(result_df$CACE); mean(result_df$CACE.adj)
- 
+mean(result_df$CAACE);mean(result_df$CAACE.adj)
 
 # causal/trt effect in simulated data (at last AVISITN)
 mean(result_df$trued_A_10); mean(result_df$trued_A_10_nsl)
 mean(result_df$trued_N_01); mean(result_df$trued_N_01_nsl)
 mean(result_df$trued_C_00); mean(result_df$trued_C_00_nsl) 
-
+mean(result_df$trued_AC_sp);mean(result_df$trued_AC_sp_nsl)
 
 # true/theoretical value of causal/trt effect (defined in f_setting)
 # TrtEff_adhact   = 1.5                               # A

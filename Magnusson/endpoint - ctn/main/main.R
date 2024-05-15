@@ -115,6 +115,7 @@ for (i in 1:nSim) {
    trued_D       = sim$true_d_Tm$true_d_Tm_adhnei
    trued_I       = sim$true_d_Tm$true_d_Tm_adhboth
    trued_B       = sim$true_d_Tm$true_d_Tm_adhact  
+   trued_sp      = sim$true_d_Tm$true_d_Tm_sp
    
   # ACE
   
@@ -134,6 +135,7 @@ for (i in 1:nSim) {
                                                trued_D_11 = trued_D,
                                                trued_I_00 = trued_I, 
                                                trued_B_10 = trued_B,
+                                               trued_IB_sp = trued_sp,
                                                ace) 
                                     )
   
@@ -156,6 +158,7 @@ mean(result_df$trued_H_01)
 mean(result_df$trued_D_11)
 mean(result_df$trued_I_00)
 mean(result_df$trued_B_10)
+mean(result_df$trued_IB_sp)
 
 {
 # true/theoretical value of causal/trt effect (defined in f_setting)

@@ -76,10 +76,12 @@ Z   = list(Z_1,Z_2,Z_3,Z_4)
   true_d_Tm_adhpbo  = mean( observed_out %>% filter(AVISITN==maxtime & U=='AdhereToPBO/01/N') %>% pull(d) )
   true_d_Tm_adhboth = mean( observed_out %>% filter(AVISITN==maxtime & U=='AlwaysAdhere/00/C') %>% pull(d) )
   true_d_Tm_adhnei  = mean( observed_out %>% filter(AVISITN==maxtime & U=='NeverAdhere/11/D') %>% pull(d) )
+  true_d_Tm_sp      = mean( observed_out %>% filter( AVISITN==maxtime & ((U=='AdhereToACT/10/A')|(U=='AlwaysAdhere/00/C')) ) %>% pull(d) )
   true_d_Tm         = list( true_d_Tm_adhact  = true_d_Tm_adhact ,
                             true_d_Tm_adhpbo  = true_d_Tm_adhpbo ,
                             true_d_Tm_adhboth = true_d_Tm_adhboth,
-                            true_d_Tm_adhnei  = true_d_Tm_adhnei )
+                            true_d_Tm_adhnei  = true_d_Tm_adhnei,
+                            true_d_Tm_sp      = true_d_Tm_sp )
 }   
 
 {
@@ -87,10 +89,13 @@ Z   = list(Z_1,Z_2,Z_3,Z_4)
   true_d_Tm_adhpbo_nsl  = mean( observed_out %>% filter(AVISITN==maxtime & U=='AdhereToPBO/01/N' & TRT==1) %>% pull(Y) )- mean( observed_out %>% filter(AVISITN==maxtime & U=='AdhereToPBO/01/N' & TRT==0) %>% pull(Y) )
   true_d_Tm_adhboth_nsl = mean( observed_out %>% filter(AVISITN==maxtime & U=='AlwaysAdhere/00/C' & TRT==1) %>% pull(Y) )- mean( observed_out %>% filter(AVISITN==maxtime & U=='AlwaysAdhere/00/C' & TRT==0) %>% pull(Y))
   true_d_Tm_adhnei_nsl  = mean( observed_out %>% filter(AVISITN==maxtime & U=='NeverAdhere/11/D' & TRT==1) %>% pull(Y) )-  mean( observed_out %>% filter(AVISITN==maxtime & U=='NeverAdhere/11/D' & TRT==0) %>% pull(Y) )
+  true_d_Tm_sp_nsl      = mean( observed_out %>% filter( AVISITN==maxtime & ((U=='AdhereToACT/10/A')|(U=='AlwaysAdhere/00/C')) & TRT==1) %>% pull(Y) )-  mean( observed_out %>% filter(AVISITN==maxtime & ((U=='AdhereToACT/10/A')|(U=='AlwaysAdhere/00/C')) & TRT==0) %>% pull(Y) )
   true_d_Tm_nsl         = list( true_d_Tm_adhact_nsl  = true_d_Tm_adhact_nsl ,
                                 true_d_Tm_adhpbo_nsl  = true_d_Tm_adhpbo_nsl ,
                                 true_d_Tm_adhboth_nsl = true_d_Tm_adhboth_nsl,
-                                true_d_Tm_adhnei_nsl  = true_d_Tm_adhnei_nsl )
+                                true_d_Tm_adhnei_nsl  = true_d_Tm_adhnei_nsl ,
+                                true_d_Tm_sp_nsl      = true_d_Tm_sp_nsl)
+  
 } 
 
 
