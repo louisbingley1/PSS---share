@@ -1,0 +1,111 @@
+{ 
+  text <- "model{
+  
+    #Likelihood for data
+  
+    for(i in 1:N){
+  
+   
+      #### Model S
+      
+      expa[i,1] <- exp(inprod(eta[,1], X[i,]))
+      expa[i,2] <- exp(inprod(eta[,2], X[i,]))
+      expa[i,3] <- exp(inprod(eta[,3], X[i,]))
+      expa[i,4] <- exp(0)
+      expasum[i] = sum(expa[i,])
+      
+      pi1[i]  = expa[i,1]/expasum[i]
+      pi2[i]  = expa[i,2]/expasum[i]
+      pi3[i]  = expa[i,3]/expasum[i]
+      pi4[i]  = expa[i,4]/expasum[i]
+  
+      
+      # to model S(0)-->p(S(0)=1) = p0 = Bern(piB+piD)
+      p0[i] = pi2[i]+pi4[i]
+      S0[i] ~ dbern(p0[i]) 
+
+      # to model S(1)-->p(S(1)=1) = p1  = Bern(piH+piD)
+      p1[i] = pi1[i]+pi2[i]
+      S1[i] ~ dbern(p1[i])
+      
+      ##### Model Y
+     
+      prob[i,1] <- expa[i,1]*I[i,1]  
+      prob[i,2] <- expa[i,2]*I[i,2]
+      prob[i,3] <- expa[i,3]*I[i,3]
+      prob[i,4] <- expa[i,4]*I[i,4]
+      pi[i,1]   = prob[i,1]/sum(prob[i,])  # H
+      pi[i,2]   = prob[i,2]/sum(prob[i,])  # D
+      pi[i,3]   = prob[i,3]/sum(prob[i,])  # I
+      pi[i,4]   = prob[i,4]/sum(prob[i,])  # B
+
+      # w[i,j]
+      w[i,1]   =  pi[i,1]/sum(pi[i,]) 
+      w[i,2]   =  pi[i,2]/sum(pi[i,]) 
+      w[i,3]   =  pi[i,3]/sum(pi[i,]) 
+      w[i,4]   =  pi[i,4]/sum(pi[i,]) 
+      
+      # mu0[i,j]  
+      mu0[i,1] <- inprod(beta[,1],X[i,])  
+      mu0[i,2] <- inprod(beta[,2],X[i,])  
+      mu0[i,3] <- inprod(beta[,3],X[i,]) 
+      mu0[i,4] <- inprod(beta[,4],X[i,])  
+      
+      # mu1[i,j]  
+      mu1[i,1] <- mu0[i,1] + delta[1]  # H / adhpbo
+      mu1[i,2] <- mu0[i,2] + delta[2]  # D / adhnei
+      mu1[i,3] <- mu0[i,3] + delta[3]  # I / adhboth
+      mu1[i,4] <- mu0[i,4] + delta[4]  # B / adhact
+      
+      # mu0_mix[i]
+      wmu0[i,1] <- inprod(mu0[i,1], w[i,1]) 
+      wmu0[i,2] <- inprod(mu0[i,2], w[i,2]) 
+      wmu0[i,3] <- inprod(mu0[i,3], w[i,3]) 
+      wmu0[i,4] <- inprod(mu0[i,4], w[i,4]) 
+      mu0_mix[i] <- sum(wmu0[i,]) 
+
+      # mu1_mix[i]
+      wmu1[i,1] <- inprod(mu1[i,1], w[i,1]) 
+      wmu1[i,2] <- inprod(mu1[i,2], w[i,2]) 
+      wmu1[i,3] <- inprod(mu1[i,3], w[i,3]) 
+      wmu1[i,4] <- inprod(mu1[i,4], w[i,4])  
+      mu1_mix[i] <- sum(wmu1[i,]) 
+      
+      # Normal mixture for all stratums
+      Y0[i] ~ dnorm(mu0_mix[i], 10) # inv.sigma2[PS[i]]) )                 
+      Y1[i] ~ dnorm(mu1_mix[i], 10) # inv.sigma2[PS[i]]) )                 
+
+}
+
+ ## Priors  
+ 
+for(j in 1:k){
+    for(p in 1:P){
+        beta[p,j] ~ dnorm(prior_beta_mean, prior_beta_precision)
+    }
+    tau[j] ~ dunif(0.01, 10)
+    inv.sigma2[j] <- 1/(tau[j]*tau[j])
+}
+    delta[1] ~ dnorm(prior_delta1_mean, prior_delta_precision)
+    delta[2] ~ dnorm(prior_delta2_mean, prior_delta_precision)
+    delta[3] ~ dnorm(prior_delta3_mean, prior_delta_precision)
+    delta[4] ~ dnorm(prior_delta4_mean, prior_delta_precision)
+
+ 
+# Strong non-informative prior on eta for Strata 01, or the Harmed Strata [# eta -- stratum probability regression coefficients]
+    # eta[,1] -- H
+    eta[1,1] ~ dnorm(prior_eta0_H_mean,prior_eta0_H_precision)  
+    for(p in 2:P){
+                    eta[p,1] ~ dnorm(prior_eta123_H_mean,prior_eta123_H_precision)
+    }
+    # eta[,2:(k-1)] --- D,I,B
+    for(j in 2:(k-1)){
+                    eta[1,j] ~ dnorm(prior_eta0123_DIB_mean, prior_eta0123_DIB_precision)
+                    for(p in 2:P){ eta[p,j] ~ dnorm(prior_eta0123_DIB_mean,prior_eta0123_DIB_precision) }
+    }
+
+}"
+  
+  cat(text, file="mod.txt")
+  
+}
