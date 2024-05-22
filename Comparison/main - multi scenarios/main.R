@@ -16,6 +16,7 @@
 # 15. diff_1 , scenario 5
 # 16. diff_1 , scenario 6
 
+
 #######
 # 1B
 #######
@@ -30,6 +31,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_trt_large_scen_B.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_trt_large_scen_B.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_trt_large_scen_B.csv")
+write.csv(tb_1B,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_1B.csv")
 
 #######
 # 1C
@@ -45,6 +47,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_trt_large_scen_C.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_trt_large_scen_C.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_trt_large_scen_C.csv")
+write.csv(tb_1C,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_1C.csv")
 
 #######
 # 1D
@@ -60,6 +63,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_trt_large_scen_D.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_trt_large_scen_D.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_trt_large_scen_D.csv")
+write.csv(tb_1D,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_1D.csv")
 
 #######
 # 2B
@@ -75,6 +79,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_trt_modest_scen_B.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_trt_modest_scen_B.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_trt_modest_scen_B.csv")
+write.csv(tb_2B,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_2B.csv")
 
 #######
 # 2C
@@ -90,6 +95,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_trt_modest_scen_C.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_trt_modest_scen_C.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_trt_modest_scen_C.csv")
+write.csv(tb_2C,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_2C.csv")
 
 #######
 # 2D
@@ -105,6 +111,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_trt_modest_scen_D.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_trt_modest_scen_D.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_trt_modest_scen_D.csv")
+write.csv(tb_2D,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_2D.csv")
 
 
 #######
@@ -121,6 +128,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_trt_null_scen_B.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_trt_null_scen_B.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_trt_null_scen_B.csv")
+write.csv(tb_3B,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_3B.csv")
 
 #######
 # 3C
@@ -136,6 +144,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_trt_null_scen_C.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_trt_null_scen_C.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_trt_null_scen_C.csv")
+write.csv(tb_3C,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_3C.csv")
 
 #######
 # 3D
@@ -151,6 +160,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_trt_null_scen_D.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_trt_null_scen_D.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_trt_null_scen_D.csv")
+write.csv(tb_3D,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_3D.csv")
 
 
 #######
@@ -167,6 +177,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_diff_1_scen_1.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_diff_1_scen_1.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_diff_1_scen_1.csv")
+write.csv(tb_11,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_11.csv")
 
 #######
 # 12
@@ -182,6 +193,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_diff_1_scen_2.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_diff_1_scen_2.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_diff_1_scen_2.csv")
+write.csv(tb_12,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_12.csv")
 
 #######
 # 13
@@ -197,6 +209,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_diff_1_scen_3.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_diff_1_scen_3.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_diff_1_scen_3.csv")
+write.csv(tb_13,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_13.csv")
 
 #######
 # 14
@@ -212,6 +225,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_diff_1_scen_4.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_diff_1_scen_4.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_diff_1_scen_4.csv")
+write.csv(tb_14,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_14.csv")
 
 #######
 # 15
@@ -229,6 +243,7 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_diff_1_scen_5.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_diff_1_scen_5.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_diff_1_scen_5.csv")
+write.csv(tb_15,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_15.csv")
 
 #######
 # 16
@@ -244,4 +259,5 @@ write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesi
 write.csv(result_df_PS,"Simulation Study/WIP - Bing/resultprint/cities simulator/PS_citiesimulator_diff_1_scen_6.csv")
 write.csv(result_df_BS,"Simulation Study/WIP - Bing/resultprint/cities simulator/BS_citiesimulator_diff_1_scen_6.csv")
 write.csv(result_df_AD,"Simulation Study/WIP - Bing/resultprint/cities simulator/AD_citiesimulator_diff_1_scen_6.csv")
+write.csv(tb_16,"Simulation Study/WIP - Bing/resultprint/cities simulator/tb_16.csv")
 
