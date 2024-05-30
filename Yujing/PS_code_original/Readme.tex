@@ -1,0 +1,131 @@
+\documentclass[11pt]{article}
+\usepackage[left=1in,top=1in,right=1in,bottom=1in,head=.1in,nofoot]{geometry}
+
+\setlength{\footskip}{24pt} % Page number/footer spacing
+\usepackage{setspace,url,bm,amsmath} % For double-spacing, URL font, math symbols
+
+\usepackage{titlesec} % Section header formatting
+\titlelabel{\thetitle.\quad} % Section header formatting
+\titleformat*{\section}{\bf\large\center\uppercase} % Section header formatting
+
+\usepackage{graphicx} % Graphics scaling
+\usepackage{bbm}
+\usepackage{latexsym}
+\usepackage{caption}
+\usepackage[margin=20pt]{subcaption}
+\usepackage{hyperref}
+
+
+
+\usepackage[table]{xcolor}
+%\newcommand\x{\times}
+%\newcommand\y{\cellcolor{green!10}}
+\newcommand\y[1]{%
+  \colorbox{green!10}{$#1$}%
+}
+\newcommand{\GG}[1]{}
+
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{example}{Example}
+\newtheorem{excont}{Example}
+\renewcommand{\theexcont}{\theexample}
+
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}{Corollary}
+\newtheorem*{corollary*}{Corollary}
+
+\usepackage{natbib} % ASA citation style
+\bibpunct{(}{)}{;}{a}{}{,} % ASA citation style
+
+\renewcommand{\refname}{REFERENCES} % Capitalize bibliography section header
+\usepackage{etoolbox} % Bibliography underfull/overfull box fix
+\apptocmd{\sloppy}{\hbadness 10000\relax}{}{} % Bibliography underfull/overfull box fix
+
+\usepackage{color}
+\usepackage{listings}
+
+
+
+
+\begin{document}
+\doublespacing
+
+\title{\bf Readme file of R code and datasets for\\
+``Principal stratification analysis using principal scores''\\
+by Peng Ding and Jiannan Lu}
+\date{}
+\maketitle
+
+
+
+
+
+%\footnote{Address for correspondence: Peng Ding, Department of Statistics, University of California Berkeley, Evans Hall, Berkeley, California 94720, USA.
+%Email: \texttt{pengdingpku@gmail.com}}
+
+\noindent {\bf Description}
+
+This folder contains contains several R code files for implementing the approaches proposed in the paper ``Principal stratification analysis using principal scores'' by Ding and Lu, and the two data sets from the empirical applications of the paper.  
+
+\vspace{4mm}
+
+
+\noindent {\bf Authors}
+
+Peng Ding
+
+%Harvard University
+%University of California Berkeley, USA
+
+E-mail: pengdingpku@gmail.com
+
+\vspace{2mm}
+
+Jiannan Lu
+
+%Harvard University
+%Microsoft Corporation, Redmond, Washington, USA
+
+E-mail: loojiannan@gmail.com
+
+
+\vspace{4mm}
+
+
+
+\noindent {\bf R Code Files}
+
+
+\begin{tabular}{ll}
+\texttt{PS\_SM\_weighting.R} & Algorithm under Strong Monotonicity, with sensitivity analysis for PI\\
+\texttt{PS\_M\_weighting.R} & Algorithm under Monotonicity, with sensitivity analysis for GPI\\
+\texttt{PS\_M\_weighting\_SA.R} & Sensitivity analysis algorithm for Monotonicity\\
+\texttt{flu.R} & R code for the flu shot encouragement experiment in Section 8.1\\
+\texttt{swog.R} & R code for the SWOG experiment in Section 8.2
+\end{tabular}
+
+
+
+\vspace{4mm}
+
+\noindent{\bf Datasets}
+
+\texttt{fludata.txt}
+
+\texttt{swogdata.txt}
+
+
+
+
+
+
+
+
+\end{document}
+
