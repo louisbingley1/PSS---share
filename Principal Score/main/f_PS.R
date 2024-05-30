@@ -1,5 +1,5 @@
 
-f_PS = function(data, ep1,ep0,beta.a= NULL,beta.n=NULL, iter.max,error0){  
+f_PS = function(data, ep1, ep0,beta.a= NULL,beta.n=NULL, iter.max,error0){  
   
   N         =  nrow(data)
   X_in      =  data %>%  dplyr::select("X_1","X_2") %>% cbind(data %>% dplyr::select(BASE)) %>% as.matrix       
