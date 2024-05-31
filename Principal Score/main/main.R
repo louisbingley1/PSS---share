@@ -3,6 +3,7 @@ rm(list=ls())
 library(nnet)
 library(dplyr)
 
+
 #======================
 #  Functions
 #======================
@@ -20,14 +21,16 @@ source("Principal Score/main/f_D.r")
 source("Principal Score/main/f_augdata.r")
 }
 
+# devtools::load_all("C:/Users/gaoyuji/OneDrive - Merck Sharp & Dohme LLC/Documents/GitHub")
+
 #=======================
 #  Parameter Settings
 #=======================
 
 # [1.a] Parameters in adace simulator
 { 
-  nSim   = 10                                                                          # number of simulated trials
-  n      = 1000                                                                        # sample size per trial
+  nSim   = 1                                                                       # number of simulated trials
+  n      = 1000                                                                    # sample size per trial
   source("Data Simulator/adace simulator/setting_adace.r")                             # adace simulator
 }
 
