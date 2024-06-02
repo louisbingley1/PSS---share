@@ -3,7 +3,7 @@ f_PS_MBoot_1sim = function(data_in, ep0,ep1,M,iter.max,error0,seed_M_v){
   #  Bootstrap -> to compute se(ACE) -- the sd of all bootstrap ACEs, within 1 simulation;
  
   N            = nrow(data_in)                     # number of subjects in data
-  n            = ceiling(0.2*N)                     # sample full number(=0.5N) of subjects in each bootstrap data
+  n            = N                     # sample full number(=0.5N) of subjects in each bootstrap data
   CACE_bs      = rep(NA,M) 
   CACE.adj_bs  = rep(NA,M)
   CPCP_bs      = rep(NA,M)
@@ -19,9 +19,9 @@ f_PS_MBoot_1sim = function(data_in, ep0,ep1,M,iter.max,error0,seed_M_v){
   for(m in 1:M){ # m=1
     set.seed(seed_M_v[m])
 
-    boot            = data_in[sample(1:N,n,replace=F),] ;head(boot) # re-sample data with replacement
+    boot            = data_in[sample(1:N,n,replace=T),] ;head(boot) # re-sample data with replacement
     boot            = as.data.frame(boot)
-    result          = f_PS( data <- boot, ep1,ep0,beta.a,beta.n, iter.max,error0)
+    result          = f_PS( data <- boot, ep1,ep0,beta.a,beta.n, iter.max, error0)
     
     AACE_bs[m]      =  result$AACE
     AACE.adj_bs[m]  =  result$AACE.adj
