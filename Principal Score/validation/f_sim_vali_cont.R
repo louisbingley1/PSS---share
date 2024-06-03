@@ -106,12 +106,25 @@ library(dplyr)
     return(res)
   }
   
+<<<<<<< HEAD:Principal Score/validation/f_sim_vali.R
   gen_Y <- function(strata, Z, Y0, Y1){
     if(Z==0){  
       return(c(Y0))
     }else{  
       return(c(Y1))
     } 
+=======
+  gen_Y <- function(# strata, 
+    Z, Y0, Y1){
+    # if(strata == 1){ # always-taker
+    #   return(c(Y1))
+    # }else if(strata == 2){ # never-taker
+    #   return(c(Y0))
+    # }else{ # complier 
+    #   return(Z*Y1 + (1-Z)*Y0)
+    # }
+    return(Z*Y1 + (1-Z)*Y0)
+>>>>>>> b8bf2bfbc76318edd293e8e5dd20ab04afaaddcc:Principal Score/validation/f_sim_vali_cont.R
   }
   
 }
