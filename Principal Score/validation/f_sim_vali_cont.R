@@ -106,14 +106,16 @@ library(dplyr)
     return(res)
   }
   
-  gen_Y <- function(strata, Z, Y0, Y1){
-    if(strata == 1){ # always-taker
-      return(c(Y1))
-    }else if(strata == 2){ # never-taker
-      return(c(Y0))
-    }else{ # complier 
-      return(Z*Y1 + (1-Z)*Y0)
-    }
+  gen_Y <- function(# strata, 
+    Z, Y0, Y1){
+    # if(strata == 1){ # always-taker
+    #   return(c(Y1))
+    # }else if(strata == 2){ # never-taker
+    #   return(c(Y0))
+    # }else{ # complier 
+    #   return(Z*Y1 + (1-Z)*Y0)
+    # }
+    return(Z*Y1 + (1-Z)*Y0)
   }
   
 }
