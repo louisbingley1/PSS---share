@@ -3,15 +3,16 @@ library(parallel)
 library(doParallel)
 library(foreach)
 
-detectCores() # 12 cores
+detectCores() # 8 cores
 
 
 # no_cores <- detectCores(logical = TRUE) 
 # cl <- makeCluster(no_cores-1, type='PSOCK')  
 my.cluster <- parallel::makeCluster(
-  10, 
+  6, 
   type = "PSOCK"
 )
+
 #register it to be used by %dopar%
 doParallel::registerDoParallel(cl = my.cluster)
 
@@ -23,8 +24,8 @@ foreach::getDoParWorkers()
 
 # foreach parallel - 1 secs
 system.time(
-  foreach(i = 1:10, .combine=cbind) %dopar% {
-    Sys.sleep(1)
+  foreach(i = 1:6, .combine=cbind) %dopar% {
+    Sys.sleep(4)
   }
   )
 
@@ -33,8 +34,8 @@ stopCluster(my.cluster)
 
 # default without using parallel - 10 secs
 system.time(
-  for(i in 1:10){
-    Sys.sleep(1)
+  for(i in 1:6){
+    Sys.sleep(6)
   }
 )
 

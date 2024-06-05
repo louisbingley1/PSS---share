@@ -9,72 +9,15 @@ library(adace)
 library(doParallel)
 
 source("Simulation Study/original/splpl_utilities.R")
+source("Data Simulator/cities simulator/scenarios/scen_vali.R")
 
-reference_id = 1
-threshold = NA
-timepoints = c(0,12,24,48,55)
-IR_display = TRUE
-delta_adjustment_in = NA
-
-n_patient_ctrl = 500
-n_patient_expt = 500
-n_patient_vector = c(n_patient_ctrl, n_patient_expt)
-n_total = sum(n_patient_vector)
-
-mean_control = c(0,0,0,0,0)
-mean_treatment = c(0,0,0,0,0)
-
-#mean_treatment = c(0,0.2,0.4,0.6,0.8)
-mean_list = list(mean_control, mean_treatment)
-
-sigma_ar_vec = c(3, 3)
-pacf_list = list(c(0.5),
-                 c(0.5))
-
-beta_list = list(c(1.25, 1.25),
-                 c(1.25, 1.25))
-covariate_df = NA
-
-# LoE & EE
-# up_good = "Up"
-# p_loe_max = 0.7
-# z_l_loe = -7
-# z_u_loe = -1
-# p_ee_max = 0
-# z_l_ee = 0
-# z_u_ee = 0
-
-# LoE & EE
-up_good = "Up"
-p_loe_max = .0
-z_l_loe = -.7
-z_u_loe = -.1
-p_ee_max = 0
-z_l_ee = 0
-z_u_ee = 0
-
-# Admin & AE
-
-p_admin_ctrl = 0
-p_admin_expt = 0
-p_admin = c(p_admin_ctrl, p_admin_expt)
-
-prob_ae_ctrl = .1
-prob_ae_expt = .1
-prob_ae = c(prob_ae_ctrl, prob_ae_expt)
-
-rate_dc_ae_ctrl = .1
-rate_dc_ae_expt = .1
-rate_dc_ae = c(rate_dc_ae_ctrl, rate_dc_ae_expt)
-
-static_output = TRUE
 
 total_data = 20
 n_core = 1
 starting_seed_val <- 1                 #bing
 total_data_cores <- total_data/n_core
 
-cl <- makeCluster(10)
+cl <- makeCluster(6)
 registerDoParallel(cl)
 
 data_out <- foreach (k=1:n_core,.packages = c('tidyverse','cities'), .combine='c', .multicombine=TRUE) %dopar% {
@@ -152,19 +95,24 @@ comb <- function(x, ...) {
 }
 
 
-sims <- foreach (j=1:total_data,.packages = c('tidyverse','adace'), .combine='comb', .multicombine=TRUE,
-         .init=list(list(), list(), c(), c())) %dopar% {
+sims <- foreach (j             = 1:total_data,
+                 .packages     = c('tidyverse','adace'), 
+                 .combine      = 'comb', 
+                 .multicombine = TRUE,
+                 .init         = list(list(), list(), c(), c())) %dopar% {
   #print(j)
   ### change to adace format ###
-  data_wide <- data %>%  dplyr::select(base, continuous, binary, subject, arm, timepoints, seed, aval_mar) %>% filter(seed ==j) %>%
-    pivot_wider(names_from = timepoints, values_from = aval_mar)
+  data_wide <- data %>%  
+                dplyr::select(base, continuous, binary, subject, arm, timepoints, seed, aval_mar) %>% 
+                filter(seed ==j) %>%
+                pivot_wider(names_from = timepoints, values_from = aval_mar)
 
 
-  times <- c("12","24","48","55")
-  Z <- list()
+  times  <- c("12","24","48","55")
+  Z      <- list()
   Z[[1]] <- matrix(NA, ncol = 1,nrow=1000)
-  A <-  matrix(NA, nrow = 1000, ncol = 4)
-  A[,1] <- ifelse(is.na(data_wide %>% pull(times[1])), 0, 1)
+  A      <-  matrix(NA, nrow = 1000, ncol = 4)
+  A[,1]  <- ifelse(is.na(data_wide %>% pull(times[1])), 0, 1)
 
 
   for (i in 1:3) {
@@ -172,8 +120,8 @@ sims <- foreach (j=1:total_data,.packages = c('tidyverse','adace'), .combine='co
     A[,i+1] <- ifelse(is.na(data_wide %>% pull(times[i+1])), 0, 1)
   }
 
-  X <- as.matrix(data.frame(data_wide$base,data_wide$continuous,data_wide$binary))
-  Y <- data_wide %>% pull(10)
+  X   <- as.matrix(data.frame(data_wide$base,data_wide$continuous,data_wide$binary))
+  Y   <- data_wide %>% pull(10)
   TRT <- data_wide %>% pull(arm)
   TRT <- ifelse(TRT == 1, 0, 1)
 
@@ -188,11 +136,8 @@ sims <- foreach (j=1:total_data,.packages = c('tidyverse','adace'), .combine='co
   data_all_1 <- data_all %>% filter(arm == 1)
   data_all_2 <- data_all %>% filter(arm == 2)
 
-  true_pp[j] <- mean(data_all_2$aval[data_all_2$A==1 &data_all_1$A==1]) -
-    mean(data_all_1$aval[data_all_2$A==1 &data_all_1$A==1])
-
-  true_sp[j] <- mean(data_all_2$aval[data_all_2$A==1]) -
-    mean(data_all_1$aval[data_all_2$A==1])
+  true_pp[j] <- mean(data_all_2$aval[data_all_2$A==1 & data_all_1$A==1]) - mean(data_all_1$aval[data_all_2$A==1 &data_all_1$A==1])
+  true_sp[j] <- mean(data_all_2$aval[data_all_2$A==1])                   - mean(data_all_1$aval[data_all_2$A==1])
 
   list(A_pp[[j]], A_sp[[j]], true_pp[j], true_sp[j])
 
