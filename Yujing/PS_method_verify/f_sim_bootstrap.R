@@ -823,7 +823,7 @@ rm(list=ls())
   # First run 1:50
   Res <- c()
   start <- Sys.time()
-  for(i in 1:10){
+  for(i in 251:300){
     print(i)
     seed <- Seeds1[i]
     system.time(temp1 <- boot_fun(seed))
@@ -909,8 +909,11 @@ rm(list=ls())
     # end - start
   }
   
-  saveRDS(Res, file = "C:/Users/gaoyuji/OneDrive - Merck Sharp & Dohme LLC/Desktop/Development R code/1. PS method/Binary_1_10")
+  saveRDS(Res, file = "C:/Users/gaoyuji/OneDrive - Merck Sharp & Dohme LLC/Desktop/Development R code/1. PS method/Binary_251_300")
+
   
+  
+    
   registerDoSEQ()
   stopCluster(my.cluster)
   
