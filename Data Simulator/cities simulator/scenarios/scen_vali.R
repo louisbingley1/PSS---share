@@ -1,5 +1,5 @@
 
-total_data = nSim       # bing
+total_data = 20      # bing
 starting_seed_val = 1   # bing
 
 reference_id = 1
@@ -61,7 +61,3 @@ rate_dc_ae = c(rate_dc_ae_ctrl, rate_dc_ae_expt)
 
 static_output = TRUE
 
-# Add (B.L.)
-maxtime             = length(timepoints)-1
-seed_vec            = seq(starting_seed_val, starting_seed_val+nSim-1,1)
-plot_po             = FALSE

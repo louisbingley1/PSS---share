@@ -9,15 +9,19 @@ library(adace)
 library(doParallel)
 
 source("Simulation Study/original/splpl_utilities.R")
-source("Data Simulator/cities simulator/scenarios/scen_vali.R")
+source("Data Simulator/cities simulator/scenarios/scen_vali.R") #total_data  = 20,starting_seed_val = 1     
 
 
-total_data = 20
-n_core = 1
-starting_seed_val <- 1                 #bing
-total_data_cores <- total_data/n_core
+# Add (B.L.)
+nSim                = total_data
+maxtime             = length(timepoints)-1
+seed_vec            = seq(starting_seed_val, starting_seed_val+nSim-1,1)
+plot_po             = FALSE
 
-cl <- makeCluster(6)
+n_core            = 5
+total_data_cores  = total_data/n_core
+
+cl <- makeCluster(n_core)
 registerDoParallel(cl)
 
 data_out <- foreach (k=1:n_core,.packages = c('tidyverse','cities'), .combine='c', .multicombine=TRUE) %dopar% {
@@ -36,7 +40,7 @@ data_out <- foreach (k=1:n_core,.packages = c('tidyverse','cities'), .combine='c
                                     p_admin,
                                     rate_dc_ae,
                                     prob_ae,
-                                    seed_val = starting_seed_val[k],
+                                    seed_val = seed_vec[k],
                                     reference_id,
                                     plot_po = FALSE,
                                     up_good,
