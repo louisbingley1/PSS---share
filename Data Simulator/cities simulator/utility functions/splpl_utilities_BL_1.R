@@ -393,18 +393,19 @@ data_generator_loop1 = function (n_patient_vector, p_loe_max, z_l_loe, z_u_loe, 
                                  covariate_df){
   
   `%notin%` = Negate(`%in%`)
+
+  #----------------------------
+  # Simulate 1 Dataset
+  #----------------------------
   
-  if(total_data==1){
-    #----------------------------
-    # Simulate 1 Dataset
-    #----------------------------
+  data_out = data_generator1(n_patient_vector, p_loe_max, z_l_loe, 
+                             z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list, 
+                             sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae, 
+                             prob_ae, seed_val, reference_id, plot_po = FALSE, up_good, 
+                             threshold, delta_adjustment_in, covariate_df)
+  
+  if (total_data > 1) {
     
-    data_out = data_generator1(n_patient_vector, p_loe_max, z_l_loe, 
-                               z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list, 
-                               sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae, 
-                               prob_ae, seed_val, reference_id, plot_po = FALSE, up_good, 
-                               threshold, delta_adjustment_in, covariate_df)
-  }else{
     #----------------------------
     # Simulate Multiple Datasets
     #----------------------------

@@ -1,4 +1,4 @@
-rm(list = ls())
+#rm(list = ls())
 
 library(nnet)
 library(dplyr)
@@ -6,26 +6,14 @@ library(R2jags)  ;
 library(dplyr)
 library(adace)
 
-#======================
-#  Functions
-#======================
+#====================================
+#  Functions & Parameter Settings
+#====================================
+nSim  = 20 
 source("Data Simulator/cities simulator/f_sim.r")                                     # cities simulator
-
-#=======================
-#  Parameter Settings
-#=======================
-
-# [1.b] Parameters in cities simulator
-{
-  nSim  = 20       ;nSim=20                                                                 # number of simulated trials
-  n_patient_ctrl = 200
-  n_patient_expt = 200
-}
-
-source("Data Simulator/cities simulator/scenarios/scen_vali.r")
+source("Data Simulator/cities simulator/scenarios/scen_vali.R")
  
-
- 
+  
 #===============================
 #  ACE from nSim Simulations
 #===============================
@@ -54,10 +42,6 @@ for(i in 1:nSim){
                                    X_2_standardized  = X_2-mean(X_2),
                                    base_standardized = BASE-mean(BASE)   )
   }
-  
-  #--------------------
-  # BAYESIAN  
-  #--------------------
  
   
   #--------------------
@@ -76,7 +60,7 @@ for(i in 1:nSim){
     
     # ACE 
     
-    X             = dat_in %>% ungroup() %>% select(X_1, X_2) %>% as.matrix()
+    X             = sim$X_forAdACE #dat_in  %>% ungroup %>% select(X_1,X_2) %>% as.matrix()  #sim$X_forAdACE
     A             = sim$A_forAdACE
     Y             = dat_in %>% pull(Y)
     Z             = sim$Z_forAdACE
@@ -139,3 +123,6 @@ for(i in 1:nSim){
 
 
 result_df_AD
+colMeans(result_df_AD)
+colMeans(result_df_AD %>% select(trued_00, adace_mean_plusplusA, adace_se_plusplusA, adace_res1_plusplusA, adace_res0_plusplusA, adace_se_res1_plusplusA, adace_se_res0_plusplusA ))
+colMeans(result_df_AD %>% select(trued_sp, adace_mean_starplusA, adace_se_starplusA, adace_res1_starplusA, adace_res0_starplusA, adace_se_res1_starplusA, adace_se_res0_starplusA ))
