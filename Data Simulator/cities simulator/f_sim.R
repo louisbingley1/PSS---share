@@ -4,8 +4,6 @@ library(tidyr)
 library(plotly)
 library(ggplot2)
 library(ggthemes)
-
-
 source("Data Simulator/cities simulator/utility functions/splpl_utilities_BL_1.R")
 source("Data Simulator/cities simulator/utility functions/f_nsim_true.R")
 source("Data Simulator/cities simulator/utility functions/f_U.R")
@@ -18,16 +16,20 @@ f_sim = function(seed_val ,
 # original  
 
 data_out      = data_generator1(n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae, seed_val, reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df)
-po_mar        = data_out$po_df %>% dplyr::select(seed, subject, arm, timepoints, aval) %>% rename(aval_mar = aval)
-observed_mar  = data_out$observed_df %>% left_join(po_mar, by=c("seed", "subject", "arm", "timepoints")) %>% rename(aval_mnar = aval)
+po_mar        = data_out$po_df %>% 
+                        dplyr::select(seed, subject, arm, timepoints, aval) %>%
+                        rename(aval_mar = aval)                # in po_df: aval is mar?
+observed_mar  = data_out$observed_df  %>%      
+                        left_join(po_mar, by=c("seed", "subject", "arm", "timepoints")) %>%
+                        rename(aval_mnar = aval)               # in observed_df: aval is mNar ?
 observed_out  = observed_mar %>%
                     ungroup() %>%
-                    tidyr::complete(seed, subject, timepoints) %>%
+                    tidyr::complete(seed, subject, timepoints) %>%           # COMPLETE EMPTY LINES - SUBJECT 4, TIME 4
                     ungroup() %>%
                     group_by(seed, subject, arm) %>%
-                    dplyr::select(-aval_mnar, -aval_mar) %>%
-                    zoo::na.locf() %>%
-                    left_join(observed_mar  %>% dplyr::select(-dc_loe, -dc_admin, -dc_ee, -dc_ae, -continuous, -binary, -base),              by=c("seed", "subject", "arm", "timepoints")) %>%
+                    dplyr::select(-aval_mnar, -aval_mar) %>%   
+                    zoo::na.locf() %>%                                       # COMPLETE EMPTY LINES - SUBJECT 4, TIME 4
+                    left_join(observed_mar  %>% dplyr::select(-dc_loe, -dc_admin, -dc_ee, -dc_ae, -continuous, -binary, -base),              by=c("seed", "subject", "arm", "timepoints"))  %>%
                     left_join(data_out$po_df%>% dplyr::select(-dc_loe, -dc_admin, -dc_ee, -dc_ae, -continuous, -binary, -base, -observed),   by=c("seed", "subject", "arm", "timepoints")) 
 
 # update observed_out: Add DC indicator
@@ -49,11 +51,12 @@ observed_out  = observed_out_1 %>%
                     left_join(cbind.data.frame(timepoints=c(12,24,48,55),AVISITN=c(1,2,3,4)),by="timepoints") %>%
                     select(-arm0,-arm1,-timepoints,-observed)%>%
                     mutate(arm = arm-1, d=Y1-Y0) %>%
-                    rename(USUBJID = subject, BASE=base, X_1=continuous, X_2=binary, TRT=arm,ICE0=DC0,ICE1=DC1,ICE=DC,Y=aval)
+                    rename(USUBJID = subject, BASE=base, X_1=continuous, X_2=binary, TRT=arm,ICE0=DC0,ICE1=DC1,ICE=DC,Y=aval_mar)
                     
 for(r in 1:nrow(observed_out)){observed_out$Utrue[r] = strsplit(observed_out$U[r],"/")[[1]][3] }
  
-# create adhereance matrix A for ADACE
+# create adhereance matrix A for ADACE    
+# observed_out_=observed_out_1[1:20,]
 A_1 = 1- observed_out_1 %>% filter(timepoints==12) %>% pull(DC)
 A_2 = 1- observed_out_1 %>% filter(timepoints==24) %>% pull(DC)
 A_3 = 1- observed_out_1 %>% filter(timepoints==48) %>% pull(DC)
@@ -61,11 +64,16 @@ A_4 = 1- observed_out_1 %>% filter(timepoints==55) %>% pull(DC)
 A   = cbind(A_1, A_2, A_3,A_4)
 
 # create list Z = list(BASE, Y1,Y2,Y3) for ADACE
-Z_1 = observed_out_1 %>% filter(timepoints==12) %>% pull(base)
+Z_1 = rep(NA,nrow(observed_out_1  %>% filter(timepoints==12) ))
+#Z_1 = observed_out_1 %>% filter(timepoints==12) %>% pull(base)
 Z_2 = observed_out_1 %>% filter(timepoints==12) %>% pull(aval)
 Z_3 = observed_out_1 %>% filter(timepoints==24) %>% pull(aval)
 Z_4 = observed_out_1 %>% filter(timepoints==48) %>% pull(aval)
 Z   = list(Z_1,Z_2,Z_3,Z_4)
+
+# create X for ADACE
+#X   = observed_out %>% filter(AVISITN==1)  %>% ungroup %>% select( X_1,X_2) %>% as.matrix()
+X   = observed_out %>% filter(AVISITN==1)  %>% ungroup %>% select( BASE,X_1,X_2) %>% as.matrix()
 
 #---------------
 # true ACE at Tm
@@ -104,7 +112,8 @@ return(list(observed_out  = observed_out,
             true_d_Tm     = true_d_Tm,
             true_d_Tm_nsl = true_d_Tm_nsl,
             Z_forAdACE    = Z,
-            A_forAdACE    = A))
+            A_forAdACE    = A,
+            X_forAdACE    = X))
 
 
 }
