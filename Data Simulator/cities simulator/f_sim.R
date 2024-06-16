@@ -16,6 +16,8 @@ f_sim = function(seed_val ,
 # original  
 
 data_out      = data_generator1(n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae, seed_val, reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df)
+ 
+
 po_mar        = data_out$po_df %>% 
                         dplyr::select(seed, subject, arm, timepoints, aval) %>%
                         rename(aval_mar = aval)                # in po_df: aval is mar?
@@ -57,23 +59,23 @@ for(r in 1:nrow(observed_out)){observed_out$Utrue[r] = strsplit(observed_out$U[r
  
 # create adhereance matrix A for ADACE    
 # observed_out_=observed_out_1[1:20,]
-A_1 = 1- observed_out_1 %>% filter(timepoints==12) %>% pull(DC)
-A_2 = 1- observed_out_1 %>% filter(timepoints==24) %>% pull(DC)
-A_3 = 1- observed_out_1 %>% filter(timepoints==48) %>% pull(DC)
-A_4 = 1- observed_out_1 %>% filter(timepoints==55) %>% pull(DC)
+A_1 = 1- observed_out %>% filter(AVISITN==1) %>% pull(ICE)
+A_2 = 1- observed_out %>% filter(AVISITN==2) %>% pull(ICE)
+A_3 = 1- observed_out %>% filter(AVISITN==3) %>% pull(ICE)
+A_4 = 1- observed_out %>% filter(AVISITN==4) %>% pull(ICE)
 A   = cbind(A_1, A_2, A_3,A_4)
 
 # create list Z = list(BASE, Y1,Y2,Y3) for ADACE
-Z_1 = rep(NA,nrow(observed_out_1  %>% filter(timepoints==12) ))
-#Z_1 = observed_out_1 %>% filter(timepoints==12) %>% pull(base)
-Z_2 = observed_out_1 %>% filter(timepoints==12) %>% pull(aval)
-Z_3 = observed_out_1 %>% filter(timepoints==24) %>% pull(aval)
-Z_4 = observed_out_1 %>% filter(timepoints==48) %>% pull(aval)
+#Z_1 = rep(NA,nrow(observed_out  %>% filter(AVISITN==1) ))
+Z_1 = observed_out %>% filter(AVISITN==1) %>% pull(BASE)
+Z_2 = observed_out %>% filter(AVISITN==1) %>% pull(Y)
+Z_3 = observed_out %>% filter(AVISITN==2) %>% pull(Y)
+Z_4 = observed_out %>% filter(AVISITN==3) %>% pull(Y)
 Z   = list(Z_1,Z_2,Z_3,Z_4)
 
 # create X for ADACE
-#X   = observed_out %>% filter(AVISITN==1)  %>% ungroup %>% select( X_1,X_2) %>% as.matrix()
-X   = observed_out %>% filter(AVISITN==1)  %>% ungroup %>% select( BASE,X_1,X_2) %>% as.matrix()
+X   = observed_out %>% filter(AVISITN==1)  %>% ungroup %>% select( X_1,X_2) %>% as.matrix()
+#X   = observed_out %>% filter(AVISITN==1)  %>% ungroup %>% select( BASE,X_1,X_2) %>% as.matrix()
 
 #---------------
 # true ACE at Tm
