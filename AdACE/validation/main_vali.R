@@ -1,4 +1,4 @@
-#rm(list = ls())
+rm(list = ls())
 
 library(nnet)
 library(dplyr)
@@ -9,11 +9,19 @@ library(adace)
 #====================================
 #  Functions & Parameter Settings
 #====================================
-nSim  = 20 
-source("Data Simulator/cities simulator/f_sim.r")                                     # cities simulator
-source("Data Simulator/cities simulator/scenarios/scen_vali.R")
  
-  
+source("Data Simulator/cities simulator/f_sim.r")                                     # cities simulator
+ 
+# [1.b] Parameters in cities simulator
+
+total_data        <- 20
+nsim  = nSim      <- total_data
+n_core            <- 10
+nsim_1core        <- nsim/n_core
+starting_seed_val <- seq(1, nsim-nsim_1core+1, nsim_1core)  # 0:(n_core-1)*nsim_1core + 1
+
+source("Data Simulator/cities simulator/scenarios/scen_vali.r")             # cities simulator: large  trt effect,  scenario B
+
 #===============================
 #  ACE from nSim Simulations
 #===============================
@@ -114,13 +122,11 @@ for(i in 1:nSim){
     
   }
   
-  #--------------------
-  # PRINCIPAL SCORE
-  #-------------------- 
  
   
 }
 
+list1=list(A=A,Y=Y,Z=Z,X=X)
 
 result_df_AD
 colMeans(result_df_AD)

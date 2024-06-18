@@ -527,7 +527,7 @@ rm(list=ls())
 }
 
 
-# Bootstrap process - combine all bootstrap process together
+# Bootstrap process - combine all bootstrap process together -- no use
 {
   # general function for parallel process
   call_function_with_seed_all <- function(seed1,
@@ -777,6 +777,8 @@ rm(list=ls())
                                                          "PS_pred",
                                                          "PSPS_M_weighting"),
                                              .combine=cbind) %dopar% {
+                                               # combine = rbind # for row vector
+                                               # combind = 'c' # for list
       index <- i
       call_function_with_data(index, boot_data_all = boot_data_all)
     })
