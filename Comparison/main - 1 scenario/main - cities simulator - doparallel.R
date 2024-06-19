@@ -93,11 +93,28 @@ timer_start <- proc.time()
 n_core      <- detectCores()                                                 
 cl          <- makeCluster(n_core-1)
 registerDoParallel(cl)
-data_out    <- foreach (i = 1:nSim,.combine  ='rbind') %dopar% { f_1sim(i,seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) }
+data_out    <- foreach (i         = 1:nSim,
+                        .export   = c("rep_row","f_1sim","rep_col","pacf_vec_to_acf", "p_ae_poisson","p_loe_ee_function","pivot_longer","jags" ), 
+                        .packages = c("dplyr","cities","rjags"),
+                        .combine  = 'rbind') %dopar% { f_1sim(i,seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) }
 stopCluster(cl)
  
 timer_stop  <- proc.time() 
 dur         <- timer_stop - timer_start
+
+
+#===============================
+# Append
+#===============================
+
+result_df_PS = result_df_BS = result_df_AD= NULL
+for(i in 1:20){
+  result_df_PS = rbind.data.frame(result_df_PS, data_out[i,]$r1)
+  result_df_BS = rbind.data.frame(result_df_BS, data_out[i,]$r2)
+  result_df_AD = rbind.data.frame(result_df_AD, data_out[i,]$r3)
+}
+result_df_PS; result_df_BS; result_df_AD
+
 
 
 # TO DELETE
