@@ -8,8 +8,8 @@ library(dplyr)
 #  Functions
 #======================
 {
-source("Data Simulator/adace simulator/f_sim.r")                                      # adace simulator: or source('Magnusson/endpoint - ctn/main/f_sim.r')                               
-#source("Data Simulator/cities simulator/f_sim.r")                                    # cities simulatorsource("Principal Score/main/f_augdata.r")
+#source("Data Simulator/adace simulator/f_sim.r")                                      # adace simulator: or source('Magnusson/endpoint - ctn/main/f_sim.r')                               
+source("Data Simulator/cities simulator/f_sim.r")                                    # cities simulatorsource("Principal Score/main/f_augdata.r")
 source("Principal Score/main/f_EM_betas.r")
 source("Principal Score/main/f_pi.r")
 source("Principal Score/main/f_w.r")
@@ -29,19 +29,19 @@ source("Principal Score/main/f_augdata.r")
 
 # [1.a] Parameters in adace simulator
 { 
-  nSim   = 1                                                                       # number of simulated trials
-  n      = 1000                                                                    # sample size per trial
-  source("Data Simulator/adace simulator/setting_adace.r")                             # adace simulator
+#  nSim   = 1                                                                       # number of simulated trials
+#  n      = 1000                                                                    # sample size per trial
+#  source("Data Simulator/adace simulator/setting_adace.r")                             # adace simulator
 }
 
 # [1.b] Parameters in cities simulator
 {
-  # nSim  = 10                                                                         # number of simulated trials
-  # n_patient_ctrl = 200
-  # n_patient_expt = 200
+   nSim  = 1                                                                       # number of simulated trials
+   n_patient_ctrl = 200
+   n_patient_expt = 200
     
   # source("Data Simulator/cities simulator/scenarios/trt_large_scen_A.r")              # cities simulator: large  trt effect,  scenario A
-  # source("Data Simulator/cities simulator/scenarios/trt_large_scen_B.r")              # cities simulator: large  trt effect,  scenario B
+   source("Data Simulator/cities simulator/scenarios/trt_large_scen_B.r")              # cities simulator: large  trt effect,  scenario B
   # source("Data Simulator/cities simulator/scenarios/trt_large_scen_C.r")              # cities simulator: large  trt effect,  scenario C
   # source("Data Simulator/cities simulator/scenarios/trt_large_scen_D.r")              # cities simulator: large  trt effect,  scenario D
   # source("Data Simulator/cities simulator/scenarios/trt_modest_scen_A.r")             # cities simulator: modest trt effect,  scenario A
@@ -62,8 +62,8 @@ source("Principal Score/main/f_augdata.r")
  
 # [2] Parameters in Principal Score
 {
-n_ps                 = 5000                                                           # update n with a larger n -- for bootstrap [adace simulator]
-#n_patient_vector_ps  = 3*n_patient_vector                                             # update n with a larger n -- for bootstrap [cities simulator]     
+#n_ps                 = 500                                                           # update n with a larger n -- for bootstrap [adace simulator]
+n_patient_vector_ps  = 3*n_patient_vector                                             # update n with a larger n -- for bootstrap [cities simulator]     
 seed_M_0             = 2020
 M                    = 5
 seed_M_v             = seq(seed_M_0, seed_M_0+M-1,1)
@@ -88,18 +88,18 @@ for(i in 1:nSim){
   
   # adace simulator:
   {
-    sim          = f_sim(seed_v[i],n<-n_ps,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_adhnei,TrtEff_adhboth,TrtEff_adhact,TrtEff_adhpbo)
-    full         = sim$full_long %>% filter(AVISITN==visit)  
-    full         = f_D(full)
-    ps_in        = full %>% filter(U!=UtoRemove) %>%   rename( Z=TRT) %>%  mutate(indexZD=paste0(Z,D))
+ #   sim          = f_sim(seed_v[i],n<-n_ps,alpha1,alpha2,alpha3,beta,gamma1,gamma2,gamma3,TrtEff_adhnei,TrtEff_adhboth,TrtEff_adhact,TrtEff_adhpbo)
+#    full         = sim$full_long %>% filter(AVISITN==visit)  
+#    full         = f_D(full)
+#    ps_in        = full %>% filter(U!=UtoRemove) %>%   rename( Z=TRT) %>%  mutate(indexZD=paste0(Z,D))
   } 
     
   # cities simulator : simulate 1 dataset and prepare for variables
   {  
-  #  sim          = f_sim(seed_val <- seed_vec[i], n_patient_vector<-n_patient_vector_ps, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) 
-  #  full         = sim$observed_out %>% filter(AVISITN==maxtime) 
-  #  full         = f_D(full)
-  #  ps_in        = full %>% filter(U!=UtoRemove) %>%   rename( Z=TRT) %>%  mutate(indexZD=paste0(Z,D))
+    sim          = f_sim(seed_val <- seed_vec[i], n_patient_vector<-n_patient_vector_ps, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) 
+    full         = sim$observed_out %>% filter(AVISITN==maxtime) 
+    full         = f_D(full)
+    ps_in        = full %>% filter(U!=UtoRemove) %>%   rename( Z=TRT) %>%  mutate(indexZD=paste0(Z,D))
   }  
     
   # TRUE 

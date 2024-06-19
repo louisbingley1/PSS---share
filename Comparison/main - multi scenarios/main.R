@@ -25,6 +25,8 @@ source("Data Simulator/cities simulator/scenarios/trt_large_scen_B.r")
 source("Comparison/main - multi scenarios/main - cities simulator - fixed part 2.r")
 source("Comparison/utility functions/f_comparison_table.r")
 tb_1B = f_comparison_table(AD=result_df_AD,BS=result_df_BS,PS=result_df_PS)
+write.csv(result_df_PS,"Comparison/main - multi scenarios/resultprint/PS_citiesimulator_trt_large_scen_B_0618.csv")
+
 write.csv(result_df_PS,"Comparison/main - multi scenarios/resultprint/PS_citiesimulator_trt_large_scen_B.csv")
 write.csv(result_df_BS,"Comparison/main - multi scenarios/resultprint/BS_citiesimulator_trt_large_scen_B.csv")
 write.csv(result_df_AD,"Comparison/main - multi scenarios/resultprint/AD_citiesimulator_trt_large_scen_B.csv")
