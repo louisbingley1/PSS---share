@@ -16,6 +16,8 @@ library(cities)
 #source("Data Simulator/adace simulator/f_sim.r")                                     # adace simulator: or source('Magnusson/endpoint - ctn/main/f_sim.r')                                   # Function to simulate data  
 source("Data Simulator/cities simulator/f_sim.r")                                     # cities simulator
 source("Comparison/utility functions/f_doparallel_1sim_3m.r")
+source("Comparison/utility functions/f_comparison_table.r")
+
 {
   source("Principal Score/main/f_augdata.r")
   source("Principal Score/main/f_EM_betas.r")
@@ -115,5 +117,20 @@ for(i in 1:nSim){
 }
 result_df_PS; result_df_BS; result_df_AD
 
+#===============================
+# outputs
+#===============================
+# s1: nsim=300, M=200, iter=1500, burnin=500, nchain=1, thin=2, ScenB
+tb_1B = f_comparison_table(AD=result_df_AD,BS=result_df_BS,PS=result_df_PS)
+# write out
+write.csv(result_df_PS,"Comparison/JSM2024/outputs/s1_PS.csv")
+write.csv(result_df_BS,"Comparison/JSM2024/outputs/s1_BS.csv")
+write.csv(result_df_AD,"Comparison/JSM2024/outputs/s1_AD.csv")
+write.csv(tb_1B,"Comparison/JSM2024/outputs/s1_tb.csv")
+# write in
+s1_PS = read.csv("Comparison/JSM2024/outputs/s1_PS.csv",header=T)
+s1_BS = read.csv("Comparison/JSM2024/outputs/s1_BS.csv",header=T)
+s1_AD = read.csv("Comparison/JSM2024/outputs/s1_AD.csv",header=T)
+s1_tb = read.csv("Comparison/JSM2024/outputs/s1_tb.csv",header=T)
 
  
