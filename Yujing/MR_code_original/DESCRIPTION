@@ -1,0 +1,16 @@
+Package: pace
+Type: Package
+Title: Multiply Robust Estimators of  Average Causal Effects within principal strata (PACE)
+Version: 0.1.0
+Author: Shu Yang
+Maintainer: Shu Yang <syang24@ncsu.edu>
+Description: Implements various estimators of Average Causal Effects within principal strata from randomized experiments and observational studies.
+License: GPL (>=2)
+Encoding: UTF-8
+LazyData: true
+Depends: stats
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 7.1.0.9000
