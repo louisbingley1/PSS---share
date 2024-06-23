@@ -13,34 +13,34 @@ library(cities)
 #  Functions
 #======================
 
-#source("Data Simulator/adace simulator/f_sim.r")                                     # adace simulator: or source('Magnusson/endpoint - ctn/main/f_sim.r')                                   # Function to simulate data  
-source("Data Simulator/cities simulator/f_sim.r")                                     # cities simulator
-source("Comparison/utility functions/f_doparallel_1sim_3m.r")
-source("Comparison/utility functions/f_comparison_table.r")
+#source("Data Simulator/adace simulator/f_sim.R")                                     # adace simulator: or source('Magnusson/endpoint - ctn/main/f_sim.r')                                   # Function to simulate data  
+source("Data Simulator/cities simulator/f_sim.R")                                     # cities simulator
+source("Comparison/utility functions/f_doparallel_1sim_3m.R")
+source("Comparison/utility functions/f_comparison_table.R")
 
 {
-  source("Principal Score/main/f_augdata.r")
-  source("Principal Score/main/f_EM_betas.r")
-  source("Principal Score/main/f_pi.r")
-  source("Principal Score/main/f_w.r")
-  source("Principal Score/main/f_prob.r")
-  source("Principal Score/main/f_coeff.r")
-  source("Principal Score/main/f_PS_MBoot_1sim.r")
-  source("Principal Score/main/f_PS.r")
-  source("Principal Score/main/f_D.r")
+  source("Principal Score/main/f_augdata.R")
+  source("Principal Score/main/f_EM_betas.R")
+  source("Principal Score/main/f_pi.R")
+  source("Principal Score/main/f_w.R")
+  source("Principal Score/main/f_prob.R")
+  source("Principal Score/main/f_coeff.R")
+  source("Principal Score/main/f_PS_MBoot_1sim.R")
+  source("Principal Score/main/f_PS.R")
+  source("Principal Score/main/f_D.R")
   
 } 
 {
-  source('Magnusson/endpoint - ctn/main/f_mod.r')                                   # Function to define model and write to file
-  source('Magnusson/endpoint - ctn/main/f_I.r')                                     # Function to create matrix I
-  source('Magnusson/endpoint - ctn/main/f_pm.r')                                    # Function to calculate prior means of delta using sample treatment effect estimates 
-  source('Magnusson/endpoint - ctn/main/f_datjags.r')                               # Function to define dat.jags 
-  source('Magnusson/endpoint - ctn/main/f_inits.r')                                 # Function to define all initial values  - starting values for MCMC
-  source('Magnusson/endpoint - ctn/main/f_postparam_jags.r')                        # Function to compute postparam
-  source('Magnusson/endpoint - ctn/main/f_postparam_jagsmodel.r')                   # Function to compute postparam (another way)
-  source('Magnusson/endpoint - ctn/main/f_ace_1sim.r')                              # Function to compute ACE within 1 dataset
-  source('Magnusson/endpoint - ctn/main/f_Uhat_Utrue.r')
-  source('Magnusson/endpoint - ctn/main/f_rubins_rule.r')
+  source('Magnusson/endpoint - ctn/main/f_mod.R')                                   # Function to define model and write to file
+  source('Magnusson/endpoint - ctn/main/f_I.R')                                     # Function to create matrix I
+  source('Magnusson/endpoint - ctn/main/f_pm.R')                                    # Function to calculate prior means of delta using sample treatment effect estimates 
+  source('Magnusson/endpoint - ctn/main/f_datjags.R')                               # Function to define dat.jags 
+  source('Magnusson/endpoint - ctn/main/f_inits.R')                                 # Function to define all initial values  - starting values for MCMC
+  source('Magnusson/endpoint - ctn/main/f_postparam_jags.R')                        # Function to compute postparam
+  source('Magnusson/endpoint - ctn/main/f_postparam_jagsmodel.R')                   # Function to compute postparam (another way)
+  source('Magnusson/endpoint - ctn/main/f_ace_1sim.R')                              # Function to compute ACE within 1 dataset
+  source('Magnusson/endpoint - ctn/main/f_Uhat_Utrue.R')
+  source('Magnusson/endpoint - ctn/main/f_rubins_rule.R')
   
 } 
 
