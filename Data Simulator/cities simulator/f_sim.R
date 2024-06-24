@@ -53,7 +53,7 @@ observed_out  = observed_out_1 %>%
                     left_join(cbind.data.frame(timepoints=c(12,24,48,55),AVISITN=c(1,2,3,4)),by="timepoints") %>%
                     select(-arm0,-arm1,-timepoints,-observed)%>%
                     mutate(arm = arm-1, d=Y1-Y0) %>%
-                    rename(USUBJID = subject, BASE=base, X_1=continuous, X_2=binary, TRT=arm,ICE0=DC0,ICE1=DC1,ICE=DC,Y=aval_mar)
+                    rename(USUBJID = subject, BASE=base, X_1=continuous, X_2=binary, TRT=arm,ICE0=DC0,ICE1=DC1,ICE=DC,Y=aval) # Y=aval_mar should be wrong.
                     
 for(r in 1:nrow(observed_out)){observed_out$Utrue[r] = strsplit(observed_out$U[r],"/")[[1]][3] }
  

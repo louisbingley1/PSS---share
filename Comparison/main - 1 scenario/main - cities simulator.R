@@ -51,7 +51,7 @@ source("Data Simulator/cities simulator/f_sim.r")                               
 
 # [1.b] Parameters in cities simulator
 {
-   nSim  = 3                                                                        # number of simulated trials
+   nSim  = 1                                                                     # number of simulated trials
    n_patient_ctrl = 200
    n_patient_expt = 200
   
@@ -91,7 +91,7 @@ source("Data Simulator/cities simulator/f_sim.r")                               
   #n_ps                 = 5000                                                           # update n with a larger n -- for bootstrap [adace simulator]
   n_patient_vector_ps  = 3*n_patient_vector                                             # update n with a larger n -- for bootstrap [cities simulator]     
   seed_M_0             = 2020
-  M                    = 5
+  M                    = 10
   seed_M_v             = seq(seed_M_0, seed_M_0+M-1,1)
   ep1                  = 1;
   ep0                  = 1;  
@@ -111,6 +111,9 @@ result_df_PS           = NULL
 
 for(i in 1:nSim){
  
+
+  
+  
   #--------------------
   # DATA SIMULATION
   #--------------------
@@ -148,6 +151,8 @@ for(i in 1:nSim){
   #--------------------
   # BAYESIAN  
   #--------------------
+  # Start the clock!
+  ptm_b <- proc.time()
    { 
    # DATA SIMULATION : done.
    
@@ -177,10 +182,14 @@ for(i in 1:nSim){
                                                  ace_BS) 
     )
   }
+  # Stop the clock
+  t_b = proc.time() - ptm_b
   
   #--------------------
   # AdACE
-  #-------------------- 
+  #--------------------
+  # Start the clock!
+  ptm_a <- proc.time()
    {
     # DATA SIMULATION : done.
      
@@ -246,11 +255,15 @@ for(i in 1:nSim){
                                                   ace_AD)
                                        ) 
   
-}
+  }
+  # Stop the clock
+  t_a = proc.time() - ptm_a
   
   #--------------------
   # PRINCIPAL SCORE
-  #-------------------- 
+  #--------------------
+  # Start the clock!
+  ptm_p <- proc.time()
    { 
     # DATA SIMULATION -- Re-Create data : Simulate a larger data pool (sample size: n_ps or n_patient_vector_ps) and bootstrap. 
      
@@ -296,7 +309,10 @@ for(i in 1:nSim){
                                                           trued_AC_sp_nsl = trued_AC_nsl,
                                                           ace_PS)  
     )
-  }
+   }
+  
+  # Stop the clock
+  t_p = proc.time() - ptm_p
   
 }
 

@@ -40,8 +40,8 @@ f_ace_1sim      =  function(postparam,dat,I) {
   
   # "w"
   w             = postparam[,grep("w", names(postparam), value=TRUE)] 
-  index_i       = rep(1:nrow(dat_in),each=4)
-  index_j       = rep(1:4, nrow(dat_in))
+  index_i       = rep(1:nrow(dat),each=4)
+  index_j       = rep(1:4, nrow(dat))
   col_order     = paste0("w[",index_i,",",index_j,"]")
   w             = w[,col_order]
   
@@ -59,7 +59,7 @@ f_ace_1sim      =  function(postparam,dat,I) {
   for (iter in 1:niter){
     
     W = w[iter,] 
-    W = matrix(W,nrow=nrow(dat_in),ncol=4,byrow = T) 
+    W = matrix(W,nrow=nrow(dat),ncol=4,byrow = T) 
     W = as.data.frame(W) 
     colnames(W) <-c("H","D","I","B")
     
