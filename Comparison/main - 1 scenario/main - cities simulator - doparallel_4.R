@@ -120,11 +120,11 @@ result_df_PS; result_df_BS; result_df_AD
 #===============================
 # outputs
 #===============================
-# nsim=300, M=200, iter=1500, burnin=500, nchain=1, thin=2, ScenB
+# nsim=300, M=200, iter=1500, burnin=500, nchain=1, thin=2 
 # s1: trt large ScenB
-# s2: FL1C
+# s2: trt large Scenc / FL1C
 # s3: trt modest ScenB
-# s4: FL2C
+# s4: trt modest Scenc / FL2C
 
 tb_1B = f_comparison_table(AD=result_df_AD,BS=result_df_BS,PS=result_df_PS)
 # write out
@@ -133,8 +133,8 @@ write.csv(result_df_BS,"Comparison/JSM2024/outputs/s4_BS.csv")
 write.csv(result_df_AD,"Comparison/JSM2024/outputs/s4_AD.csv")
 write.csv(tb_1B,"Comparison/JSM2024/outputs/s4_tb.csv")
 # write in
-s1_PS = read.csv("Comparison/JSM2024/outputs/s4_PS.csv",header=T)
-s1_BS = read.csv("Comparison/JSM2024/outputs/s4_BS.csv",header=T)
-s1_AD = read.csv("Comparison/JSM2024/outputs/s4_AD.csv",header=T)
-s1_tb = read.csv("Comparison/JSM2024/outputs/s4_tb.csv",header=T)
+s4_PS = read.csv("Comparison/JSM2024/outputs/s4_PS.csv",header=T)
+s4_BS = read.csv("Comparison/JSM2024/outputs/s4_BS.csv",header=T)
+s4_AD = read.csv("Comparison/JSM2024/outputs/s4_AD.csv",header=T)
+s4_tb = read.csv("Comparison/JSM2024/outputs/s4_tb.csv",header=T)
 

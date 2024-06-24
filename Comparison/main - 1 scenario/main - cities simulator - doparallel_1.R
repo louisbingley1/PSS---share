@@ -55,7 +55,7 @@ source("Comparison/utility functions/f_comparison_table.R")
   n_patient_ctrl = 200
   n_patient_expt = 200
   
-  source("Data Simulator/cities simulator/scenarios/trt_large_scen_B.r")             # cities simulator: large  trt effect,  scenario B
+  source("Data Simulator/cities simulator/scenarios/trt_large_scen_B.R")             # cities simulator: large  trt effect,  scenario B
   
 }
 
@@ -120,7 +120,12 @@ result_df_PS; result_df_BS; result_df_AD
 #===============================
 # outputs
 #===============================
-# s1: nsim=300, M=200, iter=1500, burnin=500, nchain=1, thin=2, ScenB
+# nsim=300, M=200, iter=1500, burnin=500, nchain=1, thin=2
+# s1: trt large ScenB
+# s2: trt large Scenc / FL1C
+# s3: trt modest ScenB
+# s4: trt modest Scenc / FL2C
+
 tb_1B = f_comparison_table(AD=result_df_AD,BS=result_df_BS,PS=result_df_PS)
 # write out
 write.csv(result_df_PS,"Comparison/JSM2024/outputs/s1_PS.csv")
