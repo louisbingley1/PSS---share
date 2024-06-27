@@ -1,4 +1,3 @@
-rm(list = ls())
 
 #=============================
 # Load Functions & Parameters
@@ -7,8 +6,7 @@ rm(list = ls())
   library(nnet)
   library(dplyr)
   library(R2jags)  ;
-  library(dplyr)
-  library(adace)
+#  library(adace)
   library(parallel)
   library(doParallel)
   library(foreach)
@@ -16,8 +14,10 @@ rm(list = ls())
 }
 
 # Functions
-{source("Data Simulator/cities simulator/f_sim.R")                                     # cities simulator
-source("Comparison/utility functions/f_doparallel_1sim_3m.R")
+{
+load(file = "Data Simulator/cities simulator/sim_list.Rdata")
+source("")
+source("Comparison/utility functions/f_doparallel_1sim_2m - nosim.R")
 source("Comparison/utility functions/f_comparison_table.R")}
 {
   source("Principal Score/main/f_augdata.R")
@@ -46,14 +46,7 @@ source("Comparison/utility functions/f_comparison_table.R")}
 } 
 
 # Parameter Settings
-{
-  nSim  = 1                                                                          # number of simulated trials
-  n_patient_ctrl = 200
-  n_patient_expt = 200
-  
-  source("Data Simulator/cities simulator/scenarios/trt_large_scen_B.R")             # cities simulator: large  trt effect,  scenario B
-  
-} # [1.b] Parameters in cities simulator [nSim = 1]
+
 { 
   parSave        = c("delta","S0","S1","Y0","Y1","w")                                # argument of jags() 
   n.chains       = 1                                                                 # argument of jags()
@@ -96,7 +89,7 @@ data_out    <- foreach (
                         
                         ) %dopar% { 
                           
-                          f_1sim(i,seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) 
+                          f_1sim(i,sim_list,seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) 
                         
                         }
 stopCluster(cl)

@@ -1,5 +1,5 @@
 
-f_1sim = function(i,seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df){
+f_1sim = function(i,sim_list, seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df){
 
   
   result_df_BS           = NULL
@@ -11,7 +11,7 @@ f_1sim = function(i,seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_
   #-------------------- 
   # cities simulator :  
   {
-    sim     = f_sim(seed_val <- seed_vec[i], n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) 
+    sim     = sim_list[[i]]
     dat_    = sim$observed_out %>% filter(AVISITN==maxtime) 
     dat_in  = dat_ %>%  mutate(    Y0                = ifelse(TRT==0, Y, NA),
                                    Y1                = ifelse(TRT==1, Y, NA),
@@ -68,7 +68,7 @@ f_1sim = function(i,seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_
 
     # cities simulator : simulate 1 dataset and prepare for variables
     {  
-      sim          = f_sim(seed_val <- seed_vec[i], n_patient_vector<-n_patient_vector_ps, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) 
+      sim          = sim
       full         = sim$observed_out %>% filter(AVISITN==maxtime) 
       full         = f_D(full)
       ps_in        = full %>% filter(U!=UtoRemove) %>%   rename( Z=TRT) %>%  mutate(indexZD=paste0(Z,D))
