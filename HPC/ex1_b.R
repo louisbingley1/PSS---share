@@ -88,7 +88,7 @@ source("HPC/f/hpc_f_2m.R")                                     # cities simulato
 load(file = "HPC/sim_list/sim_list.Rdata") # loads result
 
 set.seed(b)
-result <- hpc_f_2m(b,sim_list,seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df) 
+result <- hpc_f_2m(b,sim_list) 
 save(result, file = paste0("HPC/Output/ex1_res_", b, ".rdata"))
 
 # load(file =  "HPC/Output/ex1_res_1.rdata") # loads result
