@@ -2,7 +2,7 @@ rm(list = ls())
 
 library(nnet)
 library(dplyr)
-library(R2jags)  ;
+library(R2jags) ;
 library(dplyr)
 library(adace)
 library(parallel)
@@ -51,7 +51,7 @@ source("Comparison/utility functions/f_comparison_table.R")
 
 # [1.b] Parameters in cities simulator [nSim = 300]
 {
-  nSim  = 20                                                                # number of simulated trials
+  nSim  = 7                                                                # number of simulated trials
   n_patient_ctrl = 200
   n_patient_expt = 200
   
