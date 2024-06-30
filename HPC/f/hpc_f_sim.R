@@ -16,6 +16,6 @@ for(i in 1: nSim){
            
 }
 
-save(sim_list, file="Data Simulator/cities simulator/sim_list.Rdata")
+save(sim_list, file="HPC/sim_list/sim_list.Rdata")
 # load(file = "Data Simulator/cities simulator/sim_list.Rdata") # loads result
  

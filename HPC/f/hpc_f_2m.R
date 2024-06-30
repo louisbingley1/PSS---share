@@ -1,5 +1,4 @@
-
-f_1sim = function(i,sim_list, seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df){
+hpc_f_2m = function(i,sim_list){
 
   
   result_df_BS           = NULL
@@ -60,6 +59,7 @@ f_1sim = function(i,sim_list, seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z
   #--------------------
   # AdACE
   #--------------------  
+  
   #--------------------
   # PRINCIPAL SCORE
   #-------------------- 
@@ -111,7 +111,7 @@ f_1sim = function(i,sim_list, seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z
 
 
 
-# df_1sim <- f_1sim(seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df)
+# df_1sim <- hpc_f_2m(i,sim_list,seed_vec, n_patient_vector, p_loe_max, z_l_loe,  z_u_loe, p_ee_max, z_l_ee, z_u_ee, timepoints, pacf_list,  sigma_ar_vec, mean_list, beta_list, p_admin, rate_dc_ae,  prob_ae,  reference_id, plot_po, up_good,  threshold, delta_adjustment_in, covariate_df)
 # list(df_1sim)
 
 
