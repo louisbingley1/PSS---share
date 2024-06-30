@@ -48,4 +48,11 @@ prob_ae = c(prob_ae_ctrl, prob_ae_expt)
 rate_dc_ae_ctrl = 0.08
 rate_dc_ae_expt = 0.08
 rate_dc_ae = c(rate_dc_ae_ctrl, rate_dc_ae_expt)
- 
+
+static_output = TRUE
+
+# Add (B.L.)
+nSim                = total_data
+maxtime             = length(timepoints)-1
+seed_vec            = seq(starting_seed_val, starting_seed_val+nSim-1,1)
+plot_po             = FALSE
