@@ -3,7 +3,7 @@ rm(list = ls())
 library(nnet)
 library(dplyr)
 library(R2jags) ;
-library(dplyr)
+library(dplyr) 
 library(adace)
 library(parallel)
 library(doParallel)
@@ -15,7 +15,7 @@ library(cities)
 
 #source("Data Simulator/adace simulator/f_sim.R")                                     # adace simulator: or source('Magnusson/endpoint - ctn/main/f_sim.r')                                   # Function to simulate data  
 source("Data Simulator/cities simulator/f_sim.R")                                     # cities simulator
-source("Comparison/utility functions/f_doparallel_1sim_3m.R")
+source("HPC/f/f_doparallel_1sim_3m.R")
 source("Comparison/utility functions/f_comparison_table.R")
 
 {
@@ -51,7 +51,7 @@ source("Comparison/utility functions/f_comparison_table.R")
 
 # [1.b] Parameters in cities simulator [nSim = 300]
 {
-  nSim  = 7                                                                # number of simulated trials
+  nSim  = 300                                                              # number of simulated trials
   n_patient_ctrl = 200
   n_patient_expt = 200
   
