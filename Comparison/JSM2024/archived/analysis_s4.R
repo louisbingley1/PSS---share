@@ -1,7 +1,7 @@
-s4_PS = read.csv("Comparison/JSM2024/outputs/s2_PS.csv",header=T)
-s4_BS = read.csv("Comparison/JSM2024/outputs/s2_BS.csv",header=T)
-s4_AD = read.csv("Comparison/JSM2024/outputs/s2_AD.csv",header=T)
-s4_tb = read.csv("Comparison/JSM2024/outputs/s2_tb.csv",header=T)
+s4_PS = read.csv("Comparison/JSM2024/outputs/s4_PS.csv",header=T)
+s4_BS = read.csv("Comparison/JSM2024/outputs/s4_BS.csv",header=T)
+s4_AD = read.csv("Comparison/JSM2024/outputs/s4_AD.csv",header=T)
+s4_tb = read.csv("Comparison/JSM2024/outputs/s4_tb.csv",header=T)
 head(s4_PS)[,1:10]
 # View(s4_PS)
 

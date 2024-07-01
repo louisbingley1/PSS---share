@@ -3,7 +3,7 @@ s6_BS = read.csv("Comparison/JSM2024/outputs/s6_BS.csv",header=T)
 s6_AD = read.csv("Comparison/JSM2024/outputs/s6_AD.csv",header=T)
 s6_tb = read.csv("Comparison/JSM2024/outputs/s6_tb.csv",header=T)
 head(s6_PS)[,1:10]
-View(s6_PS)
+#View(s6_PS)
 
 
 #########################
@@ -320,4 +320,116 @@ View(s6_PS)
   s6_power_matrix          = round(s6_power_matrix,3)
   s6_power_matrix
   # write.csv(s6_power_matrix,"Comparison/JSM2024/outputs/s6_power_matrix.csv")
+}
+
+#########################
+# WIDE -> LONG
+#########################
+
+# BIAS
+{
+  BS_S01_bias = s6_bias_matrix$stratum_01[2]
+  BS_S10_bias = s6_bias_matrix$stratum_10[2]
+  BS_S00_bias = s6_bias_matrix$stratum_00[2]
+  BS_S11_bias = s6_bias_matrix$stratum_11[2]
+  BS_Ss0_bias = s6_bias_matrix$stratum_s0[2]
+  AD_S00_bias = s6_bias_matrix$stratum_00[3]
+  AD_Ss0_bias = s6_bias_matrix$stratum_s0[3]
+  PS1_S00_bias = s6_bias_matrix$stratum_00[5]
+  PS2_S00_bias = s6_bias_matrix$stratum_00[6]
+  PS1_S01_bias = s6_bias_matrix$stratum_01[5]
+  PS2_S01_bias = s6_bias_matrix$stratum_01[6]
+  PS1_S10_bias = s6_bias_matrix$stratum_10[5]
+  PS2_S10_bias = s6_bias_matrix$stratum_10[6]
+  PS1_Ss0_bias = s6_bias_matrix$stratum_s0[5]
+  PS2_Ss0_bias = s6_bias_matrix$stratum_s0[6]
+  
+  df_bias_6= rbind.data.frame(  cbind.data.frame(bias = BS_S01_bias, strata ="Strata 01", method = "Bayesian"   ,scenario = "s6"),
+                                cbind.data.frame(bias = BS_S10_bias, strata ="Strata 10", method = "Bayesian"   ,scenario = "s6"),
+                                cbind.data.frame(bias = BS_S00_bias, strata ="Strata 00", method = "Bayesian"   ,scenario = "s6"),
+                                cbind.data.frame(bias = BS_S11_bias, strata ="Strata 11", method = "Bayesian"   ,scenario = "s6"),
+                                cbind.data.frame(bias = BS_Ss0_bias, strata ="Strata *0", method = "Bayesian"   ,scenario = "s6"),
+                                cbind.data.frame(bias = AD_S00_bias, strata ="Strata 00", method = "AdACE"      ,scenario = "s6"),
+                                cbind.data.frame(bias = AD_Ss0_bias, strata = "Strata *0",method = "AdACE"      ,scenario = "s6"),
+                                cbind.data.frame(bias = PS1_S00_bias,strata = "Strata 00",method = "PS"         ,scenario = "s6"),
+                                cbind.data.frame(bias = PS2_S00_bias,strata = "Strata 00",method = "PS(Cov-adj)",scenario = "s6"),
+                                cbind.data.frame(bias = PS1_S01_bias,strata = "Strata 01",method = "PS"         ,scenario = "s6"),
+                                cbind.data.frame(bias = PS2_S01_bias,strata = "Strata 01",method = "PS(Cov-adj)",scenario = "s6"),
+                                cbind.data.frame(bias = PS1_S10_bias,strata = "Strata 10",method = "PS"         ,scenario = "s6"),
+                                cbind.data.frame(bias = PS2_S10_bias,strata = "Strata 10",method = "PS(Cov-adj)",scenario = "s6"),
+                                cbind.data.frame(bias = PS1_Ss0_bias,strata = "Strata *0",method = "PS"         ,scenario = "s6"),
+                                cbind.data.frame(bias = PS2_Ss0_bias,strata = "Strata *0",method = "PS(Cov-adj)",scenario = "s6"))
+  
+}
+
+# COVERAGE PROB
+{
+  BS_S01_cover_prob = s6_cover_prob_matrix$stratum_01[2]
+  BS_S10_cover_prob = s6_cover_prob_matrix$stratum_10[2]
+  BS_S00_cover_prob = s6_cover_prob_matrix$stratum_00[2]
+  BS_S11_cover_prob = s6_cover_prob_matrix$stratum_11[2]
+  BS_Ss0_cover_prob = s6_cover_prob_matrix$stratum_s0[2]
+  AD_S00_cover_prob = s6_cover_prob_matrix$stratum_00[3]
+  AD_Ss0_cover_prob = s6_cover_prob_matrix$stratum_s0[3]
+  PS1_S00_cover_prob = s6_cover_prob_matrix$stratum_00[5]
+  PS2_S00_cover_prob = s6_cover_prob_matrix$stratum_00[6]
+  PS1_S01_cover_prob = s6_cover_prob_matrix$stratum_01[5]
+  PS2_S01_cover_prob = s6_cover_prob_matrix$stratum_01[6]
+  PS1_S10_cover_prob = s6_cover_prob_matrix$stratum_10[5]
+  PS2_S10_cover_prob = s6_cover_prob_matrix$stratum_10[6]
+  PS1_Ss0_cover_prob = s6_cover_prob_matrix$stratum_s0[5]
+  PS2_Ss0_cover_prob = s6_cover_prob_matrix$stratum_s0[6]
+  
+  df_cover_prob_6= rbind.data.frame(  cbind.data.frame(cover_prob = BS_S01_cover_prob, strata ="Strata 01", method = "Bayesian"   ,scenario = "s6"),
+                                      cbind.data.frame(cover_prob = BS_S10_cover_prob, strata ="Strata 10", method = "Bayesian"   ,scenario = "s6"),
+                                      cbind.data.frame(cover_prob = BS_S00_cover_prob, strata ="Strata 00", method = "Bayesian"   ,scenario = "s6"),
+                                      cbind.data.frame(cover_prob = BS_S11_cover_prob, strata ="Strata 11", method = "Bayesian"   ,scenario = "s6"),
+                                      cbind.data.frame(cover_prob = BS_Ss0_cover_prob, strata ="Strata *0", method = "Bayesian"   ,scenario = "s6"),
+                                      cbind.data.frame(cover_prob = AD_S00_cover_prob, strata ="Strata 00", method = "AdACE"      ,scenario = "s6"),
+                                      cbind.data.frame(cover_prob = AD_Ss0_cover_prob, strata = "Strata *0",method = "AdACE"      ,scenario = "s6"),
+                                      cbind.data.frame(cover_prob = PS1_S00_cover_prob,strata = "Strata 00",method = "PS"         ,scenario = "s6"),
+                                      cbind.data.frame(cover_prob = PS2_S00_cover_prob,strata = "Strata 00",method = "PS(Cov-adj)",scenario = "s6"),
+                                      cbind.data.frame(cover_prob = PS1_S01_cover_prob,strata = "Strata 01",method = "PS"         ,scenario = "s6"),
+                                      cbind.data.frame(cover_prob = PS2_S01_cover_prob,strata = "Strata 01",method = "PS(Cov-adj)",scenario = "s6"),
+                                      cbind.data.frame(cover_prob = PS1_S10_cover_prob,strata = "Strata 10",method = "PS"         ,scenario = "s6"),
+                                      cbind.data.frame(cover_prob = PS2_S10_cover_prob,strata = "Strata 10",method = "PS(Cov-adj)",scenario = "s6"),
+                                      cbind.data.frame(cover_prob = PS1_Ss0_cover_prob,strata = "Strata *0",method = "PS"         ,scenario = "s6"),
+                                      cbind.data.frame(cover_prob = PS2_Ss0_cover_prob,strata = "Strata *0",method = "PS(Cov-adj)",scenario = "s6"))
+  
+}
+
+# POWER
+{
+  BS_S01_power = s6_power_matrix$stratum_01[2]
+  BS_S10_power = s6_power_matrix$stratum_10[2]
+  BS_S00_power = s6_power_matrix$stratum_00[2]
+  BS_S11_power = s6_power_matrix$stratum_11[2]
+  BS_Ss0_power = s6_power_matrix$stratum_s0[2]
+  AD_S00_power = s6_power_matrix$stratum_00[3]
+  AD_Ss0_power = s6_power_matrix$stratum_s0[3]
+  PS1_S00_power = s6_power_matrix$stratum_00[5]
+  PS2_S00_power = s6_power_matrix$stratum_00[6]
+  PS1_S01_power = s6_power_matrix$stratum_01[5]
+  PS2_S01_power = s6_power_matrix$stratum_01[6]
+  PS1_S10_power = s6_power_matrix$stratum_10[5]
+  PS2_S10_power = s6_power_matrix$stratum_10[6]
+  PS1_Ss0_power = s6_power_matrix$stratum_s0[5]
+  PS2_Ss0_power = s6_power_matrix$stratum_s0[6]
+  
+  df_power_6= rbind.data.frame(  cbind.data.frame(power = BS_S01_power, strata ="Strata 01", method = "Bayesian"   ,scenario = "s6"),
+                                 cbind.data.frame(power = BS_S10_power, strata ="Strata 10", method = "Bayesian"   ,scenario = "s6"),
+                                 cbind.data.frame(power = BS_S00_power, strata ="Strata 00", method = "Bayesian"   ,scenario = "s6"),
+                                 cbind.data.frame(power = BS_S11_power, strata ="Strata 11", method = "Bayesian"   ,scenario = "s6"),
+                                 cbind.data.frame(power = BS_Ss0_power, strata ="Strata *0", method = "Bayesian"   ,scenario = "s6"),
+                                 cbind.data.frame(power = AD_S00_power, strata ="Strata 00", method = "AdACE"      ,scenario = "s6"),
+                                 cbind.data.frame(power = AD_Ss0_power, strata = "Strata *0",method = "AdACE"      ,scenario = "s6"),
+                                 cbind.data.frame(power = PS1_S00_power,strata = "Strata 00",method = "PS"         ,scenario = "s6"),
+                                 cbind.data.frame(power = PS2_S00_power,strata = "Strata 00",method = "PS(Cov-adj)",scenario = "s6"),
+                                 cbind.data.frame(power = PS1_S01_power,strata = "Strata 01",method = "PS"         ,scenario = "s6"),
+                                 cbind.data.frame(power = PS2_S01_power,strata = "Strata 01",method = "PS(Cov-adj)",scenario = "s6"),
+                                 cbind.data.frame(power = PS1_S10_power,strata = "Strata 10",method = "PS"         ,scenario = "s6"),
+                                 cbind.data.frame(power = PS2_S10_power,strata = "Strata 10",method = "PS(Cov-adj)",scenario = "s6"),
+                                 cbind.data.frame(power = PS1_Ss0_power,strata = "Strata *0",method = "PS"         ,scenario = "s6"),
+                                 cbind.data.frame(power = PS2_Ss0_power,strata = "Strata *0",method = "PS(Cov-adj)",scenario = "s6"))
+  
 }
