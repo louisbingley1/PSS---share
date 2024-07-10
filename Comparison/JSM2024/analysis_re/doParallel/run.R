@@ -1,0 +1,8 @@
+source("Comparison/JSM2024/analysis_re/doParallel/main - cities simulator -rerunBayes - doparallel_1.R")
+source("Comparison/JSM2024/analysis_re/doParallel/main - cities simulator -rerunBayes - doparallel_2.R")
+source("Comparison/JSM2024/analysis_re/doParallel/main - cities simulator -rerunBayes - doparallel_3.R")
+source("Comparison/JSM2024/analysis_re/doParallel/main - cities simulator -rerunBayes - doparallel_4.R")
+source("Comparison/JSM2024/analysis_re/doParallel/main - cities simulator -rerunBayes - doparallel_5.R")
+source("Comparison/JSM2024/analysis_re/doParallel/main - cities simulator -rerunBayes - doparallel_6.R")
+source("Comparison/JSM2024/analysis_re/doParallel/main - cities simulator -rerunBayes - doparallel_7.R")
+source("Comparison/JSM2024/analysis_re/doParallel/main - cities simulator -rerunBayes - doparallel_8.R")
