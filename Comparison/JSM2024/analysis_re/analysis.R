@@ -1,13 +1,13 @@
 library(dplyr)
 library(ggplot2)
-source("Comparison/JSM2024/analysis_s1.R")
-source("Comparison/JSM2024/analysis_s2.R")
-source("Comparison/JSM2024/analysis_s3.R")
-source("Comparison/JSM2024/analysis_s4.R")
-source("Comparison/JSM2024/analysis_s5.R")
-source("Comparison/JSM2024/analysis_s6.R")
-source("Comparison/JSM2024/analysis_s7.R")
-source("Comparison/JSM2024/analysis_s8.R")
+source("Comparison/JSM2024/analysis_re/analysis_s1.R")
+source("Comparison/JSM2024/analysis_re/analysis_s2.R")
+source("Comparison/JSM2024/analysis_re/analysis_s3.R")
+source("Comparison/JSM2024/analysis_re/analysis_s4.R")
+source("Comparison/JSM2024/analysis_re/analysis_s5.R")
+source("Comparison/JSM2024/analysis_re/analysis_s6.R")
+source("Comparison/JSM2024/analysis_re/analysis_s7.R")
+source("Comparison/JSM2024/analysis_re/analysis_s8.R")
 rownames = c(rep('s1',6),rep('s2',6),rep('s3',6),rep('s4',6),rep('s5',6),rep('s6',6),rep('s7',6),rep('s8',6))
 
 #bias
@@ -41,7 +41,17 @@ s5_cover_prob_matrix
 s6_cover_prob_matrix
 s7_cover_prob_matrix
 s8_cover_prob_matrix
-cover_prob_matrix <- cbind.data.frame(scenario = rownames,rbind(s1_cover_prob_matrix,s2_cover_prob_matrix,s3_cover_prob_matrix,s4_cover_prob_matrix,s5_cover_prob_matrix,s6_cover_prob_matrix,s7_cover_prob_matrix,s8_cover_prob_matrix))   ;cover_prob_matrix
+cover_prob_matrix_ <- cbind.data.frame(scenario = rownames,rbind(s1_cover_prob_matrix,s2_cover_prob_matrix,s3_cover_prob_matrix,s4_cover_prob_matrix,s5_cover_prob_matrix,s6_cover_prob_matrix,s7_cover_prob_matrix,s8_cover_prob_matrix))   ;cover_prob_matrix
+cover_prob_matrix  <- cover_prob_matrix_ %>% 
+  filter(row.names(cover_prob_matrix_) %in% c("Bayesian Delta","AdACE methodA","PS Non-Cov-Adj","PS Cov-Adj",
+                                        "Bayesian Delta1","AdACE methodA1","PS Non-Cov-Adj1","PS Cov-Adj1",
+                                        "Bayesian Delta2","AdACE methodA2","PS Non-Cov-Adj2","PS Cov-Adj2",
+                                        "Bayesian Delta3","AdACE methodA3","PS Non-Cov-Adj3","PS Cov-Adj3",
+                                        "Bayesian Delta4","AdACE methodA4","PS Non-Cov-Adj4","PS Cov-Adj4",
+                                        "Bayesian Delta5","AdACE methodA5","PS Non-Cov-Adj5","PS Cov-Adj5")) %>%
+  filter(scenario %in% c("s1","s2","s3","s4","s5","s6"))%>%
+  select(scenario, stratum_00,stratum_s0)
+cover_prob_matrix
 write.csv(cover_prob_matrix,"Comparison/JSM2024/results/cover_prob_matrix.csv")
 
 # power
@@ -53,8 +63,26 @@ s5_power_matrix
 s6_power_matrix
 s7_power_matrix
 s8_power_matrix
-power_matrix <- cbind.data.frame(scenario = rownames,rbind(s1_power_matrix,s2_power_matrix,s3_power_matrix,s4_power_matrix,s5_power_matrix,s6_power_matrix,s7_power_matrix,s8_power_matrix))   ;power_matrix
+power_matrix_ <- cbind.data.frame(scenario = rownames,rbind(s1_power_matrix,s2_power_matrix,s3_power_matrix,s4_power_matrix,s5_power_matrix,s6_power_matrix,s7_power_matrix,s8_power_matrix))   ;power_matrix
+power_matrix  <- power_matrix_ %>% 
+  filter(row.names(power_matrix_) %in% c("Bayesian Delta","AdACE methodA","PS Non-Cov-Adj","PS Cov-Adj",
+                                              "Bayesian Delta1","AdACE methodA1","PS Non-Cov-Adj1","PS Cov-Adj1",
+                                              "Bayesian Delta2","AdACE methodA2","PS Non-Cov-Adj2","PS Cov-Adj2",
+                                              "Bayesian Delta3","AdACE methodA3","PS Non-Cov-Adj3","PS Cov-Adj3",
+                                              "Bayesian Delta4","AdACE methodA4","PS Non-Cov-Adj4","PS Cov-Adj4",
+                                              "Bayesian Delta5","AdACE methodA5","PS Non-Cov-Adj5","PS Cov-Adj5")) %>%
+  filter(scenario %in% c("s1","s2","s3","s4","s5","s6"))%>%
+  select(scenario, stratum_00,stratum_s0)
+power_matrix
 write.csv(power_matrix,"Comparison/JSM2024/results/power_matrix.csv")
+
+alpha_matrix  <- power_matrix_ %>% 
+  filter(row.names(power_matrix_) %in% c("Bayesian Delta6","AdACE methodA6","PS Non-Cov-Adj6","PS Cov-Adj6",
+                                         "Bayesian Delta7","AdACE methodA7","PS Non-Cov-Adj7","PS Cov-Adj7") ) %>%
+  filter(scenario %in% c("s7","s8"))%>%
+  select(scenario, stratum_00,stratum_s0)
+alpha_matrix
+write.csv(alpha_matrix,"Comparison/JSM2024/results/alpha_matrix.csv")
 
 
 ###################
@@ -143,8 +171,13 @@ write.csv(m,"Comparison/JSM2024/results/cover_prob_tb.csv")
 # power scatter plot
 #-----------------------------
 df_power = rbind.data.frame(df_power_1,df_power_2,df_power_3,df_power_4,df_power_5,df_power_6,df_power_7,df_power_8) %>% 
-  filter(strata != "Strata 11" & scenario != "s7" & scenario != "s8")
+  filter(strata  %in% c("Strata 00","Strata *0")  & scenario != "s7" & scenario != "s8")
 ggplot(df_power, aes(x=scenario, y=power,color=method)) +  
+  geom_point(size=4)+facet_wrap(~strata) +
+  theme_bw(base_size = 15, base_line_size = .3,base_rect_size  =.3)+
+  ylab("Power")+
+  xlab("Scenarios")
+ggplot(df_power%>% filter(method !="Bayesian"), aes(x=scenario, y=power,color=method)) +  
   geom_point(size=4)+facet_wrap(~strata) +
   theme_bw(base_size = 15, base_line_size = .3,base_rect_size  =.3)+
   ylab("Power")+
@@ -154,12 +187,18 @@ ggplot(df_power, aes(x=scenario, y=power,color=method)) +
 # alpha scatter plot
 #-----------------------------
 df_alpha = rbind.data.frame(df_power_1,df_power_2,df_power_3,df_power_4,df_power_5,df_power_6,df_power_7,df_power_8) %>% 
-  filter(strata != "Strata 11" & (scenario == "s7" | scenario == "s8"))
+  filter(strata  %in% c("Strata 00","Strata *0")   & (scenario == "s7" | scenario == "s8"))
 ggplot(df_alpha, aes(x=scenario, y=power,color=method)) +  
   geom_point(size=4)+facet_wrap(~strata) +
   theme_bw(base_size = 15, base_line_size = .3,base_rect_size  =.3)+
   ylab("Type I error")+
   xlab("Scenarios")
+ggplot(df_alpha %>% filter(method !="Bayesian"), aes(x=scenario, y=power,color=method)) +  
+  geom_point(size=4)+facet_wrap(~strata) +
+  theme_bw(base_size = 15, base_line_size = .3,base_rect_size  =.3)+
+  ylab("Type I error")+
+  xlab("Scenarios")
+
 
 #-----------------------------
 # table

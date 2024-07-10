@@ -1,10 +1,12 @@
+source("Comparison/JSM2024/f_sefix.R")
+
 s4_PS = read.csv("Comparison/JSM2024/outputs/s2_PS.csv",header=T)
 s4_BS = read.csv("Comparison/JSM2024/outputs/s2_BS.csv",header=T)
 s4_AD = read.csv("Comparison/JSM2024/outputs/s2_AD.csv",header=T)
 s4_tb = read.csv("Comparison/JSM2024/outputs/s2_tb.csv",header=T)
 head(s4_PS)[,1:10]
 # View(s4_PS)
-
+s4_BS = f_sefix(s4_BS)
 
 #########################
 #  BIAS

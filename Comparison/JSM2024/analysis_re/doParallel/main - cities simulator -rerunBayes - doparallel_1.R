@@ -39,7 +39,7 @@ source("Comparison/utility functions/f_comparison_table.R")
 
 # [1.b] Parameters in cities simulator [nSim = 300]
 {
-  nSim  = 30 #300                                                                    # number of simulated trials
+  nSim  = 21 #300                                                                    # number of simulated trials
   n_patient_ctrl = 200
   n_patient_expt = 200
   

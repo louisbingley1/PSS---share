@@ -1,5 +1,5 @@
 s7_PS = read.csv("Comparison/JSM2024/outputs/s7_PS.csv",header=T)
-s7_BS = read.csv("Comparison/JSM2024/outputs/s7_BS.csv",header=T)
+s7_BS = read.csv("Comparison/JSM2024/analysis_re/outputs/s7_BS_re.csv",header=T)
 s7_AD = read.csv("Comparison/JSM2024/outputs/s7_AD.csv",header=T)
 s7_tb = read.csv("Comparison/JSM2024/outputs/s7_tb.csv",header=T)
 head(s7_PS)[,1:10]
