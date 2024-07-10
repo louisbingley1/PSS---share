@@ -166,7 +166,7 @@ f_ace_1sim      =  function(postparam,dat,I) {
     delta_se_D[iter]      =sqrt(1/(prior_precision + 1/(ITTse_D[iter])^2))
     delta_se_I[iter]      =sqrt(1/(prior_precision + 1/(ITTse_I[iter])^2))
     delta_se_B[iter]      = sqrt(1/(prior_precision + 1/(ITTse_B[iter])^2))
-    delta_se_IB[iter]      =sqrt(1/(prior_precision + 1/(ITTse_IB[iter])^2))
+    delta_se_IB[iter]      =sqrt(1/(0.5 + 1/(ITTse_IB[iter])^2))
     
     
     #-------------------------

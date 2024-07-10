@@ -1,0 +1,9 @@
+"","scenario","stratum_00","stratum_s0"
+"Bayesian Delta6","s7",0.387,0.513
+"AdACE methodA6","s7",0.037,0.063
+"PS Non-Cov-Adj6","s7",0.06,0.053
+"PS Cov-Adj6","s7",0.053,0.11
+"Bayesian Delta7","s8",0.407,0.453
+"AdACE methodA7","s8",0.03,0.053
+"PS Non-Cov-Adj7","s8",0.043,0.04
+"PS Cov-Adj7","s8",0.043,0.077
