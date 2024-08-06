@@ -1,0 +1,25 @@
+Column1,scenario,P.cover_S00,P.cover_S*0
+AdACE,s1,0.98,0.977
+Bayesian ,s1,0.727,0.75
+PS Cov-Adj,s1,0.973,0.987
+PS Non-Cov-Adj,s1,0.96,0.983
+AdACE,s2,0.983,0.983
+Bayesian ,s2,0.683,0.73
+PS Cov-Adj,s2,0.98,0.987
+PS Non-Cov-Adj,s2,0.963,0.96
+AdACE,s3,0.983,0.987
+Bayesian ,s3,0.727,0.743
+PS Cov-Adj,s3,0.98,0.993
+PS Non-Cov-Adj,s3,0.963,0.973
+AdACE,s4,0.987,0.993
+Bayesian ,s4,0.667,0.71
+PS Cov-Adj,s4,1,1
+PS Non-Cov-Adj,s4,0.98,0.983
+AdACE,s5,0.977,0.983
+Bayesian ,s5,0.723,0.74
+PS Cov-Adj,s5,0.977,0.983
+PS Non-Cov-Adj,s5,0.953,0.96
+AdACE,s6,0.98,0.99
+Bayesian ,s6,0.64,0.677
+PS Cov-Adj,s6,0.977,0.993
+PS Non-Cov-Adj,s6,0.973,0.97

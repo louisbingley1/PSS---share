@@ -1,0 +1,25 @@
+"","scenario","stratum_00","stratum_s0"
+"Bayesian Delta","s1",0.563,0.797
+"AdACE methodA","s1",0.197,0.31
+"PS Non-Cov-Adj","s1",0.157,0.31
+"PS Cov-Adj","s1",0.173,0.457
+"Bayesian Delta1","s2",0.63,0.783
+"AdACE methodA1","s2",0.21,0.313
+"PS Non-Cov-Adj1","s2",0.19,0.2
+"PS Cov-Adj1","s2",0.243,0.393
+"Bayesian Delta2","s3",0.803,0.987
+"AdACE methodA2","s3",0.527,0.737
+"PS Non-Cov-Adj2","s3",0.48,0.647
+"PS Cov-Adj2","s3",0.54,0.817
+"Bayesian Delta3","s4",0.86,0.957
+"AdACE methodA3","s4",0.603,0.77
+"PS Non-Cov-Adj3","s4",0.59,0.64
+"PS Cov-Adj3","s4",0.67,0.87
+"Bayesian Delta4","s5",0.95,0.99
+"AdACE methodA4","s5",0.873,0.953
+"PS Non-Cov-Adj4","s5",0.837,0.93
+"PS Cov-Adj4","s5",0.887,0.987
+"Bayesian Delta5","s6",0.98,0.997
+"AdACE methodA5","s6",0.92,0.973
+"PS Non-Cov-Adj5","s6",0.903,0.893
+"PS Cov-Adj5","s6",0.943,0.987

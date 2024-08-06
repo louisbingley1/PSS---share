@@ -1,0 +1,7 @@
+"","stratum_01","stratum_10","stratum_00","stratum_11","stratum_s0"
+"Bayesian ITT",0.475,-0.422,0.005,0.054,-0.125
+"Bayesian Delta",0.004,0.008,-0.004,-0.009,0.004
+"AdACE methodA",NA,NA,0.038,NA,-0.107
+"AdACE methodB",NA,NA,-0.001,NA,-0.216
+"PS Non-Cov-Adj",-0.015,0.039,0.012,NA,-0.111
+"PS Cov-Adj",0.004,0.034,0.018,NA,-0.027
